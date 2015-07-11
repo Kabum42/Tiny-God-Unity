@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{0616820F-D85C-BAF7-94A4-2F699267428D}</ProjectGuid>
+	<ProjectGuid>{8F864433-787A-5A75-E178-FCDD2D4EF8DC}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -50,9 +50,10 @@
      <Compile Include="Assets\Examples\MuffinRush\ExampleEventHandler.cs" />
      <Compile Include="Assets\Examples\MuffinRush\ExampleWindow.cs" />
      <Compile Include="Assets\Examples\MuffinRush\MuffinRushAssets.cs" />
-     <Compile Include="Assets\FpsScript.cs" />
-     <Compile Include="Assets\MainScript.cs" />
-     <Compile Include="Assets\RotateScript.cs" />
+     <Compile Include="Assets\MainLoadingScript.cs" />
+     <Compile Include="Assets\Scripts\FpsScript.cs" />
+     <Compile Include="Assets\Scripts\MainScript.cs" />
+     <Compile Include="Assets\Scripts\RotateScript.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -62,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{B83A6ECE-875F-8BF6-44A8-1EC0A1563273}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{9228F162-A054-859A-DB53-35284E309988}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

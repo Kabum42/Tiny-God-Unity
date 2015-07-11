@@ -11,7 +11,7 @@ public class RotateScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		this.GetComponent<Transform> ().eulerAngles = this.GetComponent<Transform> ().eulerAngles + new Vector3(0f, 1f, 0f);
+		this.GetComponent<Transform> ().eulerAngles = this.GetComponent<Transform> ().eulerAngles + new Vector3(0f, Time.deltaTime*100f, 0f);
 	
 	}
 }
