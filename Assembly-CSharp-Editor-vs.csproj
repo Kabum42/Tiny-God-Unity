@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Soomla\Editor\SoomlaPostBuild.cs" />
      <Compile Include="Assets\Soomla\Editor\SoomlaSettingsEditor.cs" />
+     <None Include="Assets\codeandweb.com\Readme.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -83,6 +84,9 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/macstandalonesupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="TexturePackerImporter">
+ <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/codeandweb.com/Editor/TexturePackerImporter.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

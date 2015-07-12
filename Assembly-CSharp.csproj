@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\FpsScript.cs" />
      <Compile Include="Assets\Scripts\MainScript.cs" />
      <Compile Include="Assets\Scripts\RotateScript.cs" />
+     <None Include="Assets\codeandweb.com\Readme.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

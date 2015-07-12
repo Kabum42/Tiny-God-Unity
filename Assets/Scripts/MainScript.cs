@@ -6,6 +6,7 @@ public class MainScript : MonoBehaviour {
 	public int[] screens = {-2, -1, 0, 1, 2};
 	public int currentScreen = 0;
 
+	private GameObject capa0;
 	private GameObject capa1;
 
 	private Rect auxScreen;
@@ -17,6 +18,7 @@ public class MainScript : MonoBehaviour {
 	void Start () 
 	{
 
+		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
 
 		// set the desired aspect ratio (the values in this example are
@@ -72,6 +74,13 @@ public class MainScript : MonoBehaviour {
 				Vector2 touchDelta = new Vector2(Input.mousePosition.x - lastMouse.x, Input.mousePosition.y - lastMouse.y);
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
 				capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*20f, 0f, 0f);
+
+				if (capa1.transform.position.x > 60) {
+					capa1.transform.position = new Vector3(60f, 0f, 0f);
+				}
+				else if (capa1.transform.position.x < -60) {
+					capa1.transform.position = new Vector3(-60f, 0f, 0f);
+				}
 			
 			}
 			else if (Input.GetMouseButtonUp(0)) {
@@ -79,13 +88,13 @@ public class MainScript : MonoBehaviour {
 				Vector2 touchDelta = new Vector2(Input.mousePosition.x - lastMouse.x, Input.mousePosition.y - lastMouse.y);
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
 
-				if (deltaPercentage.x > 0.001f) {
+				if (deltaPercentage.x > 0) {
 
 					currentScreen++;
 					if (currentScreen > 2) { currentScreen = 2; }
 
 				}
-				else if (deltaPercentage.x < -0.001f) {
+				else if (deltaPercentage.x < -0) {
 
 					currentScreen--;
 					if (currentScreen < -2) { currentScreen = -2; }
@@ -127,19 +136,26 @@ public class MainScript : MonoBehaviour {
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
 				capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*20f, 0f, 0f);
 			
+				if (capa1.transform.position.x > 60) {
+					capa1.transform.position = new Vector3(60f, 0f, 0f);
+				}
+				else if (capa1.transform.position.x < -60) {
+					capa1.transform.position = new Vector3(-60f, 0f, 0f);
+				}
+
 			}
 			else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) {
 
 				Vector2 touchDelta = new Vector2(Input.GetTouch(0).position.x - lastFinger.x, Input.GetTouch(0).position.y - lastFinger.y);
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
 
-				if (deltaPercentage.x > 0.001f) {
+				if (deltaPercentage.x > 0) {
 					
 					currentScreen++;
 					if (currentScreen > 2) { currentScreen = 2; }
 					
 				}
-				else if (deltaPercentage.x < -0.001f) {
+				else if (deltaPercentage.x < -0) {
 					
 					currentScreen--;
 					if (currentScreen < -2) { currentScreen = -2; }
@@ -179,19 +195,7 @@ public class MainScript : MonoBehaviour {
 
 
 
-		/*
-		if (Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Ended) {
-			Vector2 touchDelta = Input.GetTouch(0).deltaPosition;
-			if (touchDelta.x>5) {} //This was a flick to the left with magnitude of 5 or more
-			if (touchDelta.x<-5) {} //This was a flick to the right with magnitude of 5 or more
-		}
-
-		goal = Mathf.Round(transform.position.x/goalGrid)*goalGrid; //Where goalGrid would be an int of steps
-
-		goal = Mathf.Clamp(goal, minimum, maximum);
-	
-		transform.position.x = Mathf.Lerp(transform.position.x, goal, speed*Time.deltaTime); //Where speed would be the multiplier to reach into position
-		*/
+		capa0.transform.position = new Vector3 (capa1.transform.position.x/15f, 0, 0);
 
 	}
 
