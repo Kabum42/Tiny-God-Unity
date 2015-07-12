@@ -8,6 +8,9 @@ public class MainScript : MonoBehaviour {
 
 	private GameObject capa0;
 	private GameObject capa1;
+	private GameObject capa1Screen3;
+	private GameObject capa2;
+	private GameObject capa2TopText;
 
 	private Rect auxScreen;
 
@@ -22,12 +25,17 @@ public class MainScript : MonoBehaviour {
 	void Start () 
 	{
 
+		if (!GlobalData.started) { GlobalData.Start(); }
+
 		slide = gameObject.AddComponent<AudioSource>();
 		slide.clip = Resources.Load ("Audio/slide") as AudioClip;
-		slide.volume = 1f;
+		slide.volume = 2f;
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
+		capa1Screen3 = GameObject.Find ("Capa1/Screen3");
+		capa2 = GameObject.Find ("Capa2");
+		capa2TopText = GameObject.Find ("Capa2/Top/TopText");
 
 		// set the desired aspect ratio (the values in this example are
 		// hard-coded for 16:9, but you could make them into public
@@ -76,6 +84,9 @@ public class MainScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		GlobalData.Update ();
+		capa2TopText.GetComponent<TextMesh> ().text = GlobalData.FormattedNumber(GlobalData.love);
+
 		UpdateLastSlides ();
 
 		bool isTouched = false;
@@ -105,17 +116,37 @@ public class MainScript : MonoBehaviour {
 
 				Vector2 touchDelta = new Vector2(Input.mousePosition.x - lastMouse.x, Input.mousePosition.y - lastMouse.y);
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
-				capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*20f, 0f, 0f);
-				
-				if (capa1.transform.position.x > 60) {
-					capa1.transform.position = new Vector3(60f, 0f, 0f);
+
+				if (Mathf.Abs(deltaPercentage.x) >= Mathf.Abs(deltaPercentage.y)) {
+
+					// X WINS OVER Y
+					capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*GlobalData.CAPA1_WIDTH_SCREEN, 0f, 0f);
+
+					if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*3f) {
+						capa1.transform.position = new Vector3(GlobalData.CAPA1_WIDTH_SCREEN*3f, 0f, 0f);
+					}
+					else if (capa1.transform.position.x < -GlobalData.CAPA1_WIDTH_SCREEN*3f) {
+						capa1.transform.position = new Vector3(-GlobalData.CAPA1_WIDTH_SCREEN*3f, 0f, 0f);
+					}
+					
+					if (deltaPercentage.x > 0.02f) { slideToLeft = 0.5f; }
+					else if (deltaPercentage.x < -0.02f) { slideToRight = 0.5f; }
+
 				}
-				else if (capa1.transform.position.x < -60) {
-					capa1.transform.position = new Vector3(-60f, 0f, 0f);
+				else {
+
+					// Y WINS OVER X
+					if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*-1.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*-0.5f) {
+						
+						capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, 0f);
+						if (capa1Screen3.transform.position.y < 0f) {
+							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 0f, 0f);
+						}
+						
+					}
+
 				}
 
-				if (deltaPercentage.x > 0.02f) { slideToLeft = 0.5f; }
-				else if (deltaPercentage.x < -0.02f) { slideToRight = 0.5f; }
 				
 			}
 			else if (touchEnded) {
@@ -142,19 +173,19 @@ public class MainScript : MonoBehaviour {
 				else {
 
 					// NINGUN DESLIZAMIENTO BRUSCO, PUNTERO ESTATICO
-					if (capa1.transform.position.x <= -30) {
+					if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
 						currentScreen = -2;
 					}
-					else if (capa1.transform.position.x > -30 && capa1.transform.position.x <= -10) {
+					else if (capa1.transform.position.x > -GlobalData.CAPA1_WIDTH_SCREEN*1.5f && capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*0.5f) {
 						currentScreen = -1;
 					}
-					else if (capa1.transform.position.x > -10 && capa1.transform.position.x <= 10) {
+					else if (capa1.transform.position.x > -GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*0.5f) {
 						currentScreen = 0;
 					}
-					else if (capa1.transform.position.x > 10 && capa1.transform.position.x <= 30) {
+					else if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
 						currentScreen = 1;
 					}
-					else if (capa1.transform.position.x > 30) {
+					else if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
 						currentScreen = 2;
 					}
 					
@@ -164,7 +195,7 @@ public class MainScript : MonoBehaviour {
 		}
 		else {
 			// PUNTERO NO ESTA INTERACTUANDO
-			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*20, 0, 0), Time.deltaTime*10f);
+			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
 		}
 
 		UpdateMousePosition ();

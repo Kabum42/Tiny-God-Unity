@@ -11,6 +11,8 @@ public class MainLoadingScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		if (!GlobalData.started) { GlobalData.Start(); }
+
 		StartCoroutine (LoadScreen ());
 
 	}

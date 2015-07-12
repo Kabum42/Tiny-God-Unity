@@ -52,6 +52,7 @@
      <Compile Include="Assets\Examples\MuffinRush\MuffinRushAssets.cs" />
      <Compile Include="Assets\MainLoadingScript.cs" />
      <Compile Include="Assets\Scripts\FpsScript.cs" />
+     <Compile Include="Assets\Scripts\GlobalData.cs" />
      <Compile Include="Assets\Scripts\MainScript.cs" />
      <Compile Include="Assets\Scripts\RotateScript.cs" />
      <None Include="Assets\codeandweb.com\Readme.txt" />
