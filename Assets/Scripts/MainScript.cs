@@ -12,11 +12,19 @@ public class MainScript : MonoBehaviour {
 	private Rect auxScreen;
 
 	private Vector3 lastMouse;
-	private Vector3 lastFinger;
+
+	private AudioSource slide;
+
+	private float slideToLeft = 0f;
+	private float slideToRight = 0f;
 
 	// Use this for initialization
 	void Start () 
 	{
+
+		slide = gameObject.AddComponent<AudioSource>();
+		slide.clip = Resources.Load ("Audio/slide") as AudioClip;
+		slide.volume = 1f;
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
@@ -68,41 +76,72 @@ public class MainScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		UpdateLastSlides ();
+
+		bool isTouched = false;
+		bool isMoving = false;
+		bool touchEnded = false;
+
 		if (Application.platform == RuntimePlatform.WindowsEditor) {
-			if (Input.GetMouseButton(0)) {
+			// TESTEANDO EN WINDOWS
+			if (Input.GetMouseButton(0)) { 
+				isTouched = true;
+				isMoving = true; 
+			}
+			else if (Input.GetMouseButtonUp(0)) { 
+				isTouched = true;
+				touchEnded = true; }
+		} else {
+			// EN CUALQUIER OTRO SITIO
+			if (Input.touchCount > 0) { 
+				isTouched = true; 
+				if (Input.GetTouch(0).phase == TouchPhase.Moved) { isMoving = true; }
+				else if (Input.GetTouch(0).phase == TouchPhase.Ended) { touchEnded = true; }
+			}
+		}
+
+		if (isTouched) {
+			if (isMoving) {
 
 				Vector2 touchDelta = new Vector2(Input.mousePosition.x - lastMouse.x, Input.mousePosition.y - lastMouse.y);
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
 				capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*20f, 0f, 0f);
-
+				
 				if (capa1.transform.position.x > 60) {
 					capa1.transform.position = new Vector3(60f, 0f, 0f);
 				}
 				else if (capa1.transform.position.x < -60) {
 					capa1.transform.position = new Vector3(-60f, 0f, 0f);
 				}
-			
-			}
-			else if (Input.GetMouseButtonUp(0)) {
 
+				if (deltaPercentage.x > 0) { slideToLeft = 0.5f; }
+				else if (deltaPercentage.x < -0) { slideToRight = 0.5f; }
+				
+			}
+			else if (touchEnded) {
+				
 				Vector2 touchDelta = new Vector2(Input.mousePosition.x - lastMouse.x, Input.mousePosition.y - lastMouse.y);
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
-
-				if (deltaPercentage.x > 0) {
-
+				
+				if (slideToLeft > 0f && slideToLeft >= slideToRight) {
+					
+					slide.Play();
+					
 					currentScreen++;
 					if (currentScreen > 2) { currentScreen = 2; }
-
+					
 				}
-				else if (deltaPercentage.x < -0) {
-
+				else if (slideToRight > 0f && slideToRight >= slideToLeft) {
+					
+					slide.Play();
+					
 					currentScreen--;
 					if (currentScreen < -2) { currentScreen = -2; }
-
+					
 				}
 				else {
 
-					// NINGUN DESLIZAMIENTO BRUSCO
+					// NINGUN DESLIZAMIENTO BRUSCO, PUNTERO ESTATICO
 					if (capa1.transform.position.x <= -30) {
 						currentScreen = -2;
 					}
@@ -118,88 +157,49 @@ public class MainScript : MonoBehaviour {
 					else if (capa1.transform.position.x > 30) {
 						currentScreen = 2;
 					}
-
-				}
-
-			}
-			else {
-				capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*20, 0, 0), Time.deltaTime*10f);
-			}
-
-			lastMouse = Input.mousePosition;
-
-		} else {
-
-			if (Input.touchCount > 0) {
-
-				if (Input.GetTouch(0).phase == TouchPhase.Moved) {
-					
-					Vector2 touchDelta = new Vector2(Input.GetTouch(0).position.x - lastFinger.x, Input.GetTouch(0).position.y - lastFinger.y);
-					Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
-					capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*20f, 0f, 0f);
-					
-					if (capa1.transform.position.x > 60) {
-						capa1.transform.position = new Vector3(60f, 0f, 0f);
-					}
-					else if (capa1.transform.position.x < -60) {
-						capa1.transform.position = new Vector3(-60f, 0f, 0f);
-					}
 					
 				}
-				else if (Input.GetTouch(0).phase == TouchPhase.Ended) {
-					
-					Vector2 touchDelta = new Vector2(Input.GetTouch(0).position.x - lastFinger.x, Input.GetTouch(0).position.y - lastFinger.y);
-					Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
-					
-					if (deltaPercentage.x > 0) {
-						
-						currentScreen++;
-						if (currentScreen > 2) { currentScreen = 2; }
-						
-					}
-					else if (deltaPercentage.x < -0) {
-						
-						currentScreen--;
-						if (currentScreen < -2) { currentScreen = -2; }
-						
-					}
-					else {
-						
-						// NINGUN DESLIZAMIENTO BRUSCO
-						if (capa1.transform.position.x <= -30) {
-							currentScreen = -2;
-						}
-						else if (capa1.transform.position.x > -30 && capa1.transform.position.x <= -10) {
-							currentScreen = -1;
-						}
-						else if (capa1.transform.position.x > -10 && capa1.transform.position.x <= 10) {
-							currentScreen = 0;
-						}
-						else if (capa1.transform.position.x > 10 && capa1.transform.position.x <= 30) {
-							currentScreen = 1;
-						}
-						else if (capa1.transform.position.x > 30) {
-							currentScreen = 2;
-						}
-						
-					}
-					
-				}
-
-				lastFinger = Input.GetTouch(0).position;
-
+				
 			}
-			else {
-
-				capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*20, 0, 0), Time.deltaTime*10f);
-			
-			}
-
+		}
+		else {
+			// PUNTERO NO ESTA INTERACTUANDO
+			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*20, 0, 0), Time.deltaTime*10f);
 		}
 
-
+		UpdateMousePosition ();
 
 		capa0.transform.position = new Vector3 (capa1.transform.position.x/15f, 0, 0);
+
+	}
+
+	void UpdateLastSlides() {
+
+		if (slideToLeft > 0f) { 
+			slideToLeft -= Time.deltaTime; 
+			if (slideToLeft <= 0f) {
+				slideToLeft = 0f;
+			}
+		}
+		
+		if (slideToRight > 0f) { 
+			slideToRight -= Time.deltaTime; 
+			if (slideToRight <= 0f) {
+				slideToRight = 0f;
+			}
+		}
+
+	}
+
+	void UpdateMousePosition() {
+
+		if (Application.platform == RuntimePlatform.WindowsEditor) {
+			lastMouse = Input.mousePosition;
+		} else {
+			if (Input.touchCount > 0) { 
+				lastMouse = Input.GetTouch(0).position;
+			}
+		}
 
 	}
 
