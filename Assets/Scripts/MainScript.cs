@@ -130,65 +130,69 @@ public class MainScript : MonoBehaviour {
 
 		} else {
 
-			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) {
+			if (Input.touchCount > 0) {
 
-				Vector2 touchDelta = new Vector2(Input.GetTouch(0).position.x - lastFinger.x, Input.GetTouch(0).position.y - lastFinger.y);
-				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
-				capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*20f, 0f, 0f);
-			
-				if (capa1.transform.position.x > 60) {
-					capa1.transform.position = new Vector3(60f, 0f, 0f);
+				if (Input.GetTouch(0).phase == TouchPhase.Moved) {
+					
+					Vector2 touchDelta = new Vector2(Input.GetTouch(0).position.x - lastFinger.x, Input.GetTouch(0).position.y - lastFinger.y);
+					Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
+					capa1.transform.position = new Vector3(capa1.transform.position.x + deltaPercentage.x*20f, 0f, 0f);
+					
+					if (capa1.transform.position.x > 60) {
+						capa1.transform.position = new Vector3(60f, 0f, 0f);
+					}
+					else if (capa1.transform.position.x < -60) {
+						capa1.transform.position = new Vector3(-60f, 0f, 0f);
+					}
+					
 				}
-				else if (capa1.transform.position.x < -60) {
-					capa1.transform.position = new Vector3(-60f, 0f, 0f);
+				else if (Input.GetTouch(0).phase == TouchPhase.Ended) {
+					
+					Vector2 touchDelta = new Vector2(Input.GetTouch(0).position.x - lastFinger.x, Input.GetTouch(0).position.y - lastFinger.y);
+					Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
+					
+					if (deltaPercentage.x > 0) {
+						
+						currentScreen++;
+						if (currentScreen > 2) { currentScreen = 2; }
+						
+					}
+					else if (deltaPercentage.x < -0) {
+						
+						currentScreen--;
+						if (currentScreen < -2) { currentScreen = -2; }
+						
+					}
+					else {
+						
+						// NINGUN DESLIZAMIENTO BRUSCO
+						if (capa1.transform.position.x <= -30) {
+							currentScreen = -2;
+						}
+						else if (capa1.transform.position.x > -30 && capa1.transform.position.x <= -10) {
+							currentScreen = -1;
+						}
+						else if (capa1.transform.position.x > -10 && capa1.transform.position.x <= 10) {
+							currentScreen = 0;
+						}
+						else if (capa1.transform.position.x > 10 && capa1.transform.position.x <= 30) {
+							currentScreen = 1;
+						}
+						else if (capa1.transform.position.x > 30) {
+							currentScreen = 2;
+						}
+						
+					}
+					
 				}
 
-			}
-			else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) {
-
-				Vector2 touchDelta = new Vector2(Input.GetTouch(0).position.x - lastFinger.x, Input.GetTouch(0).position.y - lastFinger.y);
-				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
-
-				if (deltaPercentage.x > 0) {
-					
-					currentScreen++;
-					if (currentScreen > 2) { currentScreen = 2; }
-					
-				}
-				else if (deltaPercentage.x < -0) {
-					
-					currentScreen--;
-					if (currentScreen < -2) { currentScreen = -2; }
-					
-				}
-				else {
-					
-					// NINGUN DESLIZAMIENTO BRUSCO
-					if (capa1.transform.position.x <= -30) {
-						currentScreen = -2;
-					}
-					else if (capa1.transform.position.x > -30 && capa1.transform.position.x <= -10) {
-						currentScreen = -1;
-					}
-					else if (capa1.transform.position.x > -10 && capa1.transform.position.x <= 10) {
-						currentScreen = 0;
-					}
-					else if (capa1.transform.position.x > 10 && capa1.transform.position.x <= 30) {
-						currentScreen = 1;
-					}
-					else if (capa1.transform.position.x > 30) {
-						currentScreen = 2;
-					}
-					
-				}
+				lastFinger = Input.GetTouch(0).position;
 
 			}
 			else {
-				capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*20, 0, 0), Time.deltaTime*10f);
-			}
 
-			if (Input.touchCount > 0) {
-				lastFinger = Input.GetTouch(0).position;
+				capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*20, 0, 0), Time.deltaTime*10f);
+			
 			}
 
 		}

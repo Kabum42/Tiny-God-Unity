@@ -4,23 +4,33 @@ using UnityEngine.UI;
 
 public class MainLoadingScript : MonoBehaviour {
 
+	private int loadProgress = 0;
 	private AsyncOperation async;
-	private GameObject progress;
+	public GameObject progress;
 
 	// Use this for initialization
 	void Start () {
 
-		progress = GameObject.Find ("Progress");
+		StartCoroutine (LoadScreen ());
+
+	}
+
+	IEnumerator LoadScreen() {
+
 		async = Application.LoadLevelAsync ("Game");
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-		if (!async.isDone) {
-			progress.GetComponent<Text>().text = async.progress*100 + "%";
+		while (!async.isDone) {
+
+			loadProgress = (int)(async.progress*100);
+			progress.GetComponent<TextMesh>().text = loadProgress + "%";
+
+			yield return null;
+
 		}
 
+
+
 	}
+
+
 }
