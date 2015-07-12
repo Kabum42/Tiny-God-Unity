@@ -114,8 +114,8 @@ public class MainScript : MonoBehaviour {
 					capa1.transform.position = new Vector3(-60f, 0f, 0f);
 				}
 
-				if (deltaPercentage.x > 0) { slideToLeft = 0.5f; }
-				else if (deltaPercentage.x < -0) { slideToRight = 0.5f; }
+				if (deltaPercentage.x > 0.02f) { slideToLeft = 0.5f; }
+				else if (deltaPercentage.x < -0.02f) { slideToRight = 0.5f; }
 				
 			}
 			else if (touchEnded) {
