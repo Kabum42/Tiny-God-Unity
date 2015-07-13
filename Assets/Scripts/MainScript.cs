@@ -8,6 +8,7 @@ public class MainScript : MonoBehaviour {
 
 	private GameObject capa0;
 	private GameObject capa1;
+	private GameObject capa1Screen2Yahvy;
 	private GameObject capa1Screen3;
 	private GameObject capa2;
 	private GameObject capa2TopText;
@@ -33,6 +34,7 @@ public class MainScript : MonoBehaviour {
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
+		capa1Screen2Yahvy = GameObject.Find ("Capa1/Screen2/Yahvy");
 		capa1Screen3 = GameObject.Find ("Capa1/Screen3");
 		capa2 = GameObject.Find ("Capa2");
 		capa2TopText = GameObject.Find ("Capa2/Top/TopText");

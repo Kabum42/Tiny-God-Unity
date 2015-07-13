@@ -39,33 +39,26 @@ public static class GlobalData {
 
 		if (iterations == 1) {
 			finalWord = "K";
-		}
-		else if (iterations == 2) {
+		} else if (iterations == 2) {
 			finalWord = "million";
-		}
-		else if (iterations == 3) {
+		} else if (iterations == 3) {
 			finalWord = "billion";
-		}
-		else if (iterations == 4) {
+		} else if (iterations == 4) {
 			finalWord = "trillion";
-		}
-		else if (iterations == 5) {
+		} else if (iterations == 5) {
 			finalWord = "quadrillion";
-		}
-		else if (iterations == 6) {
+		} else if (iterations == 6) {
 			finalWord = "quintillion";
-		}
-		else if (iterations == 7) {
+		} else if (iterations == 7) {
 			finalWord = "sextillion";
-		}
-		else if (iterations == 8) {
+		} else if (iterations == 8) {
 			finalWord = "septillion";
-		}
-		else if (iterations == 9) {
+		} else if (iterations == 9) {
 			finalWord = "octillion";
-		}
-		else if (iterations == 10) {
+		} else if (iterations == 10) {
 			finalWord = "nonillion";
+		} else if (iterations > 10) {
+			finalWord = "10^"+ (iterations*3);
 		}
 
 		result = d.ToString ("F3") + " " + finalWord;
