@@ -6,12 +6,12 @@ public class MainScript : MonoBehaviour {
 	public int[] screens = {-2, -1, 0, 1, 2};
 	public int currentScreen = 0;
 
-	private GameObject capa0;
-	private GameObject capa1;
-	private GameObject capa1Screen2Yahvy;
-	private GameObject capa1Screen3;
-	private GameObject capa2;
-	private GameObject capa2TopText;
+	public GameObject capa0;
+	public GameObject capa1;
+	public GameObject capa1Screen2Yahvy;
+	public GameObject capa1Screen3;
+	public GameObject capa2;
+	public GameObject capa2TopText;
 
 	private Rect auxScreen;
 
@@ -160,35 +160,35 @@ public class MainScript : MonoBehaviour {
 					
 					slide.Play();
 					
-					currentScreen++;
-					if (currentScreen > 2) { currentScreen = 2; }
+					currentScreen--;
+					if (currentScreen < -2) { currentScreen = -2; }
 					
 				}
 				else if (slideToRight > 0f && slideToRight >= slideToLeft) {
 					
 					slide.Play();
 					
-					currentScreen--;
-					if (currentScreen < -2) { currentScreen = -2; }
+					currentScreen++;
+					if (currentScreen > 2) { currentScreen = 2; }
 					
 				}
 				else {
 
 					// NINGUN DESLIZAMIENTO BRUSCO, PUNTERO ESTATICO
 					if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
-						currentScreen = -2;
+						currentScreen = 2;
 					}
 					else if (capa1.transform.position.x > -GlobalData.CAPA1_WIDTH_SCREEN*1.5f && capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*0.5f) {
-						currentScreen = -1;
+						currentScreen = 1;
 					}
 					else if (capa1.transform.position.x > -GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*0.5f) {
 						currentScreen = 0;
 					}
 					else if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
-						currentScreen = 1;
+						currentScreen = -1;
 					}
 					else if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
-						currentScreen = 2;
+						currentScreen = -2;
 					}
 					
 				}
@@ -197,7 +197,7 @@ public class MainScript : MonoBehaviour {
 		}
 		else {
 			// PUNTERO NO ESTA INTERACTUANDO
-			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
+			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*-GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
 		}
 
 		UpdateMousePosition ();
