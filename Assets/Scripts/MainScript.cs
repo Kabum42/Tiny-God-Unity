@@ -95,7 +95,7 @@ public class MainScript : MonoBehaviour {
 		bool isMoving = false;
 		bool touchEnded = false;
 
-		if (Application.platform == RuntimePlatform.WindowsEditor) {
+		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
 			// TESTEANDO EN WINDOWS
 			if (Input.GetMouseButton(0)) { 
 				isTouched = true;
@@ -226,7 +226,7 @@ public class MainScript : MonoBehaviour {
 
 	void UpdateMousePosition() {
 
-		if (Application.platform == RuntimePlatform.WindowsEditor) {
+		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
 			lastMouse = Input.mousePosition;
 		} else {
 			if (Input.touchCount > 0) { 
