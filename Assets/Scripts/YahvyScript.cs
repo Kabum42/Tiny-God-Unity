@@ -25,10 +25,10 @@ public class YahvyScript : MonoBehaviour {
 	void Start () {
 
 		lastMousePosition = new Vector2(0, 0);
-		state = "IdleLoop";
 		yahvyBack = gameObject.transform.FindChild ("YahvyBack").gameObject;
 		yahvyBody = gameObject.transform.FindChild ("YahvyBodyModel").gameObject;
 		yahvyFront = gameObject.transform.FindChild ("YahvyFront").gameObject;
+		PlayAnimation ("IdleLoop");
 	
 	}
 	
@@ -46,24 +46,28 @@ public class YahvyScript : MonoBehaviour {
 
 		if (state == "IdleLoop") {
 
+			if (yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleLoop") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
+				PlayAnimation("IdleLoop");
+			}
+
 			if (probBlinkCooldown > 0f) {
 				probBlinkCooldown -= Time.deltaTime;
 				if (probBlinkCooldown <= 0f) {
 					if (Random.Range(0f, 1f) > (1f - probBlinkDecSecond)) {
-						PlayAnimation("IdleBlink");
+						CrossFadeAnimation("IdleBlink");
 					}
 					probBlinkCooldown = 0.1f;
 				}
 			}
 
 			if (lastInteraction >= sleepyThreshold) {
-				PlayAnimation("SleepyLoop");
+				CrossFadeAnimation("SleepyLoop");
 			}
 
 
 		} else if (state == "IdleBlink" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleBlink") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 
-			PlayAnimation("IdleLoop");
+			CrossFadeAnimation("IdleLoop");
 
 		} else if (state == "SleepyLoop") {
 			
@@ -71,7 +75,7 @@ public class YahvyScript : MonoBehaviour {
 				probBlinkCooldown -= Time.deltaTime;
 				if (probBlinkCooldown <= 0f) {
 					if (Random.Range(0f, 1f) > (1f - probBlinkDecSecond)) {
-						PlayAnimation("SleepyBlink");
+						CrossFadeAnimation("SleepyBlink");
 					}
 					probBlinkCooldown = 0.1f;
 				}
@@ -79,29 +83,37 @@ public class YahvyScript : MonoBehaviour {
 
 
 			if (lastInteraction >= sleepThreshold) {
-				PlayAnimation("EnterToSleep");
+				CrossFadeAnimation("EnterToSleep");
 			}
 
 			
 		} else if (state == "SleepyBlink" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyBlink") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
+			CrossFadeAnimation("SleepyLoop");
+			
+		} else if (state == "SleepyLoop" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+			
 			PlayAnimation("SleepyLoop");
 			
 		} else if (state == "EnterToSleep" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("EnterToSleep") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
+			CrossFadeAnimation("SleepLoop");
+			
+		} else if (state == "SleepLoop" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+			
 			PlayAnimation("SleepLoop");
 			
 		} else if (state == "TapEye" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapEye") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			PlayAnimation("IdleLoop");
+
+			CrossFadeAnimation("IdleLoop");
 			
 		} else if (state == "TapBody" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapBody") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
-			PlayAnimation("IdleLoop");
+			CrossFadeAnimation("IdleLoop");
 			
 		} else if (state == "TapScreen" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapScreen") && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
-			PlayAnimation("IdleLoop");
+			CrossFadeAnimation("IdleLoop");
 			tapScreenCoolingDown = 0.05f;
 			
 		}
@@ -134,9 +146,9 @@ public class YahvyScript : MonoBehaviour {
 			lastInteraction = 0f;
 
 			if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyEye"))) {
-				PlayAnimation("TapEye");
+				CrossFadeAnimation("TapEye");
 			} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyBody"))) {
-				PlayAnimation("TapBody");
+				CrossFadeAnimation("TapBody");
 			} else {
 
 				Vector2 aux = new Vector2(ray.origin.x, ray.origin.y);
@@ -146,7 +158,7 @@ public class YahvyScript : MonoBehaviour {
 
 				lastAngleTapScreen = angle;
 
-				PlayAnimation("TapScreen");
+				CrossFadeAnimation("TapScreen");
 			}
 
 		}
@@ -154,10 +166,17 @@ public class YahvyScript : MonoBehaviour {
 
 	}
 
-	void PlayAnimation(string anim) {
+	void CrossFadeAnimation(string anim) {
 		yahvyBack.GetComponent<Animator> ().CrossFade (anim, 0.05f, 0, 0f);
 		yahvyBody.GetComponent<Animator> ().CrossFade (anim, 0.05f, 0, 0f);
 		yahvyFront.GetComponent<Animator> ().CrossFade (anim, 0.05f, 0, 0f);
+		state = anim;
+	}
+
+	void PlayAnimation(string anim) {
+		yahvyBack.GetComponent<Animator> ().Play (anim, 0, 0f);
+		yahvyBody.GetComponent<Animator> ().Play (anim, 0, 0f);
+		yahvyFront.GetComponent<Animator> ().Play (anim, 0, 0f);
 		state = anim;
 	}
 
@@ -179,7 +198,7 @@ public class YahvyScript : MonoBehaviour {
 
 	/*
 	void OnMouseDown() {
-		PlayAnimation("TapBody");
+		CrossFadeAnimation("TapBody");
 		lastInteraction = 0f;
 	}
 	*/
