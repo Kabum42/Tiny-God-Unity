@@ -21,7 +21,7 @@ public static class GlobalData {
 	
 	public static void Update() {
 
-		love += love*Time.deltaTime;
+		//love += love*Time.deltaTime;
 
 	}
 

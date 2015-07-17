@@ -13,6 +13,7 @@ public class MainLoadingScript : MonoBehaviour {
 	private AsyncOperation async;
 	public GameObject progress;
 	private GameObject scene1;
+	private float connectionStatus = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -34,8 +35,12 @@ public class MainLoadingScript : MonoBehaviour {
 		PlayGamesPlatform.Activate();
 
 		// authenticate user:
-		Social.localUser.Authenticate((bool success) => {
-			// handle success or failure
+		Social.localUser.Authenticate (success => {
+			if (success) {
+				connectionStatus = 10;
+			}
+			else
+				connectionStatus = -20;
 		});
 
 
@@ -69,8 +74,9 @@ public class MainLoadingScript : MonoBehaviour {
 
 	void Update () {
 
-		if ((Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer
-			|| Social.localUser.authenticated) && loadProgress == 100) {
+		if (connectionStatus != 0 && loadProgress == 100) {
+
+			GlobalData.love = connectionStatus;
 
 			scene1.SetActive (true);
 			GameObject.Find ("Scene0").SetActive (false);
