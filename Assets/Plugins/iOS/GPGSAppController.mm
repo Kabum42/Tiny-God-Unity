@@ -23,69 +23,65 @@
 @implementation GPGSAppController
 
 - (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    [super application:application
-               openURL:url
-     sourceApplication:sourceApplication
-            annotation:annotation];
-    return [GPPURLHandler handleURL:url
-                  sourceApplication:sourceApplication
-                         annotation:annotation];
+              openURL:(NSURL *)url
+    sourceApplication:(NSString *)sourceApplication
+           annotation:(id)annotation {
+
+  [super application:application
+                openURL:url
+      sourceApplication:sourceApplication
+             annotation:annotation];
+
+  return [GPPURLHandler handleURL:url
+                sourceApplication:sourceApplication
+                       annotation:annotation];
 }
 
 - (BOOL)application:(UIApplication *)application
-        didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [super application:application didFinishLaunchingWithOptions:launchOptions];
+    didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [super application:application didFinishLaunchingWithOptions:launchOptions];
+//-- Set Notification
+#if defined(__IPHONE_8_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0)
+  // iOS 8 Notifications
+  if ([application
+      respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
+    [application registerUserNotificationSettings:
+                     [UIUserNotificationSettings
+                         settingsForTypes:(UIUserNotificationTypeSound |
+                                           UIUserNotificationTypeAlert |
+                                           UIUserNotificationTypeBadge)
+                               categories:nil]];
 
-    // iOS 8 Notifications
-    if ([application
-         respondsToSelector:@selector(isRegisteredForRemoteNotifications)]) {
-        [application registerUserNotificationSettings:
-         [UIUserNotificationSettings
-          settingsForTypes:(UIUserNotificationTypeSound |
-                            UIUserNotificationTypeAlert |
-                            UIUserNotificationTypeBadge)
-          categories:nil]];
-        [application registerForRemoteNotifications];
-    } else {
-        // iOS < 8 Notifications
-        [application
-         registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                             UIRemoteNotificationTypeAlert |
-                                             UIRemoteNotificationTypeSound)];
-    }
-
-    gpg::TryHandleNotificationFromLaunchOptions(launchOptions);
-    return YES;
+    [application registerForRemoteNotifications];
+  } else {
+    // iOS < 8 Notifications
+    [application
+        registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                            UIRemoteNotificationTypeAlert |
+                                            UIRemoteNotificationTypeSound)];
+  }
+#else
+  // iOS < 8 Notifications
+  [application
+      registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                          UIRemoteNotificationTypeAlert |
+                                          UIRemoteNotificationTypeSound)];
+#endif
+  return gpg::TryHandleNotificationFromLaunchOptions(launchOptions);
 }
 
 - (void)application:(UIApplication *)application
-            didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-
-    NSLog(@"Got Token for APNS: %@", deviceToken);
-
-    // send the token to GPGS server so invitations can be sent to the local player
-    // NOTE: false indicates this is using the production APNS service.  true indicates
-    // that the sandbox service should be used.  This value needs to match the cooresponding
-    // certificate registered in the play app console, under linked apps > ios in
-    // the section for push notifications.
-    gpg::RegisterDeviceToken(deviceToken, false);
+    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  // "true" below indicates that we are using a development cert and hitting the
+  // sandbox push server.
+  gpg::RegisterDeviceToken(deviceToken, false);
 }
 
 - (void)application:(UIApplication *)application
-        didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"Error registering for remote notifications! %@", error);
-}
-
-
-- (void)application:(UIApplication *)application
-        didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    // this returns a bool if it was handled (here you might pass off to another
-    // company's sdk for example).
-    NSLog(@"Received notification: %@", userInfo);
-    gpg::TryHandleRemoteNotification(userInfo);
+    didReceiveRemoteNotification:(NSDictionary *)userInfo {
+  // this returns a bool if it was handled (here you might pass off to another
+  // company's sdk for example).
+  gpg::TryHandleRemoteNotification(userInfo);
 }
 
 @end

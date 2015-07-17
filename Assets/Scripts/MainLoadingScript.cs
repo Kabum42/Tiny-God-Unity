@@ -74,6 +74,7 @@ public class MainLoadingScript : MonoBehaviour {
 
 	void Update () {
 
+
 		if (connectionStatus != 0 && loadProgress == 100) {
 
 			GlobalData.love = connectionStatus;
