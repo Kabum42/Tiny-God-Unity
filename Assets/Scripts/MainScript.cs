@@ -87,7 +87,7 @@ public class MainScript : MonoBehaviour {
 	void Update () {
 
 		GlobalData.Update ();
-		capa2TopText.GetComponent<TextMesh> ().text = GlobalData.FormattedNumber(GlobalData.love);
+		capa2TopText.GetComponent<TextMesh> ().text = GlobalData.FormattedNumber(GlobalData.thisState.love);
 
 		UpdateLastSlides ();
 

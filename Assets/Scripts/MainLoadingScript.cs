@@ -12,39 +12,31 @@ public class MainLoadingScript : MonoBehaviour {
 	private int loadProgress = 0;
 	private AsyncOperation async;
 	public GameObject progress;
+	public GameObject status;
 	private GameObject scene1;
-	private float connectionStatus = 0;
 
 	// Use this for initialization
 	void Start () {
 
+		if (!GlobalData.started) { GlobalData.Start(); }
+
 		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
 		// enables saving game progress.
 		.EnableSavedGames()
-		// registers a callback to handle game invitations received while the game is not running.
-		//.WithInvitationDelegate(<callback method>)
-		// registers a callback for turn based match notifications received while the
-		// game is not running.
-		//.WithMatchDelegate(<callback method>)
 		.Build();
 		
 		PlayGamesPlatform.InitializeInstance(config);
-		// recommended for debugging:
-		//PlayGamesPlatform.DebugLogEnabled = true;
 		// Activate the Google Play Games platform
 		PlayGamesPlatform.Activate();
 
 		// authenticate user:
 		Social.localUser.Authenticate (success => {
 			if (success) {
-				connectionStatus = 10;
+				GlobalData.connectionStatus = 1;
 			}
 			else
-				connectionStatus = -20;
+				GlobalData.connectionStatus = -1;
 		});
-
-
-		if (!GlobalData.started) { GlobalData.Start(); }
 
 		StartCoroutine (LoadScreen ());
 
@@ -74,10 +66,23 @@ public class MainLoadingScript : MonoBehaviour {
 
 	void Update () {
 
+		status.GetComponent<TextMesh>().text = ""+GlobalData.connectionStatus;
 
-		if (connectionStatus != 0 && loadProgress == 100) {
+		if ((Social.localUser.authenticated || PlayGamesPlatform.Instance.IsAuthenticated()) && GlobalData.connectionStatus == 0) {
+			GlobalData.connectionStatus = 1;
+		}
 
-			GlobalData.love = connectionStatus;
+		if (GlobalData.connectionStatus == 1) {
+			GlobalData.OpenSavedGame("TinyGod");
+			GlobalData.connectionStatus = 2;
+		}
+
+
+		if ((GlobalData.connectionStatus <= -1 || GlobalData.connectionStatus == 5) && loadProgress == 100) {
+
+			if (GlobalData.connectionStatus <= -1) {
+				GlobalData.thisState.love = GlobalData.connectionStatus;
+			}
 
 			scene1.SetActive (true);
 			GameObject.Find ("Scene0").SetActive (false);
@@ -85,52 +90,6 @@ public class MainLoadingScript : MonoBehaviour {
 		}
 
 
-	}
-
-	void OpenSavedGame(string filename) {
-		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-		savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
-		                                                    ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
-	}
-
-	public void OnSavedGameOpened(SavedGameRequestStatus status, ISavedGameMetadata game) {
-		if (status == SavedGameRequestStatus.Success) {
-			// handle reading or writing of saved game.
-		} else {
-			// handle error
-		}
-	}
-
-	void SaveGame (ISavedGameMetadata game, byte[] savedData, TimeSpan totalPlaytime) {
-		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-		
-		SavedGameMetadataUpdate.Builder builder = new SavedGameMetadataUpdate.Builder();
-		builder = builder
-			.WithUpdatedPlayedTime(totalPlaytime)
-				.WithUpdatedDescription("Saved game at " + DateTime.Now.ToString());
-		SavedGameMetadataUpdate updatedMetadata = builder.Build();
-		savedGameClient.CommitUpdate(game, updatedMetadata, savedData, OnSavedGameWritten);
-	}
-	
-	public void OnSavedGameWritten (SavedGameRequestStatus status, ISavedGameMetadata game) {
-		if (status == SavedGameRequestStatus.Success) {
-			// handle reading or writing of saved game.
-		} else {
-			// handle error
-		}
-	}
-
-	void LoadGameData (ISavedGameMetadata game) {
-		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
-		savedGameClient.ReadBinaryData(game, OnSavedGameDataRead);
-	}
-	
-	public void OnSavedGameDataRead (SavedGameRequestStatus status, byte[] data) {
-		if (status == SavedGameRequestStatus.Success) {
-			// handle processing the byte array data
-		} else {
-			// handle error
-		}
 	}
 
 
