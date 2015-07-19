@@ -42,11 +42,8 @@ public static class GlobalData {
 
 			if (saveCooldown <= 0f) {
 
-				TimeSpan timeSpan = TimeSpan.FromSeconds(thisState.timePlayed);
+				OpenSavedGame2("TinyGod");
 
-				byte[] myByteArray = SaveState.ToByteArray(thisState);
-				
-				SaveGame(thisGame, myByteArray, timeSpan);
 				saveCooldown = defaultSaveCooldown;
 				
 			}
@@ -97,8 +94,7 @@ public static class GlobalData {
 		
 		SavedGameMetadataUpdate.Builder builder = new SavedGameMetadataUpdate.Builder();
 		builder = builder
-			.WithUpdatedPlayedTime(totalPlaytime)
-				.WithUpdatedDescription("Saved game at " + DateTime.Now.ToString());
+			.WithUpdatedPlayedTime (totalPlaytime);
 		SavedGameMetadataUpdate updatedMetadata = builder.Build();
 		savedGameClient.CommitUpdate(game, updatedMetadata, savedData, OnSavedGameWritten);
 	}
@@ -108,6 +104,30 @@ public static class GlobalData {
 			// handle reading or writing of saved game.
 		} else {
 			// handle error
+			thisState.love = -666;
+		}
+	}
+
+	public static void OpenSavedGame2(string filename) {
+		ISavedGameClient savedGameClient = PlayGamesPlatform.Instance.SavedGame;
+		savedGameClient.OpenWithAutomaticConflictResolution(filename, DataSource.ReadCacheOrNetwork,
+		                                                    ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened2);
+	}
+	
+	public static void OnSavedGameOpened2(SavedGameRequestStatus status, ISavedGameMetadata game) {
+		if (status == SavedGameRequestStatus.Success) {
+			// handle reading or writing of saved game.
+			thisGame = game;
+
+			TimeSpan timeSpan = TimeSpan.FromSeconds(thisState.timePlayed);
+			
+			byte[] myByteArray = SaveState.ToByteArray(thisState);
+			
+			SaveGame(thisGame, myByteArray, timeSpan);
+
+		} else {
+			// handle error
+			thisState.love = -42;
 		}
 	}
 
@@ -163,13 +183,145 @@ public static class GlobalData {
 		public double love = 0f;
 		public double totalLove = 0f;
 		public double clicks = 0f;
-		public List<int> producers = new List<int>();
+
+		public static int[] values = new int[300];
+
 		public int language = 0;
 		
 		
 		public SaveState()
 		{
-			// NOTHING TO SEE HERE
+			// Producers
+			values[Lang.SERVANT_NAME] = 0;
+			values[Lang.HUMAN_NAME] = 0;
+			values[Lang.PROPHET_NAME] = 0;
+			values[Lang.TEMPLE_NAME] = 0;
+			values[Lang.SHIP_NAME] = 0;
+			values[Lang.FACTORY_NAME] = 0;
+			values[Lang.LABORATORY_NAME] = 0;
+			values[Lang.SHOP_NAME] = 0;
+			values[Lang.SPACESHIP_NAME] = 0;
+
+			// Servant Upgrades
+			values[Lang.SERVANT_UPGRADE_1] = 0;
+			values[Lang.SERVANT_UPGRADE_2] = 0;
+			values[Lang.SERVANT_UPGRADE_3] = 0;
+			values[Lang.SERVANT_UPGRADE_4] = 0;
+			values[Lang.SERVANT_UPGRADE_5] = 0;
+			values[Lang.SERVANT_UPGRADE_6] = 0;
+			values[Lang.SERVANT_UPGRADE_7] = 0;
+			values[Lang.SERVANT_UPGRADE_8] = 0;
+			values[Lang.SERVANT_UPGRADE_9] = 0;
+			values[Lang.SERVANT_UPGRADE_10] = 0;
+
+			// Human Upgrades
+			values[Lang.HUMAN_UPGRADE_1] = 0;
+			values[Lang.HUMAN_UPGRADE_2] = 0;
+			values[Lang.HUMAN_UPGRADE_3] = 0;
+			values[Lang.HUMAN_UPGRADE_4] = 0;
+			values[Lang.HUMAN_UPGRADE_5] = 0;
+			values[Lang.HUMAN_UPGRADE_6] = 0;
+			values[Lang.HUMAN_UPGRADE_7] = 0;
+			values[Lang.HUMAN_UPGRADE_8] = 0;
+			values[Lang.HUMAN_UPGRADE_9] = 0;
+			values[Lang.HUMAN_UPGRADE_10] = 0;
+
+			// Special Human Upgrades
+			values[Lang.SPECIAL_HUMAN_1] = 0;
+			values[Lang.SPECIAL_HUMAN_2] = 0;
+			values[Lang.SPECIAL_HUMAN_3] = 0;
+			values[Lang.SPECIAL_HUMAN_4] = 0;
+			values[Lang.SPECIAL_HUMAN_5] = 0;
+			values[Lang.SPECIAL_HUMAN_6] = 0;
+			values[Lang.SPECIAL_HUMAN_7] = 0;
+			values[Lang.SPECIAL_HUMAN_8] = 0;
+			values[Lang.SPECIAL_HUMAN_9] = 0;
+			values[Lang.SPECIAL_HUMAN_10] = 0;
+
+			// Prophet Upgrades
+			values[Lang.PROPHET_UPGRADE_1] = 0;
+			values[Lang.PROPHET_UPGRADE_2] = 0;
+			values[Lang.PROPHET_UPGRADE_3] = 0;
+			values[Lang.PROPHET_UPGRADE_4] = 0;
+			values[Lang.PROPHET_UPGRADE_5] = 0;
+			values[Lang.PROPHET_UPGRADE_6] = 0;
+			values[Lang.PROPHET_UPGRADE_7] = 0;
+			values[Lang.PROPHET_UPGRADE_8] = 0;
+			values[Lang.PROPHET_UPGRADE_9] = 0;
+			values[Lang.PROPHET_UPGRADE_10] = 0;
+
+			// Temple Upgrades
+			values[Lang.TEMPLE_UPGRADE_1] = 0;
+			values[Lang.TEMPLE_UPGRADE_2] = 0;
+			values[Lang.TEMPLE_UPGRADE_3] = 0;
+			values[Lang.TEMPLE_UPGRADE_4] = 0;
+			values[Lang.TEMPLE_UPGRADE_5] = 0;
+			values[Lang.TEMPLE_UPGRADE_6] = 0;
+			values[Lang.TEMPLE_UPGRADE_7] = 0;
+			values[Lang.TEMPLE_UPGRADE_8] = 0;
+			values[Lang.TEMPLE_UPGRADE_9] = 0;
+			values[Lang.TEMPLE_UPGRADE_10] = 0;
+
+			// Ship Upgrades
+			values[Lang.SHIP_UPGRADE_1] = 0;
+			values[Lang.SHIP_UPGRADE_2] = 0;
+			values[Lang.SHIP_UPGRADE_3] = 0;
+			values[Lang.SHIP_UPGRADE_4] = 0;
+			values[Lang.SHIP_UPGRADE_5] = 0;
+			values[Lang.SHIP_UPGRADE_6] = 0;
+			values[Lang.SHIP_UPGRADE_7] = 0;
+			values[Lang.SHIP_UPGRADE_8] = 0;
+			values[Lang.SHIP_UPGRADE_9] = 0;
+			values[Lang.SHIP_UPGRADE_10] = 0;
+
+			// Factory Upgrades
+			values[Lang.FACTORY_UPGRADE_1] = 0;
+			values[Lang.FACTORY_UPGRADE_2] = 0;
+			values[Lang.FACTORY_UPGRADE_3] = 0;
+			values[Lang.FACTORY_UPGRADE_4] = 0;
+			values[Lang.FACTORY_UPGRADE_5] = 0;
+			values[Lang.FACTORY_UPGRADE_6] = 0;
+			values[Lang.FACTORY_UPGRADE_7] = 0;
+			values[Lang.FACTORY_UPGRADE_8] = 0;
+			values[Lang.FACTORY_UPGRADE_9] = 0;
+			values[Lang.FACTORY_UPGRADE_10] = 0;
+
+			// Laboratory Upgrades
+			values[Lang.LABORATORY_UPGRADE_1] = 0;
+			values[Lang.LABORATORY_UPGRADE_2] = 0;
+			values[Lang.LABORATORY_UPGRADE_3] = 0;
+			values[Lang.LABORATORY_UPGRADE_4] = 0;
+			values[Lang.LABORATORY_UPGRADE_5] = 0;
+			values[Lang.LABORATORY_UPGRADE_6] = 0;
+			values[Lang.LABORATORY_UPGRADE_7] = 0;
+			values[Lang.LABORATORY_UPGRADE_8] = 0;
+			values[Lang.LABORATORY_UPGRADE_9] = 0;
+			values[Lang.LABORATORY_UPGRADE_10] = 0;
+
+			// Shop Upgrades
+			values[Lang.SHOP_UPGRADE_1] = 0;
+			values[Lang.SHOP_UPGRADE_2] = 0;
+			values[Lang.SHOP_UPGRADE_3] = 0;
+			values[Lang.SHOP_UPGRADE_4] = 0;
+			values[Lang.SHOP_UPGRADE_5] = 0;
+			values[Lang.SHOP_UPGRADE_6] = 0;
+			values[Lang.SHOP_UPGRADE_7] = 0;
+			values[Lang.SHOP_UPGRADE_8] = 0;
+			values[Lang.SHOP_UPGRADE_9] = 0;
+			values[Lang.SHOP_UPGRADE_10] = 0;
+
+			// Spaceship Upgrades
+			values[Lang.SPACESHIP_UPGRADE_1] = 0;
+			values[Lang.SPACESHIP_UPGRADE_2] = 0;
+			values[Lang.SPACESHIP_UPGRADE_3] = 0;
+			values[Lang.SPACESHIP_UPGRADE_4] = 0;
+			values[Lang.SPACESHIP_UPGRADE_5] = 0;
+			values[Lang.SPACESHIP_UPGRADE_6] = 0;
+			values[Lang.SPACESHIP_UPGRADE_7] = 0;
+			values[Lang.SPACESHIP_UPGRADE_8] = 0;
+			values[Lang.SPACESHIP_UPGRADE_9] = 0;
+			values[Lang.SPACESHIP_UPGRADE_10] = 0;
+
 		}
 		
 		public static SaveState FromByteArray(Byte[] array)
@@ -206,6 +358,19 @@ public static class GlobalData {
 				return stream.ToArray();
 			}
 		}
+
+		public double getClickValue() {
+			return 1f;
+		}
+
+		public float getCriticalChance() {
+			return 0.1f;
+		}
+
+		public double getCriticalClickValue() {
+			return 10f;
+		}
+
 	}
 	
 }

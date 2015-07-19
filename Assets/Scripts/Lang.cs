@@ -3,7 +3,7 @@ using System.Collections;
 
 public static class Lang {
 
-	public static bool initialized = false;
+	public static bool started = false;
 	
 	public static int CURRENT_VALUE = 0;
 	
@@ -16,18 +16,18 @@ public static class Lang {
 	public static int GERMAN_VALUE = 6;
 	public static int RUSSIAN_VALUE = 7;
 	
-	public static String[][]LANGUAGES = new String[10][];
+	public static string[][]LANGUAGES = new string[10][];
 
 	public static int amount_words = 300;
 	
-	public static String[]ENGLISH_WORDS = new String[amount_words];
-	public static String[]SPANISH_WORDS = new String[amount_words];
-	public static String[]CATALAN_WORDS = new String[amount_words];
-	public static String[]ITALIAN_WORDS = new String[amount_words];
-	public static String[]FRENCH_WORDS = new String[amount_words];
-	public static String[]ROMANIAN_WORDS = new String[amount_words];
-	public static String[]GERMAN_WORDS = new String[amount_words];
-	public static String[]RUSSIAN_WORDS = new String[amount_words];
+	public static string[]ENGLISH_WORDS = new string[amount_words];
+	public static string[]SPANISH_WORDS = new string[amount_words];
+	public static string[]CATALAN_WORDS = new string[amount_words];
+	public static string[]ITALIAN_WORDS = new string[amount_words];
+	public static string[]FRENCH_WORDS = new string[amount_words];
+	public static string[]ROMANIAN_WORDS = new string[amount_words];
+	public static string[]GERMAN_WORDS = new string[amount_words];
+	public static string[]RUSSIAN_WORDS = new string[amount_words];
 	
 	// MISCELLANEOUS
 	public static int TRANSLATOR_MALE = 				0;
@@ -336,9 +336,9 @@ public static class Lang {
 	public static int MESSAGE_18 =  					275;
 
 	// Use this for initialization
-	void Start () {
+	public static void Start () {
 	
-		initialized = true;
+		started = true;
 		
 		MESSAGES[0] = MESSAGE_01;
 		MESSAGES[1] = MESSAGE_02;

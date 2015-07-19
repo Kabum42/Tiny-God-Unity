@@ -153,42 +153,58 @@ public class YahvyScript : MonoBehaviour {
 
 		if (touched && Camera.main.GetComponent<MainScript>().currentScreen == 0) {
 
-			Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
+			if (GlobalData.thisState.getCriticalChance() >= Random.Range(0f, 1f)) {
 
-			lastInteraction = 0f;
+				// CLICK CRITICO
+				GlobalData.thisState.love += GlobalData.thisState.getCriticalClickValue();
 
-			if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyEye"))) {
-
-				if (state == "SleepLoop") {
-					PlayAnimation("TapCritical");
-				} else {
-					CrossFadeAnimation("TapEye");
-				}
-
-			} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyBody"))) {
-
-				if (state == "SleepLoop") {
-					PlayAnimation("TapCritical");
-				} else {
-					CrossFadeAnimation("TapBody");
-				}
+				CrossFadeAnimation("TapCritical");
 
 			} else {
 
-				Vector2 aux = new Vector2(ray.origin.x, ray.origin.y);
+				// CLICK NORMAL
+				GlobalData.thisState.love += GlobalData.thisState.getClickValue();
+
+				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 				
-				float angle = Vector3.Angle(new Vector3(yahvyBack.transform.position.x, yahvyBack.transform.position.y - 0.64f, 0),  new Vector3(aux.x, aux.y, 0));
-				if (aux.x < 0f) { angle = 360f - angle; }
-
-				lastAngleTapScreen = angle;
-
-				if (state == "SleepLoop") {
-					PlayAnimation("TapCritical");
+				lastInteraction = 0f;
+				
+				if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyEye"))) {
+					
+					if (state == "SleepLoop") {
+						PlayAnimation("TapCritical");
+					} else {
+						CrossFadeAnimation("TapEye");
+					}
+					
+				} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyBody"))) {
+					
+					if (state == "SleepLoop") {
+						PlayAnimation("TapCritical");
+					} else {
+						CrossFadeAnimation("TapBody");
+					}
+					
 				} else {
-					CrossFadeAnimation("TapScreen");
+					
+					Vector2 aux = new Vector2(ray.origin.x, ray.origin.y);
+					
+					float angle = Vector3.Angle(new Vector3(yahvyBack.transform.position.x, yahvyBack.transform.position.y - 0.64f, 0),  new Vector3(aux.x, aux.y, 0));
+					if (aux.x < 0f) { angle = 360f - angle; }
+					
+					lastAngleTapScreen = angle;
+					
+					if (state == "SleepLoop") {
+						PlayAnimation("TapCritical");
+					} else {
+						CrossFadeAnimation("TapScreen");
+					}
+					
 				}
 
 			}
+
+
 
 		}
 

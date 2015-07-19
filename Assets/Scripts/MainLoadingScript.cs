@@ -19,6 +19,7 @@ public class MainLoadingScript : MonoBehaviour {
 	void Start () {
 
 		if (!GlobalData.started) { GlobalData.Start(); }
+		if (!Lang.started) { Lang.Start(); }
 
 		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
 		// enables saving game progress.
