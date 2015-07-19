@@ -46,7 +46,7 @@ public class YahvyScript : MonoBehaviour {
 
 		if (state == "IdleLoop") {
 
-			if (yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
+			if (yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
 				PlayAnimation("IdleLoop");
 			}
 
@@ -65,11 +65,15 @@ public class YahvyScript : MonoBehaviour {
 			}
 
 
-		} else if (state == "IdleBlink" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "IdleBlink" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 
 			CrossFadeAnimation("IdleLoop");
 
 		} else if (state == "SleepyLoop") {
+
+			if (yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
+				PlayAnimation("SleepyLoop");
+			}
 			
 			if (probBlinkCooldown > 0f) {
 				probBlinkCooldown -= Time.deltaTime;
@@ -87,44 +91,44 @@ public class YahvyScript : MonoBehaviour {
 			}
 
 			
-		} else if (state == "SleepyBlink" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "SleepyBlink" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			CrossFadeAnimation("SleepyLoop");
 			
-		} else if (state == "SleepyLoop" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "SleepyLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			PlayAnimation("SleepyLoop");
 			
-		} else if (state == "EnterToSleep" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("EnterToSleep") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "EnterToSleep" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("EnterToSleep") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			CrossFadeAnimation("SleepLoop");
 			
-		} else if (state == "SleepLoop" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "SleepLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			PlayAnimation("SleepLoop");
 			
-		} else if (state == "TapEye" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapEye") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "TapEye" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapEye") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 
 			CrossFadeAnimation("IdleLoop");
 			
-		} else if (state == "TapBody" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapBody") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "TapBody" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapBody") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			CrossFadeAnimation("IdleLoop");
 			
-		} else if (state == "TapScreen" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapScreen") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "TapScreen" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapScreen") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			CrossFadeAnimation("IdleLoop");
 			tapScreenCoolingDown = 0.05f;
 			
-		} else if (state == "TapCritical" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapCritical") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "TapCritical" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapCritical") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			CrossFadeAnimation("IdleLoop");
 			
-		} else if (state == "Annoyed" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Annoyed") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "Annoyed" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Annoyed") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			PlayAnimation("Annoyed");
 			
-		} else if (state == "SadLoop" && yahvyBack.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SadLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		} else if (state == "SadLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SadLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
 			PlayAnimation("SadLoop");
 			

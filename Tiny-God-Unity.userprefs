@@ -1,11 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GlobalData.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\YahvyScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\Lang.cs" Line="103" Column="20" />
-      <File FileName="Assets\Scripts\MainLoadingScript.cs" Line="77" Column="28" />
-      <File FileName="Assets\Scripts\YahvyScript.cs" Line="161" Column="36" />
-      <File FileName="Assets\Scripts\GlobalData.cs" Line="107" Column="25" />
+      <File FileName="Assets\Scripts\YahvyScript.cs" Line="75" Column="26" />
+      <File FileName="Assets\Scripts\Lang.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MainLoadingScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GlobalData.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\MainScript.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
