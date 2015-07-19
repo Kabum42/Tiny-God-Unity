@@ -28,7 +28,7 @@ public class YahvyScript : MonoBehaviour {
 		yahvyBack = gameObject.transform.FindChild ("YahvyBack").gameObject;
 		yahvyBody = gameObject.transform.FindChild ("YahvyBodyModel").gameObject;
 		yahvyFront = gameObject.transform.FindChild ("YahvyFront").gameObject;
-		PlayAnimation ("IdleLoop");
+		PlayAnimation ("Annoyed");
 	
 	}
 	
@@ -117,8 +117,8 @@ public class YahvyScript : MonoBehaviour {
 			
 		} else if (state == "TapScreen" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapScreen") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
-			CrossFadeAnimation("IdleLoop");
-			tapScreenCoolingDown = 0.05f;
+			PlayAnimation("IdleLoop");
+			//tapScreenCoolingDown = 0.05f;
 			
 		} else if (state == "TapCritical" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapCritical") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
@@ -231,7 +231,7 @@ public class YahvyScript : MonoBehaviour {
 
 	void LateUpdate() {
 		// CAMBIAR ANGULO DEL OJO PARA LA ANIMACION DE TAP SCREEN
-		if (state == "TapScreen" || tapScreenCoolingDown > 0f) {
+		if (state == "TapScreen" ) {
 
 			//yahvyBody.transform.RotateAround (yahvyBack.transform.position + new Vector3(0f, -0.64f, 0f), Vector3.forward, lastAngleTapScreen - 90f);
 			yahvyBack.transform.FindChild ("Yahvy_Pupil").RotateAround (yahvyBack.transform.position + new Vector3(0f, -0.64f, 0f), Vector3.forward, lastAngleTapScreen - 90f);
@@ -239,6 +239,7 @@ public class YahvyScript : MonoBehaviour {
 			//yahvyBack.transform.FindChild ("Yahvy_Pupil").RotateAround (yahvyBack.transform.position /* +new Vector3(0f, -0.64f, 0f)*/, Vector3.forward, 90);
 
 		} else {
+
 			//yahvyBody.transform.eulerAngles = new Vector3(0f, 0f, 0f);
 			//yahvyBack.transform.FindChild ("Yahvy_Pupil").eulerAngles = new Vector3(0f, 0f, Mathf.LerpAngle(yahvyBack.transform.FindChild ("Yahvy_Pupil").eulerAngles.z, 0f, 0f));
 		}
