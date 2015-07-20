@@ -30,6 +30,8 @@ public static class GlobalData {
 		started = true;
 		thisState = new SaveState ();
 
+		if (!Lang.started) { Lang.Start(); }
+
 	}
 	
 	public static void Update() {
@@ -172,6 +174,183 @@ public static class GlobalData {
 		return result;
 
 	}
+
+	public static float getBaseCost(int id) {
+
+		if (id == Lang.SERVANT_NAME) {
+			return 15f;
+		} else if (id == Lang.HUMAN_NAME) {
+			return 100f;
+		} else if (id == Lang.PROPHET_NAME) {
+			return 500f;
+		} else if (id == Lang.TEMPLE_NAME) {
+			return 3000f;
+		} else if (id == Lang.SHIP_NAME) {
+			return 10000f;
+		} else if (id == Lang.FACTORY_NAME) {
+			return 40000f;
+		} else if (id == Lang.LABORATORY_NAME) {
+			return 200000f;
+		} else if (id == Lang.SHOP_NAME) {
+			return 1700000f;
+		} else if (id == Lang.SPACESHIP_NAME) {
+			return 125000000f;
+		}
+
+		return 0f;
+
+	}
+
+	public static float getBaseLps(int id) {
+		
+		if (id == Lang.SERVANT_NAME) {
+			return 0.1f;
+		} else if (id == Lang.HUMAN_NAME) {
+			return 1f;
+		} else if (id == Lang.PROPHET_NAME) {
+			return 4f;
+		} else if (id == Lang.TEMPLE_NAME) {
+			return 10f;
+		} else if (id == Lang.SHIP_NAME) {
+			return 40f;
+		} else if (id == Lang.FACTORY_NAME) {
+			return 100f;
+		} else if (id == Lang.LABORATORY_NAME) {
+			return 400f;
+		} else if (id == Lang.SHOP_NAME) {
+			return 7000f;
+		} else if (id == Lang.SPACESHIP_NAME) {
+			return 100000f;
+		}
+		
+		return 0f;
+		
+	}
+
+	public static double getLps(int id) {
+			
+		double lps_final = getBaseLps(id);
+		
+		if (id == Lang.SERVANT_NAME) {
+			if (thisState.values[Lang.SERVANT_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SERVANT_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.HUMAN_NAME) {
+			if (thisState.values[Lang.HUMAN_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.HUMAN_UPGRADE_10] == 1) { lps_final *= 2; }
+
+			if (thisState.values[Lang.SPECIAL_HUMAN_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPECIAL_HUMAN_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPECIAL_HUMAN_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPECIAL_HUMAN_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPECIAL_HUMAN_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPECIAL_HUMAN_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPECIAL_HUMAN_7] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.PROPHET_NAME) {
+			if (thisState.values[Lang.PROPHET_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.PROPHET_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.TEMPLE_NAME) {
+			if (thisState.values[Lang.TEMPLE_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.TEMPLE_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.SHIP_NAME) {
+			if (thisState.values[Lang.SHIP_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHIP_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.FACTORY_NAME) {
+			if (thisState.values[Lang.FACTORY_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.FACTORY_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.LABORATORY_NAME) {
+			if (thisState.values[Lang.LABORATORY_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.LABORATORY_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.SHOP_NAME) {
+			if (thisState.values[Lang.SHOP_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SHOP_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+		else if (id == Lang.SPACESHIP_NAME) {
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_1] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_2] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_3] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_4] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_5] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_6] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_7] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_8] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_9] == 1) { lps_final *= 2; }
+			if (thisState.values[Lang.SPACESHIP_UPGRADE_10] == 1) { lps_final *= 2; }
+		}
+			
+			return lps_final;
+
+	}
 	
 
 	[Serializable]
@@ -184,7 +363,7 @@ public static class GlobalData {
 		public double totalLove = 0f;
 		public double clicks = 0f;
 
-		public static int[] values = new int[300];
+		public int[] values = new int[300];
 
 		public int language = 0;
 		

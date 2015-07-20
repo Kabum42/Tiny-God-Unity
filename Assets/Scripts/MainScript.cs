@@ -17,6 +17,8 @@ public class MainScript : MonoBehaviour {
 
 	private Vector3 lastMouse;
 
+	private Vector2 mouseDown;
+
 	private AudioSource slide;
 
 	private float slideToLeft = 0f;
@@ -97,6 +99,10 @@ public class MainScript : MonoBehaviour {
 
 		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
 			// TESTEANDO EN WINDOWS
+			if (Input.GetMouseButtonDown(0)) {
+				mouseDown = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+			}
+
 			if (Input.GetMouseButton(0)) { 
 				isTouched = true;
 				isMoving = true; 
@@ -108,7 +114,8 @@ public class MainScript : MonoBehaviour {
 			// EN CUALQUIER OTRO SITIO
 			if (Input.touchCount > 0) { 
 				isTouched = true; 
-				if (Input.GetTouch(0).phase == TouchPhase.Moved) { isMoving = true; }
+				if (Input.GetTouch(0).phase == TouchPhase.Began) { mouseDown = new Vector2(Input.mousePosition.x, Input.mousePosition.y); }
+				else if (Input.GetTouch(0).phase == TouchPhase.Moved) { isMoving = true; }
 				else if (Input.GetTouch(0).phase == TouchPhase.Ended) { touchEnded = true; }
 			}
 		}
@@ -140,9 +147,13 @@ public class MainScript : MonoBehaviour {
 					// Y WINS OVER X
 					if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*-1.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*-0.5f) {
 						
-						capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, 0f);
+						capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen3.transform.position.z);
+
 						if (capa1Screen3.transform.position.y < 0f) {
-							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 0f, 0f);
+							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 0f, capa1Screen3.transform.position.z);
+						}
+						else if (capa1Screen3.transform.position.y > 8f) {
+							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 8f, capa1Screen3.transform.position.z);
 						}
 						
 					}
@@ -156,7 +167,16 @@ public class MainScript : MonoBehaviour {
 				Vector2 touchDelta = new Vector2(Input.mousePosition.x - lastMouse.x, Input.mousePosition.y - lastMouse.y);
 				Vector2 deltaPercentage = new Vector2((float)touchDelta.x/((float)Screen.width * (float)auxScreen.width), (float)touchDelta.y/((float)Screen.height  * (float)auxScreen.height));
 				
-				if (slideToLeft > 0f && slideToLeft >= slideToRight) {
+				Vector2 downUp = new Vector2(Input.mousePosition.x - mouseDown.x, Input.mousePosition.y - mouseDown.y);
+				downUp.Normalize();
+
+				bool possibleSlide = false;
+
+				if (Mathf.Abs(downUp.x) >= Mathf.Abs(downUp.y)) {
+					possibleSlide = true;
+				}
+
+				if (slideToLeft > 0f && slideToLeft >= slideToRight && possibleSlide) {
 					
 					slide.Play();
 					
@@ -164,7 +184,7 @@ public class MainScript : MonoBehaviour {
 					if (currentScreen < -2) { currentScreen = -2; }
 					
 				}
-				else if (slideToRight > 0f && slideToRight >= slideToLeft) {
+				else if (slideToRight > 0f && slideToRight >= slideToLeft && possibleSlide) {
 					
 					slide.Play();
 					
