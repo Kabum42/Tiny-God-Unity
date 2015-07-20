@@ -28,7 +28,7 @@ public class YahvyScript : MonoBehaviour {
 		yahvyBack = gameObject.transform.FindChild ("YahvyBack").gameObject;
 		yahvyBody = gameObject.transform.FindChild ("YahvyBodyModel").gameObject;
 		yahvyFront = gameObject.transform.FindChild ("YahvyFront").gameObject;
-		PlayAnimation ("Annoyed");
+		PlayAnimation ("IdleLoop");
 	
 	}
 	
@@ -113,7 +113,7 @@ public class YahvyScript : MonoBehaviour {
 			
 		} else if (state == "TapBody" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapBody") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
-			CrossFadeAnimation("IdleLoop");
+			PlayAnimation("IdleLoop");
 			
 		} else if (state == "TapScreen" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapScreen") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			
@@ -157,6 +157,8 @@ public class YahvyScript : MonoBehaviour {
 
 		if (touched && Camera.main.GetComponent<MainScript>().currentScreen == 0) {
 
+			lastInteraction = 0f;
+
 			if (GlobalData.thisState.getCriticalChance() >= Random.Range(0f, 1f)) {
 
 				// CLICK CRITICO
@@ -170,8 +172,6 @@ public class YahvyScript : MonoBehaviour {
 				GlobalData.thisState.love += GlobalData.thisState.getClickValue();
 
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
-				
-				lastInteraction = 0f;
 				
 				if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyEye"))) {
 					
