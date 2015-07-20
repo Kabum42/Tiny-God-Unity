@@ -72,7 +72,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		servantText = GameObject.Find ("Scene1/Capa1/Screen3/Servant/Text");
 		servantBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		servantIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		servantText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		servantText.GetComponent<TextMesh> ().color = new Color(servantText.GetComponent<TextMesh> ().color.r, servantText.GetComponent<TextMesh> ().color.g, servantText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 
 		human = GameObject.Find ("Scene1/Capa1/Screen3/Human");
 		humanBG = GameObject.Find ("Scene1/Capa1/Screen3/Human/Background");
@@ -80,7 +80,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		humanText = GameObject.Find ("Scene1/Capa1/Screen3/Human/Text");
 		humanBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		humanIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		humanText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		humanText.GetComponent<TextMesh> ().color = new Color(humanText.GetComponent<TextMesh> ().color.r, humanText.GetComponent<TextMesh> ().color.g, humanText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		human.SetActive (false);
 
 		prophet = GameObject.Find ("Scene1/Capa1/Screen3/Prophet");
@@ -89,7 +89,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		prophetText = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/Text");
 		prophetBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		prophetIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		prophetText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		prophetText.GetComponent<TextMesh> ().color = new Color(prophetText.GetComponent<TextMesh> ().color.r, prophetText.GetComponent<TextMesh> ().color.g, prophetText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		prophet.SetActive (false);
 
 		temple = GameObject.Find ("Scene1/Capa1/Screen3/Temple");
@@ -98,7 +98,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		templeText = GameObject.Find ("Scene1/Capa1/Screen3/Temple/Text");
 		templeBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		templeIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		templeText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		templeText.GetComponent<TextMesh> ().color = new Color(templeText.GetComponent<TextMesh> ().color.r, templeText.GetComponent<TextMesh> ().color.g, templeText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		temple.SetActive (false);
 
 		ship = GameObject.Find ("Scene1/Capa1/Screen3/Ship");
@@ -107,7 +107,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		shipText = GameObject.Find ("Scene1/Capa1/Screen3/Ship/Text");
 		shipBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		shipIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		shipText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		shipText.GetComponent<TextMesh> ().color = new Color(shipText.GetComponent<TextMesh> ().color.r, shipText.GetComponent<TextMesh> ().color.g, shipText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		ship.SetActive (false);
 
 		factory = GameObject.Find ("Scene1/Capa1/Screen3/Factory");
@@ -116,7 +116,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		factoryText = GameObject.Find ("Scene1/Capa1/Screen3/Factory/Text");
 		factoryBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		factoryIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		factoryText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		factoryText.GetComponent<TextMesh> ().color = new Color(factoryText.GetComponent<TextMesh> ().color.r, factoryText.GetComponent<TextMesh> ().color.g, factoryText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		factory.SetActive (false);
 
 		laboratory = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory");
@@ -125,7 +125,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		laboratoryText = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/Text");
 		laboratoryBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		laboratoryIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		laboratoryText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		laboratoryText.GetComponent<TextMesh> ().color = new Color(laboratoryText.GetComponent<TextMesh> ().color.r, laboratoryText.GetComponent<TextMesh> ().color.g, laboratoryText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		laboratory.SetActive (false);
 
 		shop = GameObject.Find ("Scene1/Capa1/Screen3/Shop");
@@ -134,7 +134,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		shopText = GameObject.Find ("Scene1/Capa1/Screen3/Shop/Text");
 		shopBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		shopIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		shopText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		shopText.GetComponent<TextMesh> ().color = new Color(shopText.GetComponent<TextMesh> ().color.r, shopText.GetComponent<TextMesh> ().color.g, shopText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		shop.SetActive (false);
 
 		spaceship = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship");
@@ -143,7 +143,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		spaceshipText = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/Text");
 		spaceshipBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
 		spaceshipIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		spaceshipText.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency);
+		spaceshipText.GetComponent<TextMesh> ().color = new Color(spaceshipText.GetComponent<TextMesh> ().color.r, spaceshipText.GetComponent<TextMesh> ().color.g, spaceshipText.GetComponent<TextMesh> ().color.b, discovered_transparency);
 		spaceship.SetActive (false);
 	
 	}
@@ -188,15 +188,15 @@ public class Capa1Screen3Script : MonoBehaviour {
 		if (status == "undiscovered") {
 			background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
 			icon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency*producerAlpha);
-			text.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
+			text.GetComponent<TextMesh> ().color = new Color(text.GetComponent<TextMesh> ().color.r, text.GetComponent<TextMesh> ().color.g, text.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
 		} else if (status == "discovered") {
 			background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
 			icon.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
-			text.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
+			text.GetComponent<TextMesh> ().color = new Color(text.GetComponent<TextMesh> ().color.r, text.GetComponent<TextMesh> ().color.g, text.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
 		} else if (status == "buyable") {
 			background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f*producerAlpha);
 			icon.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f*producerAlpha);
-			text.GetComponent<TextMesh> ().color = new Color(1f, 1f, 1f, 1f*producerAlpha);
+			text.GetComponent<TextMesh> ().color = new Color(text.GetComponent<TextMesh> ().color.r, text.GetComponent<TextMesh> ().color.g, text.GetComponent<TextMesh> ().color.b, 1f*producerAlpha);
 		}
 
 

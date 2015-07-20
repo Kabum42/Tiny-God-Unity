@@ -149,11 +149,23 @@ public class MainScript : MonoBehaviour {
 						
 						capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen3.transform.position.z);
 
+						float max_y = 0f;
+
+						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.FACTORY_NAME)) {
+							max_y += 2.2f;
+						}
+						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.LABORATORY_NAME)) {
+							max_y += 2.2f;
+						}
+						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHOP_NAME)) {
+							max_y += 2.2f;
+						}
+
 						if (capa1Screen3.transform.position.y < 0f) {
 							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 0f, capa1Screen3.transform.position.z);
 						}
-						else if (capa1Screen3.transform.position.y > 8f) {
-							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 8f, capa1Screen3.transform.position.z);
+						else if (capa1Screen3.transform.position.y > max_y) {
+							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, max_y, capa1Screen3.transform.position.z);
 						}
 						
 					}

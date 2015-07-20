@@ -162,20 +162,20 @@ public class YahvyScript : MonoBehaviour {
 			if (GlobalData.thisState.getCriticalChance() >= Random.Range(0f, 1f)) {
 
 				// CLICK CRITICO
-				GlobalData.thisState.love += GlobalData.thisState.getCriticalClickValue();
-				GlobalData.thisState.totalLove += GlobalData.thisState.getCriticalClickValue();
-				//GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
-				//GlobalData.thisState.love += GlobalData.thisState.love +1;
+				//GlobalData.thisState.love += GlobalData.thisState.getCriticalClickValue();
+				//GlobalData.thisState.totalLove += GlobalData.thisState.getCriticalClickValue();
+				GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
+				GlobalData.thisState.love += GlobalData.thisState.love +1;
 
 				CrossFadeAnimation("TapCritical");
 
 			} else {
 
 				// CLICK NORMAL
-				GlobalData.thisState.love += GlobalData.thisState.getClickValue();
-				GlobalData.thisState.totalLove += GlobalData.thisState.getClickValue();
-				//GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
-				//GlobalData.thisState.love += GlobalData.thisState.love +1;
+				//GlobalData.thisState.love += GlobalData.thisState.getClickValue();
+				//GlobalData.thisState.totalLove += GlobalData.thisState.getClickValue();
+				GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
+				GlobalData.thisState.love += GlobalData.thisState.love +1;
 
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 				
