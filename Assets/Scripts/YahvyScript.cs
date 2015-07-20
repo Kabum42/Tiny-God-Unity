@@ -163,6 +163,9 @@ public class YahvyScript : MonoBehaviour {
 
 				// CLICK CRITICO
 				GlobalData.thisState.love += GlobalData.thisState.getCriticalClickValue();
+				GlobalData.thisState.totalLove += GlobalData.thisState.getCriticalClickValue();
+				//GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
+				//GlobalData.thisState.love += GlobalData.thisState.love +1;
 
 				CrossFadeAnimation("TapCritical");
 
@@ -170,6 +173,9 @@ public class YahvyScript : MonoBehaviour {
 
 				// CLICK NORMAL
 				GlobalData.thisState.love += GlobalData.thisState.getClickValue();
+				GlobalData.thisState.totalLove += GlobalData.thisState.getClickValue();
+				//GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
+				//GlobalData.thisState.love += GlobalData.thisState.love +1;
 
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 				
