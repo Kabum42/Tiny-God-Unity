@@ -32,7 +32,7 @@ public class MainScript : MonoBehaviour {
 
 		slide = gameObject.AddComponent<AudioSource>();
 		slide.clip = Resources.Load ("Audio/slide") as AudioClip;
-		slide.volume = 2f;
+		slide.volume = 1f;
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
@@ -151,14 +151,17 @@ public class MainScript : MonoBehaviour {
 
 						float max_y = 0f;
 
+						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHIP_NAME)) {
+							max_y += 1.5f;
+						}
 						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.FACTORY_NAME)) {
-							max_y += 2.2f;
+							max_y += 2.5f;
 						}
 						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.LABORATORY_NAME)) {
-							max_y += 2.2f;
+							max_y += 2.5f;
 						}
 						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHOP_NAME)) {
-							max_y += 2.2f;
+							max_y += 2.5f;
 						}
 
 						if (capa1Screen3.transform.position.y < 0f) {
