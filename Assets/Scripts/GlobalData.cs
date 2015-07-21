@@ -36,6 +36,11 @@ public static class GlobalData {
 	
 	public static void Update() {
 
+		thisState.timeOfDay += Time.deltaTime*(1f/10f);
+		if (thisState.timeOfDay > 1f) {
+			thisState.timeOfDay -= 1f;
+		}
+
 		if (connectionStatus == 5) {
 
 			thisState.timePlayed += Time.deltaTime;
@@ -51,9 +56,6 @@ public static class GlobalData {
 			}
 
 		}
-
-
-
 
 	}
 
@@ -366,6 +368,7 @@ public static class GlobalData {
 		public int[] values = new int[300];
 
 		public int language = 0;
+		public float timeOfDay = 0f;
 		
 		
 		public SaveState()
