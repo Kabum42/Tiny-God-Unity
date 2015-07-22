@@ -36,6 +36,9 @@ public static class GlobalData {
 	
 	public static void Update() {
 
+		thisState.love += getAllLps () * Time.deltaTime;
+		thisState.totalLove += getAllLps () * Time.deltaTime;
+
 		thisState.timeOfDay += Time.deltaTime*(1f/10f);
 		if (thisState.timeOfDay > 1f) {
 			thisState.timeOfDay -= 1f;
@@ -350,8 +353,24 @@ public static class GlobalData {
 			if (thisState.values[Lang.SPACESHIP_UPGRADE_10] == 1) { lps_final *= 2; }
 		}
 			
-			return lps_final;
+			return lps_final*thisState.values[id];
 
+	}
+
+	public static double getAllLps() {
+
+		double aux = 0f;
+		aux += getLps (Lang.SERVANT_NAME);
+		aux += getLps (Lang.HUMAN_NAME);
+		aux += getLps (Lang.PROPHET_NAME);
+		aux += getLps (Lang.TEMPLE_NAME);
+		aux += getLps (Lang.SHIP_NAME);
+		aux += getLps (Lang.FACTORY_NAME);
+		aux += getLps (Lang.LABORATORY_NAME);
+		aux += getLps (Lang.SHOP_NAME);
+		aux += getLps (Lang.SPACESHIP_NAME);
+
+		return aux;
 	}
 	
 

@@ -322,27 +322,66 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation (factoryStatus, ref laboratoryStatus, ref laboratory, ref laboratoryBG, ref laboratoryIcon, ref laboratoryText, ref laboratoryNumber, ref laboratorySubNumber, ref laboratoryCost, ref laboratoryLoveIcon, Lang.LABORATORY_NAME);
 		RegularComprobation (laboratoryStatus, ref shopStatus, ref shop, ref shopBG, ref shopIcon, ref shopText, ref shopNumber, ref shopSubNumber, ref shopCost, ref shopLoveIcon, Lang.SHOP_NAME);
 		RegularComprobation (shopStatus, ref spaceshipStatus, ref spaceship, ref spaceshipBG, ref spaceshipIcon, ref spaceshipText, ref spaceshipNumber, ref spaceshipSubNumber, ref spaceshipCost, ref spaceshipLoveIcon, Lang.SPACESHIP_NAME);
+		
 
-		if (servantStatus != "unexistant" && servantStatus != "undiscovered" && ClickedOn(servant)) {
+		if (servantStatus != "unexistant" && servantStatus != "undiscovered" && ClickedOn (servantNumber)) {	
+			checkCanBuy (Lang.SERVANT_NAME);
+		} else if (false) {
+			// COMPROBAR SI HA CLICKADO ENCIMA DE LA CABECERA
+		}
 
-			if (GlobalData.thisState.love >= Mathf.Floor (GlobalData.getBaseCost(Lang.SERVANT_NAME)*Mathf.Pow(1.1f, GlobalData.thisState.values[Lang.SERVANT_NAME]))) {
+		if (humanStatus != "unexistant" && humanStatus != "undiscovered" && ClickedOn (humanNumber)) {	
+			checkCanBuy (Lang.HUMAN_NAME);
+		}
 
-				GlobalData.thisState.love -= Mathf.Floor (GlobalData.getBaseCost(Lang.SERVANT_NAME)*Mathf.Pow(1.1f, GlobalData.thisState.values[Lang.SERVANT_NAME]));
-				GlobalData.thisState.values[Lang.SERVANT_NAME]++;
-				
-				float aux = Random.Range(0f, 1f);
-				
-				if (aux > 2f/3f) {
-					buy1.Play();
-				} else if (aux > 1f/3f) {
-					buy2.Play();
-				}
-				else {
-					buy3.Play();
-				}
+		if (prophetStatus != "unexistant" && prophetStatus != "undiscovered" && ClickedOn (prophetNumber)) {	
+			checkCanBuy (Lang.PROPHET_NAME);
+		}
 
+		if (templeStatus != "unexistant" && templeStatus != "undiscovered" && ClickedOn (templeNumber)) {	
+			checkCanBuy (Lang.TEMPLE_NAME);
+		}
+
+		if (shipStatus != "unexistant" && shipStatus != "undiscovered" && ClickedOn (shipNumber)) {	
+			checkCanBuy (Lang.SHIP_NAME);
+		}
+
+		if (factoryStatus != "unexistant" && factoryStatus != "undiscovered" && ClickedOn (factoryNumber)) {	
+			checkCanBuy (Lang.FACTORY_NAME);
+		}
+
+		if (laboratoryStatus != "unexistant" && laboratoryStatus != "undiscovered" && ClickedOn (laboratoryNumber)) {	
+			checkCanBuy (Lang.LABORATORY_NAME);
+		}
+
+		if (shopStatus != "unexistant" && shopStatus != "undiscovered" && ClickedOn (shopNumber)) {	
+			checkCanBuy (Lang.SHOP_NAME);
+		}
+
+		if (spaceshipStatus != "unexistant" && spaceshipStatus != "undiscovered" && ClickedOn (spaceshipNumber)) {	
+			checkCanBuy (Lang.SPACESHIP_NAME);
+		}
+
+	}
+
+	private void checkCanBuy(int LangCode) {
+
+		if (GlobalData.thisState.love >= Mathf.Floor (GlobalData.getBaseCost(LangCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[LangCode]))) {
+			
+			GlobalData.thisState.love -= Mathf.Floor (GlobalData.getBaseCost(LangCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[LangCode]));
+			GlobalData.thisState.values[LangCode]++;
+			
+			float aux = Random.Range(0f, 1f);
+			
+			if (aux > 2f/3f) {
+				buy1.Play();
+			} else if (aux > 1f/3f) {
+				buy2.Play();
 			}
-
+			else {
+				buy3.Play();
+			}
+			
 		}
 
 	}
@@ -359,13 +398,13 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 				
-				RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("ProducerMask"));
+				RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 				
 				if (hit.collider != null) {
 					
 					Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
 					
-					RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("ProducerMask"));
+					RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 					
 					if (hit2.collider != null) {
 
