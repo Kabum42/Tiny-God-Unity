@@ -21,14 +21,105 @@ public class YahvyScript : MonoBehaviour {
 	private Vector2 lastMousePosition;
 	private float lastAngleTapScreen;
 
+	private string currentSkin = "Standard";
+
+	private GameObject yahvyBackSheen;
+	private Sprite currentBackSheen;
+
+	private GameObject yahvyBackPupil;
+	private Sprite currentBackPupil;
+
+	private GameObject yahvyBackEyeBack;
+	private Sprite currentBackEyeBack;
+
+	private GameObject yahvyFrontTearRight;
+	private Sprite currentFrontTearRight;
+
+	private GameObject yahvyFrontTearLeft;
+	private Sprite currentFrontTearLeft;
+
+	private GameObject yahvyFrontTwistMouth;
+	private Sprite currentFrontTwistMouth;
+
+	private GameObject yahvyFrontYawn;
+	private Sprite currentFrontYawn;
+
+	private GameObject yahvyFrontSad;
+	private Sprite currentFrontSad;
+
+	private GameObject yahvyFrontOpenMouth;
+	private Sprite currentFrontOpenMouth;
+
+	private GameObject yahvyFrontGrin;
+	private Sprite currentFrontGrin;
+
+	private GameObject yahvyFrontEyelash;
+	private Sprite currentFrontEyelash;
+
+	private GameObject yahvyFrontCloseMouth;
+	private Sprite currentFrontCloseMouth;
+
+	private GameObject yahvyFrontSmile;
+	private Sprite currentFrontSmile;
+
+	private GameObject yahvyFrontTeeth;
+	private Sprite currentFrontTeeth;
+
+	private GameObject yahvyFrontFrecklesRight;
+	private Sprite currentFrontFrecklesRight;
+
+	private GameObject yahvyFrontFrecklesLeft;
+	private Sprite currentFrontFrecklesLeft;
+
+	private GameObject yahvyFrontCheekRight;
+	private Sprite currentFrontCheekRight;
+
+	private GameObject yahvyFrontCheekLeft;
+	private Sprite currentFrontCheekLeft;
+
+	private GameObject yahvyFrontEyebrow;
+	private Sprite currentFrontEyebrow;
+
+	private GameObject yahvyFrontShadeDetailUp;
+	private Sprite currentFrontShadeDetailUp;
+
+	private GameObject yahvyFrontShadeDetailDown;
+	private Sprite currentFrontShadeDetailDown;
+
 	// Use this for initialization
 	void Start () {
 
 		lastMousePosition = new Vector2(0, 0);
+
 		yahvyBack = gameObject.transform.FindChild ("YahvyBack").gameObject;
 		yahvyBody = gameObject.transform.FindChild ("YahvyBodyModel").gameObject;
 		yahvyFront = gameObject.transform.FindChild ("YahvyFront").gameObject;
+
+		yahvyBackSheen = yahvyBack.transform.FindChild ("Yahvy_Sheen").gameObject;
+		yahvyBackPupil = yahvyBack.transform.FindChild ("Yahvy_Pupil").gameObject;
+		yahvyBackEyeBack = yahvyBack.transform.FindChild ("Yahvy_EyeBack").gameObject;
+
+		yahvyFrontTearRight = yahvyFront.transform.FindChild("Yahvy_Tear_Right").gameObject;
+		yahvyFrontTearLeft = yahvyFront.transform.FindChild("Yahvy_Tear_Left").gameObject;
+		yahvyFrontTwistMouth = yahvyFront.transform.FindChild("Yahvy_TwistMouth").gameObject;
+		yahvyFrontYawn = yahvyFront.transform.FindChild("Yahvy_Yawn").gameObject;
+		yahvyFrontSad = yahvyFront.transform.FindChild("Yahvy_Sad").gameObject;
+		yahvyFrontOpenMouth = yahvyFront.transform.FindChild("Yahvy_OpenMouth").gameObject;
+		yahvyFrontGrin = yahvyFront.transform.FindChild("Yahvy_Grin").gameObject;
+		yahvyFrontEyelash = yahvyFront.transform.FindChild("Yahvy_Eyelash").gameObject;
+		yahvyFrontCloseMouth = yahvyFront.transform.FindChild("Yahvy_CloseMouth").gameObject;
+		yahvyFrontSmile = yahvyFront.transform.FindChild("Yahvy_Smile").gameObject;
+		yahvyFrontTeeth = yahvyFront.transform.FindChild("Yahvy_Teeth").gameObject;
+		yahvyFrontFrecklesRight = yahvyFront.transform.FindChild("Yahvy_Freckles_Right").gameObject;
+		yahvyFrontFrecklesLeft = yahvyFront.transform.FindChild("Yahvy_Freckles_Left").gameObject;
+		yahvyFrontCheekRight = yahvyFront.transform.FindChild("Yahvy_Cheek_Right").gameObject;
+		yahvyFrontCheekLeft = yahvyFront.transform.FindChild("Yahvy_Cheek_Left").gameObject;
+		yahvyFrontEyebrow = yahvyFront.transform.FindChild("Yahvy_Eyebrow").gameObject;
+		yahvyFrontShadeDetailUp = yahvyFront.transform.FindChild("Yahvy_ShadeDetail_Up").gameObject;
+		yahvyFrontShadeDetailDown = yahvyFront.transform.FindChild("Yahvy_ShadeDetail_Down").gameObject;
+
 		PlayAnimation ("IdleLoop");
+		ChangeSkin ("Rainbow");
 	
 	}
 	
@@ -236,27 +327,71 @@ public class YahvyScript : MonoBehaviour {
 	}
 
 	void LateUpdate() {
+
+		yahvyBackSheen.GetComponent<SpriteRenderer> ().sprite = currentBackSheen;
+		yahvyBackPupil.GetComponent<SpriteRenderer>().sprite = currentBackPupil;
+		yahvyBackEyeBack.GetComponent<SpriteRenderer>().sprite = currentBackEyeBack;
+
+		yahvyFrontTearRight.GetComponent<SpriteRenderer> ().sprite = currentFrontTearRight;
+		yahvyFrontTearLeft.GetComponent<SpriteRenderer> ().sprite = currentFrontTearLeft;
+		yahvyFrontTwistMouth.GetComponent<SpriteRenderer> ().sprite = currentFrontTwistMouth;
+		yahvyFrontYawn.GetComponent<SpriteRenderer> ().sprite = currentFrontYawn;
+		yahvyFrontSad.GetComponent<SpriteRenderer> ().sprite = currentFrontSad;
+		yahvyFrontOpenMouth.GetComponent<SpriteRenderer> ().sprite = currentFrontOpenMouth;
+		yahvyFrontGrin.GetComponent<SpriteRenderer> ().sprite = currentFrontGrin;
+		yahvyFrontEyelash.GetComponent<SpriteRenderer> ().sprite = currentFrontEyelash;
+		yahvyFrontCloseMouth.GetComponent<SpriteRenderer> ().sprite = currentFrontCloseMouth;
+		yahvyFrontSmile.GetComponent<SpriteRenderer> ().sprite = currentFrontSmile;
+		yahvyFrontTeeth.GetComponent<SpriteRenderer> ().sprite = currentFrontTeeth;
+		yahvyFrontFrecklesRight.GetComponent<SpriteRenderer> ().sprite = currentFrontFrecklesRight;
+		yahvyFrontFrecklesLeft.GetComponent<SpriteRenderer> ().sprite = currentFrontFrecklesLeft;
+		yahvyFrontCheekRight.GetComponent<SpriteRenderer> ().sprite = currentFrontCheekRight;
+		yahvyFrontCheekLeft.GetComponent<SpriteRenderer> ().sprite = currentFrontCheekLeft;
+		yahvyFrontEyebrow.GetComponent<SpriteRenderer> ().sprite = currentFrontEyebrow;
+		yahvyFrontShadeDetailUp.GetComponent<SpriteRenderer> ().sprite = currentFrontShadeDetailUp;
+		yahvyFrontShadeDetailDown.GetComponent<SpriteRenderer> ().sprite = currentFrontShadeDetailDown;
+
+
 		// CAMBIAR ANGULO DEL OJO PARA LA ANIMACION DE TAP SCREEN
 		if (state == "TapScreen" ) {
 
-			//yahvyBody.transform.RotateAround (yahvyBack.transform.position + new Vector3(0f, -0.64f, 0f), Vector3.forward, lastAngleTapScreen - 90f);
 			yahvyBack.transform.FindChild ("Yahvy_Pupil").RotateAround (yahvyBack.transform.position + new Vector3(0f, -0.64f, 0f), Vector3.forward, lastAngleTapScreen - 90f);
 
-			//yahvyBack.transform.FindChild ("Yahvy_Pupil").RotateAround (yahvyBack.transform.position /* +new Vector3(0f, -0.64f, 0f)*/, Vector3.forward, 90);
-
-		} else {
-
-			//yahvyBody.transform.eulerAngles = new Vector3(0f, 0f, 0f);
-			//yahvyBack.transform.FindChild ("Yahvy_Pupil").eulerAngles = new Vector3(0f, 0f, Mathf.LerpAngle(yahvyBack.transform.FindChild ("Yahvy_Pupil").eulerAngles.z, 0f, 0f));
 		}
 
 	}
 
-	/*
-	void OnMouseDown() {
-		CrossFadeAnimation("TapBody");
-		lastInteraction = 0f;
+	void ChangeSkin(string skin) {
+
+		currentBackSheen = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Sheen");
+		currentBackPupil = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Pupil");
+		currentBackEyeBack = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_EyeBack");
+		
+		yahvyBody.transform.FindChild ("YahvyModel").GetComponent<SkinnedMeshRenderer> ().material.mainTexture = (Texture) Resources.Load ("Skins/" + skin + "/Yahvy_Body");
+		yahvyBody.transform.FindChild ("YahvyModel.1").GetComponent<SkinnedMeshRenderer> ().material.mainTexture = (Texture) Resources.Load ("Skins/" + skin + "/Yahvy_Body");
+
+		currentFrontTearRight = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Tear");
+		currentFrontTearLeft = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Tear");
+		currentFrontTwistMouth = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Twistmouth");
+		currentFrontYawn = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Yawn");
+		currentFrontSad = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Sad");
+		currentFrontOpenMouth = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_OpenMouth");
+		currentFrontGrin = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Grin");
+		currentFrontEyelash = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Eyelash");
+		currentFrontCloseMouth = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_CloseMouth");
+		currentFrontSmile = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Smile");
+		currentFrontTeeth = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Teeth");
+		currentFrontFrecklesRight = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Freckles");
+		currentFrontFrecklesLeft = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Freckles");
+		currentFrontCheekRight = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Cheek");
+		currentFrontCheekLeft = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Cheek");
+		currentFrontEyebrow = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_Eyebrow");
+		currentFrontShadeDetailUp = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_ShadeDetail");
+		currentFrontShadeDetailDown = Resources.Load<Sprite>("Skins/" + skin + "/Yahvy_ShadeDetail");
+
+		currentSkin = skin;
+
 	}
-	*/
+
 
 }
