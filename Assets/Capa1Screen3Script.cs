@@ -3,105 +3,17 @@ using System.Collections;
 
 public class Capa1Screen3Script : MonoBehaviour {
 
-	private GameObject servant;
-	private GameObject servantBG;
-	private GameObject servantIcon;
-	private GameObject servantText;
-	private GameObject servantNumber;
-	private GameObject servantSubNumber;
-	private GameObject servantCost;
-	private GameObject servantLoveIcon;
+	private Producer servant;
+	private Producer human;
+	private Producer prophet;
+	private Producer temple;
+	private Producer ship;
+	private Producer factory;
+	private Producer laboratory;
+	private Producer shop;
+	private Producer spaceship;
 
 
-	private GameObject human;
-	private GameObject humanBG;
-	private GameObject humanIcon;
-	private GameObject humanText;
-	private GameObject humanNumber;
-	private GameObject humanSubNumber;
-	private GameObject humanCost;
-	private GameObject humanLoveIcon;
-
-
-	private GameObject prophet;
-	private GameObject prophetBG;
-	private GameObject prophetIcon;
-	private GameObject prophetText;
-	private GameObject prophetNumber;
-	private GameObject prophetSubNumber;
-	private GameObject prophetCost;
-	private GameObject prophetLoveIcon;
-
-
-	private GameObject temple;
-	private GameObject templeBG;
-	private GameObject templeIcon;
-	private GameObject templeText;
-	private GameObject templeNumber;
-	private GameObject templeSubNumber;
-	private GameObject templeCost;
-	private GameObject templeLoveIcon;
-
-
-	private GameObject ship;
-	private GameObject shipBG;
-	private GameObject shipIcon;
-	private GameObject shipText;
-	private GameObject shipNumber;
-	private GameObject shipSubNumber;
-	private GameObject shipCost;
-	private GameObject shipLoveIcon;
-
-
-	private GameObject factory;
-	private GameObject factoryBG;
-	private GameObject factoryIcon;
-	private GameObject factoryText;
-	private GameObject factoryNumber;
-	private GameObject factorySubNumber;
-	private GameObject factoryCost;
-	private GameObject factoryLoveIcon;
-
-
-	private GameObject laboratory;
-	private GameObject laboratoryBG;
-	private GameObject laboratoryIcon;
-	private GameObject laboratoryText;
-	private GameObject laboratoryNumber;
-	private GameObject laboratorySubNumber;
-	private GameObject laboratoryCost;
-	private GameObject laboratoryLoveIcon;
-
-
-	private GameObject shop;
-	private GameObject shopBG;
-	private GameObject shopIcon;
-	private GameObject shopText;
-	private GameObject shopNumber;
-	private GameObject shopSubNumber;
-	private GameObject shopCost;
-	private GameObject shopLoveIcon;
-
-
-	private GameObject spaceship;
-	private GameObject spaceshipBG;
-	private GameObject spaceshipIcon;
-	private GameObject spaceshipText;
-	private GameObject spaceshipNumber;
-	private GameObject spaceshipSubNumber;
-	private GameObject spaceshipCost;
-	private GameObject spaceshipLoveIcon;
-
-
-	private string servantStatus = "undiscovered";
-	private string humanStatus = "unexistant";
-	private string prophetStatus = "unexistant";
-	private string templeStatus = "unexistant";
-	private string shipStatus = "unexistant";
-	private string factoryStatus = "unexistant";
-	private string laboratoryStatus = "unexistant";
-	private string shopStatus = "unexistant";
-	private string spaceshipStatus = "unexistant";
 
 	private float discovered_transparency = 0.75f;
 
@@ -129,6 +41,17 @@ public class Capa1Screen3Script : MonoBehaviour {
 		buy3.clip = Resources.Load ("Audio/buy3") as AudioClip;
 		buy3.volume = 1f;
 
+		servant = new Producer (this.gameObject, 0, "Servant");
+		human = new Producer (this.gameObject, 1, "Human");
+		prophet = new Producer (this.gameObject, 2, "Prophet");
+		temple = new Producer (this.gameObject, 3, "Temple");
+		ship = new Producer (this.gameObject, 4, "Ship");
+		factory = new Producer (this.gameObject, 5, "Factory");
+		laboratory = new Producer (this.gameObject, 6, "Laboratory");
+		shop = new Producer (this.gameObject, 7, "Shop");
+		spaceship = new Producer (this.gameObject, 8, "Spaceship");
+
+		/*
 		servant = GameObject.Find ("Scene1/Capa1/Screen3/Servant");
 		servantBG = GameObject.Find ("Scene1/Capa1/Screen3/Servant/Background");
 		servantIcon = GameObject.Find ("Scene1/Capa1/Screen3/Servant/Icon");
@@ -307,12 +230,14 @@ public class Capa1Screen3Script : MonoBehaviour {
 		spaceshipCost.SetActive (false);
 		spaceshipLoveIcon.SetActive (false);
 		spaceship.SetActive (false);
+		*/
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		/*
 		RegularComprobation ("meh", ref servantStatus, ref servant, ref servantBG, ref servantIcon, ref servantText, ref servantNumber, ref servantSubNumber, ref servantCost, ref servantLoveIcon, Lang.SERVANT_NAME);
 		RegularComprobation (servantStatus, ref humanStatus, ref human, ref humanBG, ref humanIcon, ref humanText, ref humanNumber, ref humanSubNumber, ref humanCost, ref humanLoveIcon, Lang.HUMAN_NAME);
 		RegularComprobation (humanStatus, ref prophetStatus, ref prophet, ref prophetBG, ref prophetIcon, ref prophetText, ref prophetNumber, ref prophetSubNumber, ref prophetCost, ref prophetLoveIcon, Lang.PROPHET_NAME);
@@ -322,7 +247,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation (factoryStatus, ref laboratoryStatus, ref laboratory, ref laboratoryBG, ref laboratoryIcon, ref laboratoryText, ref laboratoryNumber, ref laboratorySubNumber, ref laboratoryCost, ref laboratoryLoveIcon, Lang.LABORATORY_NAME);
 		RegularComprobation (laboratoryStatus, ref shopStatus, ref shop, ref shopBG, ref shopIcon, ref shopText, ref shopNumber, ref shopSubNumber, ref shopCost, ref shopLoveIcon, Lang.SHOP_NAME);
 		RegularComprobation (shopStatus, ref spaceshipStatus, ref spaceship, ref spaceshipBG, ref spaceshipIcon, ref spaceshipText, ref spaceshipNumber, ref spaceshipSubNumber, ref spaceshipCost, ref spaceshipLoveIcon, Lang.SPACESHIP_NAME);
-		
+
 
 		if (servantStatus != "unexistant" && servantStatus != "undiscovered" && ClickedOn (servantNumber)) {	
 			checkCanBuy (Lang.SERVANT_NAME);
@@ -361,6 +286,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		if (spaceshipStatus != "unexistant" && spaceshipStatus != "undiscovered" && ClickedOn (spaceshipNumber)) {	
 			checkCanBuy (Lang.SPACESHIP_NAME);
 		}
+		*/
 
 	}
 
@@ -502,6 +428,25 @@ public class Capa1Screen3Script : MonoBehaviour {
 			loveIcon.SetActive(true);
 		}
 
+
+	}
+
+
+	public class Producer {
+
+		public GameObject root;
+		public string status;
+
+		public Producer(GameObject parent, int position, string name) {
+
+			status = "undiscovered";
+
+			root =  Instantiate(Resources.Load("Producer")) as GameObject;
+			root.name = name;
+			root.transform.parent = parent.transform;
+			root.transform.localPosition = new Vector3(0, root.transform.localPosition.y +3f -2.5f*position, root.transform.localPosition.z);
+
+		}
 
 	}
 
