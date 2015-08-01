@@ -198,6 +198,10 @@ public class YahvyScript : MonoBehaviour {
 			
 			PlayAnimation("SleepLoop");
 			
+		} else if (state == "SleepLoop" && !yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop")) {
+			
+			PlayAnimation("SleepLoop");
+			
 		} else if (state == "TapEye" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapEye") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 
 			CrossFadeAnimation("IdleLoop");
@@ -392,6 +396,5 @@ public class YahvyScript : MonoBehaviour {
 		currentSkin = skin;
 
 	}
-
 
 }
