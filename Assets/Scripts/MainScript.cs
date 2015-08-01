@@ -6,6 +6,8 @@ public class MainScript : MonoBehaviour {
 	public int[] screens = {-2, -1, 0, 1, 2};
 	public int currentScreen = 0;
 
+	private AsyncOperation async;
+
 	public GameObject capa0;
 	public GameObject capa1;
 	public GameObject capa1Screen2Yahvy;
@@ -238,6 +240,12 @@ public class MainScript : MonoBehaviour {
 		UpdateMousePosition ();
 
 		capa0.transform.position = new Vector3 (capa1.transform.position.x/15f, 0, 0);
+
+		if (Input.GetKeyDown (KeyCode.M)) {
+
+			Application.LoadLevelAdditive("MiniGame");
+
+		}
 
 	}
 

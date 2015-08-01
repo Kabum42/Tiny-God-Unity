@@ -32,14 +32,17 @@ public class Capa1Screen3Script : MonoBehaviour {
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
 		buy1.volume = 1f;
+		buy1.playOnAwake = false;
 
 		buy2 = gameObject.AddComponent<AudioSource>();
 		buy2.clip = Resources.Load ("Audio/buy2") as AudioClip;
 		buy2.volume = 1f;
+		buy2.playOnAwake = false;
 
 		buy3 = gameObject.AddComponent<AudioSource>();
 		buy3.clip = Resources.Load ("Audio/buy3") as AudioClip;
 		buy3.volume = 1f;
+		buy3.playOnAwake = false;
 
 		servant = new Producer (this.gameObject, 0, "Servant");
 		human = new Producer (this.gameObject, 1, "Human");

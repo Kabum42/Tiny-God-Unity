@@ -85,7 +85,8 @@ public class MainLoadingScript : MonoBehaviour {
 			}
 
 			scene1.SetActive (true);
-			GameObject.Find ("Scene0").SetActive (false);
+			//GameObject.Find ("Scene0").SetActive (false);
+			GameObject.Destroy(GameObject.Find ("Scene0"));
 
 		}
 

@@ -46,9 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Capa0Script.cs" />
-     <Compile Include="Assets\Capa1Screen1Script.cs" />
-     <Compile Include="Assets\Capa1Screen3Script.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\Achievement.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\DummyClient.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\IPlayGamesClient.cs" />
@@ -149,10 +146,14 @@
      <Compile Include="Assets\GooglePlayGames\Platforms\Native\UnsupportedSavedGamesClient.cs" />
      <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
      <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
+     <Compile Include="Assets\Scripts\Capa0Script.cs" />
+     <Compile Include="Assets\Scripts\Capa1Screen1Script.cs" />
+     <Compile Include="Assets\Scripts\Capa1Screen3Script.cs" />
      <Compile Include="Assets\Scripts\FpsScript.cs" />
      <Compile Include="Assets\Scripts\GlobalData.cs" />
      <Compile Include="Assets\Scripts\Lang.cs" />
      <Compile Include="Assets\Scripts\MainLoadingScript.cs" />
+     <Compile Include="Assets\Scripts\MainMiniGameScript.cs" />
      <Compile Include="Assets\Scripts\MainScript.cs" />
      <Compile Include="Assets\Scripts\RotateScript.cs" />
      <Compile Include="Assets\Scripts\YahvyScript.cs" />
