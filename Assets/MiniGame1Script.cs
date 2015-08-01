@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MainMiniGameScript : MonoBehaviour {
+public class MiniGame1Script : MonoBehaviour {
 
-	private int loadProgress = 0;
 	private Rect auxScreen;
-	private AsyncOperation async;
-	public GameObject progress;
+	private float time = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -50,40 +48,25 @@ public class MainMiniGameScript : MonoBehaviour {
 		
 		auxScreen = camera.rect;
 
-		StartCoroutine (LoadScreen ());
-
-	}
-
-	IEnumerator LoadScreen() {
-		
-		//async = Application.LoadLevelAsync ("Game");
-		async = Application.LoadLevelAdditiveAsync ("MiniGame"+GlobalData.currentMiniGame);
-		
-		while (!async.isDone) {
-			
-			loadProgress = (int)(async.progress*100);
-			progress.GetComponent<TextMesh>().text = loadProgress + "%";
-			
-			yield return null;
-			
-		}
-		
-
-
-		GameObject aux = GameObject.Find ("MiniGame");
-		aux.transform.parent = GameObject.Find ("Scene2").transform;
-
-		loadProgress = 100;
-		progress.GetComponent<TextMesh>().text = loadProgress + "%";
-
-		aux = GameObject.Find ("Scene2/Loading");
-		//aux.SetActive (false);
-		GameObject.Destroy (aux);
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+		time += Time.deltaTime;
+
+		if (time > 2f) {
+
+			returnToCore();
+
+		}
+
+	}
+
+	void returnToCore() {
+
+		GameObject.Find ("Scene2").GetComponent<Scene2Script> ().scene1.SetActive (true);
+		GameObject.Destroy (GameObject.Find ("Scene2"));
+
 	}
 }

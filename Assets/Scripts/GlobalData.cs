@@ -22,6 +22,8 @@ public static class GlobalData {
 	private static double timeThisSession = 0f;
 
 	public static SaveState thisState; 
+
+	public static int currentMiniGame = 1;
 	
 
 	
