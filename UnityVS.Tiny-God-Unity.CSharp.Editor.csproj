@@ -143,7 +143,6 @@
     <None Include="Assets\GooglePlayGames\Editor\projsettings.txt" />
     <None Include="Assets\GooglePlayGames\Editor\template-AndroidManifest.txt" />
     <None Include="Assets\Graphics\Fonts\Comfortaa\OFL.txt" />
-    <None Include="Assets\Plugins\Android\GoogleMobileAdsPlugin\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\google-play-services_lib\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\google-play-services_lib\proguard.txt" />
     <None Include="Assets\Plugins\Android\google-play-services_lib\README.txt" />
