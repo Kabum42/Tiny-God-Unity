@@ -7,6 +7,7 @@ using GooglePlayGames.BasicApi.SavedGame;
 using System.Collections.Generic; 
 using System.Runtime.Serialization.Formatters.Binary; 
 using System.IO;
+using GoogleMobileAds.Api;
 
 public static class GlobalData {
 	
@@ -24,7 +25,9 @@ public static class GlobalData {
 	public static SaveState thisState; 
 
 	public static int currentMiniGame = 1;
-	
+
+	public static InterstitialAd interstitial;
+	public static int showedAd = 0;
 
 	
 	public static void Start() {
@@ -61,6 +64,27 @@ public static class GlobalData {
 			}
 
 		}
+
+		if (showedAd == 1) {
+
+			if (interstitial.IsLoaded()) {
+				showedAd = 2;
+				interstitial.Show();
+			}
+
+		}
+
+	}
+
+	public static void LoadInterstitial() {
+
+		showedAd = 0;
+
+		interstitial = new InterstitialAd("ca-app-pub-7511456809904271/6234934949");
+		// Create an empty ad request.
+		AdRequest request = new AdRequest.Builder().Build();
+		// Load the interstitial with the request.
+		interstitial.LoadAd(request);
 
 	}
 

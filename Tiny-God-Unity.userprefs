@@ -1,13 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MainScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GlobalData.cs">
     <Files>
+      <File FileName="Assets\RewardScript.cs" Line="112" Column="23" />
       <File FileName="Assets\Scripts\MainMiniGameScript.cs" Line="39" Column="42" />
-      <File FileName="Assets\Scripts\MainScript.cs" Line="43" Column="29" />
-      <File FileName="Assets\MiniGame1Script.cs" Line="68" Column="71" />
-      <File FileName="Assets\Scripts\GlobalData.cs" Line="1" Column="1" />
-      <File FileName="Assets\RewardScript.cs" Line="62" Column="4" />
+      <File FileName="Assets\Scripts\MainScript.cs" Line="255" Column="46" />
+      <File FileName="Assets\Scripts\GlobalData.cs" Line="18" Column="35" />
       <File FileName="Assets\Scene2Script.cs" Line="13" Column="95" />
+      <File FileName="Assets\Scripts\YahvyScript.cs" Line="244" Column="18" />
+      <File FileName="Assets\Scripts\MainLoadingScript.cs" Line="84" Column="61" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

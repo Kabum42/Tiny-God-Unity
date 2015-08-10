@@ -6,6 +6,8 @@ public class RewardScript : MonoBehaviour {
 	private Rect auxScreen;
 	public GameObject scene1;
 	public float time = 0f;
+	private Vector2 lastMousePosition;
+	private int optionReward = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -54,12 +56,66 @@ public class RewardScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		time += Time.deltaTime;
-
+		//time += Time.deltaTime;
+		/*
 		if (time > 2f) {
 			time = 0f;
 			finishedReward ();
 		}
+		*/
+
+		bool touched = false;
+		lastMousePosition = new Vector2(0f, 0f);
+
+		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
+			
+			if (Input.GetMouseButtonDown(0)) { 
+				touched = true; 
+				lastMousePosition = Input.mousePosition;
+			}
+			
+		} else {
+			
+			if (Input.touchCount > 0) { 
+				if (Input.GetTouch(0).phase == TouchPhase.Began) {
+					touched = true; 
+					lastMousePosition = Input.GetTouch(0).position;
+				}
+			}
+			
+		}
+
+		if (touched) {
+
+			Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
+			
+			if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("Option1")) && optionReward == 0) {
+
+				// SELECTED OPTION 1
+				optionReward = 1;
+				GlobalData.showedAd = 2;
+
+				//finishedReward ();
+				
+			} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("Option2")) && optionReward == 0) {
+				
+				// SELECTED OPTION 2
+				optionReward = 2;
+				GlobalData.showedAd = 1;
+				
+				//finishedReward ();
+				
+			} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("Confirm")) && optionReward != 0 && GlobalData.showedAd == 2) {
+				
+				// PRESSED CONFIRM BUTTON
+				GlobalData.LoadInterstitial();
+				finishedReward ();
+				
+			}
+
+		}
+
+
 
 	}
 
@@ -67,6 +123,7 @@ public class RewardScript : MonoBehaviour {
 
 		this.gameObject.transform.parent.gameObject.SetActive (false);
 		scene1.SetActive (true);
+		scene1.transform.FindChild ("Main Camera").GetComponent<MainScript> ().lastMouse = Input.mousePosition;
 
 	}
 }
