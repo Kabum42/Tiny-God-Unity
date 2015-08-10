@@ -65,7 +65,7 @@ public class MiniGame1Script : MonoBehaviour {
 
 	void returnToCore() {
 
-		GameObject.Find ("Scene2").GetComponent<Scene2Script> ().sceneReward.SetActive (true);
+		GameObject.Find ("Scene2").GetComponent<Scene2Script> ().scene1.SetActive (true);
 		GameObject.Destroy (GameObject.Find ("Scene2"));
 
 	}
