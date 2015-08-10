@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MiniGame1Script : MonoBehaviour {
+public class RewardScript : MonoBehaviour {
 
 	private Rect auxScreen;
-	private float time = 0f;
+	public GameObject scene1;
+	public float time = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -56,17 +57,16 @@ public class MiniGame1Script : MonoBehaviour {
 		time += Time.deltaTime;
 
 		if (time > 2f) {
-
-			returnToCore();
-
+			time = 0f;
+			finishedReward ();
 		}
 
 	}
 
-	void returnToCore() {
+	void finishedReward() {
 
-		GameObject.Find ("Scene2").GetComponent<Scene2Script> ().sceneReward.SetActive (true);
-		GameObject.Destroy (GameObject.Find ("Scene2"));
+		this.gameObject.transform.parent.gameObject.SetActive (false);
+		scene1.SetActive (true);
 
 	}
 }

@@ -16,6 +16,8 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa2;
 	public GameObject capa2TopText;
 
+	public GameObject sceneReward;
+
 	private Rect auxScreen;
 
 	private Vector3 lastMouse;
@@ -38,6 +40,7 @@ public class MainScript : MonoBehaviour {
 
 		slide = gameObject.AddComponent<AudioSource>();
 		slide.clip = Resources.Load ("Audio/slide") as AudioClip;
+		slide.playOnAwake = false;
 		slide.volume = 1f;
 
 		capa0 = GameObject.Find ("Capa0");
@@ -46,6 +49,11 @@ public class MainScript : MonoBehaviour {
 		capa1Screen3 = GameObject.Find ("Capa1/Screen3");
 		capa2 = GameObject.Find ("Capa2");
 		capa2TopText = GameObject.Find ("Capa2/Top/TopText");
+
+		sceneReward = GameObject.Find ("SceneReward");
+		sceneReward.transform.FindChild("Second Camera").gameObject.GetComponent<RewardScript>().scene1 = GameObject.Find ("Scene1");
+
+		sceneReward.SetActive (false);
 
 		// set the desired aspect ratio (the values in this example are
 		// hard-coded for 16:9, but you could make them into public
