@@ -180,6 +180,7 @@
     <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
     <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
     <Compile Include="Assets\MiniGame1Script.cs" />
+    <Compile Include="Assets\RewardScript.cs" />
     <Compile Include="Assets\Scene2Script.cs" />
     <Compile Include="Assets\Scripts\Capa0Script.cs" />
     <Compile Include="Assets\Scripts\Capa1Screen1Script.cs" />
