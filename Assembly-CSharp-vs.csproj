@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\AdHolderScript.cs" />
      <Compile Include="Assets\GoogleMobileAds\Api\AdFailedToLoadEventArgs.cs" />
      <Compile Include="Assets\GoogleMobileAds\Api\AdPosition.cs" />
      <Compile Include="Assets\GoogleMobileAds\Api\AdRequest.cs" />
@@ -172,9 +171,7 @@
      <Compile Include="Assets\GooglePlayGames\Platforms\Native\UnsupportedSavedGamesClient.cs" />
      <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
      <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
-     <Compile Include="Assets\MiniGame1Script.cs" />
-     <Compile Include="Assets\RewardScript.cs" />
-     <Compile Include="Assets\Scene2Script.cs" />
+     <Compile Include="Assets\Scripts\AdHolderScript.cs" />
      <Compile Include="Assets\Scripts\Capa0Script.cs" />
      <Compile Include="Assets\Scripts\Capa1Screen1Script.cs" />
      <Compile Include="Assets\Scripts\Capa1Screen3Script.cs" />
@@ -184,7 +181,10 @@
      <Compile Include="Assets\Scripts\MainLoadingScript.cs" />
      <Compile Include="Assets\Scripts\MainMiniGameScript.cs" />
      <Compile Include="Assets\Scripts\MainScript.cs" />
+     <Compile Include="Assets\Scripts\MiniGame1Script.cs" />
+     <Compile Include="Assets\Scripts\RewardScript.cs" />
      <Compile Include="Assets\Scripts\RotateScript.cs" />
+     <Compile Include="Assets\Scripts\Scene2Script.cs" />
      <Compile Include="Assets\Scripts\YahvyScript.cs" />
      <Compile Include="Assets\ThirdParty\Spriter2Unity\Example\Scripts\AnimationTestScript.cs" />
      <Compile Include="Assets\ThirdParty\Spriter2Unity\Runtime\SortingOrderUpdate.cs" />
