@@ -33,7 +33,7 @@ public class MainScript : MonoBehaviour {
 	{
 
 		if (!GlobalData.started) { GlobalData.Start(); }
-		GlobalData.LoadInterstitial ();
+		GameObject.Find ("AdHolder").GetComponent<AdHolderScript> ().LoadInterstitial ();
 
 		slide = gameObject.AddComponent<AudioSource>();
 		slide.clip = Resources.Load ("Audio/slide") as AudioClip;

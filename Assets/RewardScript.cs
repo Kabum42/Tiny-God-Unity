@@ -93,7 +93,7 @@ public class RewardScript : MonoBehaviour {
 
 				// SELECTED OPTION 1
 				optionReward = 1;
-				GlobalData.showedAd = 2;
+				GameObject.Find("AdHolder").GetComponent<AdHolderScript>().showedAd = 2;
 
 				//finishedReward ();
 				
@@ -101,14 +101,14 @@ public class RewardScript : MonoBehaviour {
 				
 				// SELECTED OPTION 2
 				optionReward = 2;
-				GlobalData.showedAd = 1;
+				GameObject.Find("AdHolder").GetComponent<AdHolderScript>().showedAd = 1;
 				
 				//finishedReward ();
 				
-			} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("Confirm")) && optionReward != 0 && GlobalData.showedAd == 2) {
+			} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("Confirm")) && optionReward != 0 && GameObject.Find("AdHolder").GetComponent<AdHolderScript>().showedAd == 2) {
 				
 				// PRESSED CONFIRM BUTTON
-				GlobalData.LoadInterstitial();
+				GameObject.Find("AdHolder").GetComponent<AdHolderScript>().LoadInterstitial();
 				finishedReward ();
 				
 			}
@@ -121,6 +121,7 @@ public class RewardScript : MonoBehaviour {
 
 	void finishedReward() {
 
+		optionReward = 0;
 		this.gameObject.transform.parent.gameObject.SetActive (false);
 		scene1.SetActive (true);
 		scene1.transform.FindChild ("Main Camera").GetComponent<MainScript> ().lastMouse = Input.mousePosition;
