@@ -280,6 +280,7 @@ public class YahvyScript : MonoBehaviour {
 						PlayAnimation("TapCritical");
 					} else {
 						CrossFadeAnimation("TapEye");
+						Application.LoadLevelAdditive("MiniGame");
 					}
 					
 				} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyBody"))) {

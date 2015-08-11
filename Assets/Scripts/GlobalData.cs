@@ -24,7 +24,6 @@ public static class GlobalData {
 	public static SaveState thisState; 
 
 	public static int currentMiniGame = 1;
-	
 
 	
 	public static void Start() {
