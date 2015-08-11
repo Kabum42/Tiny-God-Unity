@@ -53,7 +53,7 @@ public static class GlobalData {
 
 			if (saveCooldown <= 0f) {
 
-				OpenSavedGame2("TinyGod");
+				OpenSavedGame2("TinyGod_3");
 
 				saveCooldown = defaultSaveCooldown;
 				
@@ -532,7 +532,8 @@ public static class GlobalData {
 			if(array == null || array.Length == 0)
 			{
 				GlobalData.connectionStatus = 5;
-				return null; 
+				SaveState newState = new SaveState(); 
+				return newState;
 			}
 			
 			using(var stream = new System.IO.MemoryStream(array))

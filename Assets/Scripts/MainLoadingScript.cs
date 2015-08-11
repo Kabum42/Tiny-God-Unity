@@ -73,17 +73,17 @@ public class MainLoadingScript : MonoBehaviour {
 		}
 
 		if (GlobalData.connectionStatus == 1) {
-			//GlobalData.OpenSavedGame("TinyGod");
-			//GlobalData.connectionStatus = 2;
-			GlobalData.connectionStatus = 5;
+			GlobalData.OpenSavedGame("TinyGod_3");
+			GlobalData.connectionStatus = 2;
 		}
 
-
 		if ((GlobalData.connectionStatus <= -1 || GlobalData.connectionStatus == 5) && loadProgress == 100) {
+
 
 			if (GlobalData.connectionStatus <= -1) {
 				GlobalData.thisState.love = GlobalData.connectionStatus;
 			}
+
 
 			scene1.SetActive (true);
 			//GameObject.Find ("Scene0").SetActive (false);
