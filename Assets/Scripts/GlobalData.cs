@@ -385,6 +385,10 @@ public static class GlobalData {
 		public double totalLove = 0f;
 		public double clicks = 0f;
 
+		public double fragments = 0f;
+		public double gems = 0f;
+		public double fragment_multiplier = 2f;
+
 		public int[] values = new int[300];
 
 		public int language = 0;
