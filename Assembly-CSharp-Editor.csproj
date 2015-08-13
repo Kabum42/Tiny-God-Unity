@@ -56,6 +56,8 @@
      <Compile Include="Assets\GooglePlayGames\Editor\GPGSUpgrader.cs" />
      <Compile Include="Assets\GooglePlayGames\Editor\GPGSUtil.cs" />
      <Compile Include="Assets\GooglePlayGames\Editor\PlistBuddyHelper.cs" />
+     <Compile Include="Assets\Soomla\Editor\SoomlaPostBuild.cs" />
+     <Compile Include="Assets\Soomla\Editor\SoomlaSettingsEditor.cs" />
      <Compile Include="Assets\ThirdParty\Spriter2Unity\Editor\GUI\SpriterEntityInspector.cs" />
      <Compile Include="Assets\ThirdParty\Spriter2Unity\Editor\Spriter\BoneRef.cs" />
      <Compile Include="Assets\ThirdParty\Spriter2Unity\Editor\Spriter\BoneTimelineKey.cs" />
@@ -102,6 +104,7 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-en-rAU\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ml-rIN\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-da\common_strings.xml" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\wallet_attrs.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-km-rKH\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ka-rGE\common_strings.xml" />
@@ -145,6 +148,7 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-uk\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\AndroidManifest.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sl\common_strings.xml" />
+     <None Include="Assets\Plugins\WP8\IAPMock.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hy-rAM\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-kk-rKZ\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-is-rIS\common_strings.xml" />
@@ -237,11 +241,19 @@
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/macstandalonesupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="soomla-wp-core">
+ <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/Plugins/soomla-wp-core.dll</HintPath>
+ </Reference>
+ <Reference Include="wp-store">
+ <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/Plugins/wp-store.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{9228F162-A054-859A-DB53-35284E309988}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{8F864433-787A-5A75-E178-FCDD2D4EF8DC}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>

@@ -94,6 +94,7 @@ public class RewardScript : MonoBehaviour {
 				// SELECTED OPTION 1
 				optionReward = 1;
 				GameObject.Find("AdHolder").GetComponent<AdHolderScript>().showedAd = 2;
+				Soomla.Store.StoreInventory.BuyItem (SoomlaAssets.GEMS_1_ITEM_ID);
 
 				//finishedReward ();
 				
