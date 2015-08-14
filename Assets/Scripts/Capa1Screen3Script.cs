@@ -90,56 +90,44 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation (laboratory.status, ref shop);
 		RegularComprobation (shop.status, ref spaceship);
 
-		/*
-		RegularComprobation ("meh", ref servantStatus, ref servant, ref servantBG, ref servantIcon, ref servantText, ref servantNumber, ref servantSubNumber, ref servantCost, ref servantLoveIcon, Lang.SERVANT_NAME);
-		RegularComprobation (servantStatus, ref humanStatus, ref human, ref humanBG, ref humanIcon, ref humanText, ref humanNumber, ref humanSubNumber, ref humanCost, ref humanLoveIcon, Lang.HUMAN_NAME);
-		RegularComprobation (humanStatus, ref prophetStatus, ref prophet, ref prophetBG, ref prophetIcon, ref prophetText, ref prophetNumber, ref prophetSubNumber, ref prophetCost, ref prophetLoveIcon, Lang.PROPHET_NAME);
-		RegularComprobation (prophetStatus, ref templeStatus, ref temple, ref templeBG, ref templeIcon, ref templeText, ref templeNumber, ref templeSubNumber, ref templeCost, ref templeLoveIcon, Lang.TEMPLE_NAME);
-		RegularComprobation (templeStatus, ref shipStatus, ref ship, ref shipBG, ref shipIcon, ref shipText, ref shipNumber, ref shipSubNumber, ref shipCost, ref shipLoveIcon, Lang.SHIP_NAME);
-		RegularComprobation (shipStatus, ref factoryStatus, ref factory, ref factoryBG, ref factoryIcon, ref factoryText, ref factoryNumber, ref factorySubNumber, ref factoryCost, ref factoryLoveIcon, Lang.FACTORY_NAME);
-		RegularComprobation (factoryStatus, ref laboratoryStatus, ref laboratory, ref laboratoryBG, ref laboratoryIcon, ref laboratoryText, ref laboratoryNumber, ref laboratorySubNumber, ref laboratoryCost, ref laboratoryLoveIcon, Lang.LABORATORY_NAME);
-		RegularComprobation (laboratoryStatus, ref shopStatus, ref shop, ref shopBG, ref shopIcon, ref shopText, ref shopNumber, ref shopSubNumber, ref shopCost, ref shopLoveIcon, Lang.SHOP_NAME);
-		RegularComprobation (shopStatus, ref spaceshipStatus, ref spaceship, ref spaceshipBG, ref spaceshipIcon, ref spaceshipText, ref spaceshipNumber, ref spaceshipSubNumber, ref spaceshipCost, ref spaceshipLoveIcon, Lang.SPACESHIP_NAME);
-
-
-		if (servantStatus != "unexistant" && servantStatus != "undiscovered" && ClickedOn (servantNumber)) {	
+		if (servant.status != "unexistant" && servant.status != "undiscovered" && ClickedOn (servant.buyButton)) {	
 			checkCanBuy (Lang.SERVANT_NAME);
 		} else if (false) {
 			// COMPROBAR SI HA CLICKADO ENCIMA DE LA CABECERA
 		}
 
-		if (humanStatus != "unexistant" && humanStatus != "undiscovered" && ClickedOn (humanNumber)) {	
+		if (human.status != "unexistant" && human.status != "undiscovered" && ClickedOn (human.buyButton)) {	
 			checkCanBuy (Lang.HUMAN_NAME);
 		}
 
-		if (prophetStatus != "unexistant" && prophetStatus != "undiscovered" && ClickedOn (prophetNumber)) {	
+		if (prophet.status != "unexistant" && prophet.status != "undiscovered" && ClickedOn (prophet.buyButton)) {	
 			checkCanBuy (Lang.PROPHET_NAME);
 		}
 
-		if (templeStatus != "unexistant" && templeStatus != "undiscovered" && ClickedOn (templeNumber)) {	
+		if (temple.status != "unexistant" && temple.status != "undiscovered" && ClickedOn (temple.buyButton)) {	
 			checkCanBuy (Lang.TEMPLE_NAME);
 		}
 
-		if (shipStatus != "unexistant" && shipStatus != "undiscovered" && ClickedOn (shipNumber)) {	
+		if (ship.status != "unexistant" && ship.status != "undiscovered" && ClickedOn (ship.buyButton)) {	
 			checkCanBuy (Lang.SHIP_NAME);
 		}
 
-		if (factoryStatus != "unexistant" && factoryStatus != "undiscovered" && ClickedOn (factoryNumber)) {	
+		if (factory.status != "unexistant" && factory.status != "undiscovered" && ClickedOn (factory.buyButton)) {	
 			checkCanBuy (Lang.FACTORY_NAME);
 		}
 
-		if (laboratoryStatus != "unexistant" && laboratoryStatus != "undiscovered" && ClickedOn (laboratoryNumber)) {	
+		if (laboratory.status != "unexistant" && laboratory.status != "undiscovered" && ClickedOn (laboratory.buyButton)) {	
 			checkCanBuy (Lang.LABORATORY_NAME);
 		}
 
-		if (shopStatus != "unexistant" && shopStatus != "undiscovered" && ClickedOn (shopNumber)) {	
+		if (shop.status != "unexistant" && shop.status != "undiscovered" && ClickedOn (shop.buyButton)) {	
 			checkCanBuy (Lang.SHOP_NAME);
 		}
 
-		if (spaceshipStatus != "unexistant" && spaceshipStatus != "undiscovered" && ClickedOn (spaceshipNumber)) {	
+		if (spaceship.status != "unexistant" && spaceship.status != "undiscovered" && ClickedOn (spaceship.buyButton)) {	
 			checkCanBuy (Lang.SPACESHIP_NAME);
 		}
-		*/
+
 
 	}
 
@@ -189,7 +177,13 @@ public class Capa1Screen3Script : MonoBehaviour {
 			producer.number.SetActive(true);
 			//subNumber.SetActive(true);
 			producer.cost.SetActive(true);
-			//loveIcon.SetActive(true);
+			producer.loveIcon.SetActive(true);
+
+			producer.buyButton.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
+		}
+
+		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking") && producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+			producer.buyButton.GetComponent<Animator> ().Play ("Available", 0, 0f);
 		}
 
 		
@@ -293,7 +287,9 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public int langCode;
 		public GameObject text;
 		public GameObject number;
+		public GameObject loveIcon;
 		public GameObject cost;
+		public GameObject buyButton;
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
 
@@ -306,7 +302,12 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 			text = root.gameObject.transform.FindChild("Text").gameObject;
 			number = root.gameObject.transform.FindChild("Number").gameObject;
+			number.SetActive(false);
+			loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
+			loveIcon.SetActive(false);
 			cost = root.gameObject.transform.FindChild("Cost").gameObject;
+			cost.SetActive(false);
+			buyButton = root.gameObject.transform.FindChild("BuyButton").gameObject;
 
 			root.SetActive(false);
 
