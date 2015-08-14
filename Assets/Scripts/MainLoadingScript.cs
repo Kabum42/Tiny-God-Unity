@@ -30,15 +30,21 @@ public class MainLoadingScript : MonoBehaviour {
 		PlayGamesPlatform.Activate();
 
 		// authenticate user:
+		AuthenticateLoop ();
+
+		StartCoroutine (LoadScreen ());
+
+	}
+
+	void AuthenticateLoop() {
+
 		Social.localUser.Authenticate (success => {
 			if (success) {
 				GlobalData.connectionStatus = 1;
 			}
 			else
-				GlobalData.connectionStatus = -1;
+				AuthenticateLoop();
 		});
-
-		StartCoroutine (LoadScreen ());
 
 	}
 

@@ -77,7 +77,9 @@ public static class GlobalData {
 			LoadGameData(thisGame);
 		} else {
 			// handle error
-			connectionStatus = -2;
+			// try to open again
+			OpenSavedGame("TinyGod_3");
+			//connectionStatus = -2;
 		}
 	}
 	
