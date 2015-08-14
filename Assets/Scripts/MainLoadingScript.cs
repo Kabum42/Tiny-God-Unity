@@ -86,6 +86,7 @@ public class MainLoadingScript : MonoBehaviour {
 
 
 			scene1.SetActive (true);
+			Soomla.Store.SoomlaStore.Initialize (new SoomlaAssets());
 			//GameObject.Find ("Scene0").SetActive (false);
 			GameObject.Destroy(GameObject.Find ("Scene0"));
 

@@ -35,8 +35,6 @@ public class MainScript : MonoBehaviour {
 		if (!GlobalData.started) { GlobalData.Start(); }
 		GameObject.Find ("AdHolder").GetComponent<AdHolderScript> ().LoadInterstitial ();
 
-		Soomla.Store.SoomlaStore.Initialize (new SoomlaAssets());
-
 		slide = gameObject.AddComponent<AudioSource>();
 		slide.clip = Resources.Load ("Audio/slide") as AudioClip;
 		slide.playOnAwake = false;

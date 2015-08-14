@@ -202,6 +202,12 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="soomla-wp-core">
+ <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/Plugins/soomla-wp-core.dll</HintPath>
+ </Reference>
+ <Reference Include="wp-store">
+ <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/Plugins/wp-store.dll</HintPath>
+ </Reference>
  <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
  <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
  </Reference>
@@ -240,12 +246,6 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/macstandalonesupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
- </Reference>
- <Reference Include="soomla-wp-core">
- <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/Plugins/soomla-wp-core.dll</HintPath>
- </Reference>
- <Reference Include="wp-store">
- <HintPath>C:/Users/Roberto/Desktop/Programar/Unity/Tiny-God-Unity/Assets/Plugins/wp-store.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
