@@ -44,15 +44,15 @@ public class Capa1Screen3Script : MonoBehaviour {
 		buy3.volume = 1f;
 		buy3.playOnAwake = false;
 
-		servant = new Producer (this.gameObject, 0, "Servant");
-		human = new Producer (this.gameObject, 1, "Human");
-		prophet = new Producer (this.gameObject, 2, "Prophet");
-		temple = new Producer (this.gameObject, 3, "Temple");
-		ship = new Producer (this.gameObject, 4, "Ship");
-		factory = new Producer (this.gameObject, 5, "Factory");
-		laboratory = new Producer (this.gameObject, 6, "Laboratory");
-		shop = new Producer (this.gameObject, 7, "Shop");
-		spaceship = new Producer (this.gameObject, 8, "Spaceship");
+		servant = new Producer (this.gameObject, 0, "Servant", Lang.SERVANT_NAME);
+		human = new Producer (this.gameObject, 1, "Human", Lang.HUMAN_NAME);
+		prophet = new Producer (this.gameObject, 2, "Prophet", Lang.PROPHET_NAME);
+		temple = new Producer (this.gameObject, 3, "Temple", Lang.TEMPLE_NAME);
+		ship = new Producer (this.gameObject, 4, "Ship", Lang.SHIP_NAME);
+		factory = new Producer (this.gameObject, 5, "Factory", Lang.FACTORY_NAME);
+		laboratory = new Producer (this.gameObject, 6, "Laboratory", Lang.LABORATORY_NAME);
+		shop = new Producer (this.gameObject, 7, "Shop", Lang.SHOP_NAME);
+		spaceship = new Producer (this.gameObject, 8, "Spaceship", Lang.SPACESHIP_NAME);
 
 		/*
 		servant = GameObject.Find ("Scene1/Capa1/Screen3/Servant");
@@ -73,172 +73,22 @@ public class Capa1Screen3Script : MonoBehaviour {
 		servantSubNumber.SetActive (false);
 		servantCost.SetActive (false);
 		servantLoveIcon.SetActive (false);
-
-		human = GameObject.Find ("Scene1/Capa1/Screen3/Human");
-		humanBG = GameObject.Find ("Scene1/Capa1/Screen3/Human/Background");
-		humanIcon = GameObject.Find ("Scene1/Capa1/Screen3/Human/Icon");
-		humanText = GameObject.Find ("Scene1/Capa1/Screen3/Human/Text");
-		humanNumber = GameObject.Find ("Scene1/Capa1/Screen3/Human/Number");
-		humanSubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Human/SubNumber");
-		humanCost = GameObject.Find ("Scene1/Capa1/Screen3/Human/Cost");
-		humanLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Human/LoveIcon");
-		humanBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		humanIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		humanText.GetComponent<TextMesh> ().color = new Color(humanText.GetComponent<TextMesh> ().color.r, humanText.GetComponent<TextMesh> ().color.g, humanText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		humanNumber.GetComponent<TextMesh> ().color = new Color(humanNumber.GetComponent<TextMesh> ().color.r, humanNumber.GetComponent<TextMesh> ().color.g, humanNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		humanSubNumber.GetComponent<TextMesh> ().color = new Color(humanSubNumber.GetComponent<TextMesh> ().color.r, humanSubNumber.GetComponent<TextMesh> ().color.g, humanSubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		humanCost.GetComponent<TextMesh> ().color = new Color(humanCost.GetComponent<TextMesh> ().color.r, humanCost.GetComponent<TextMesh> ().color.g, humanCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		humanNumber.SetActive (false);
-		humanSubNumber.SetActive (false);
-		humanCost.SetActive (false);
-		humanLoveIcon.SetActive (false);
-		human.SetActive (false);
-
-		prophet = GameObject.Find ("Scene1/Capa1/Screen3/Prophet");
-		prophetBG = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/Background");
-		prophetIcon = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/Icon");
-		prophetText = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/Text");
-		prophetNumber = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/Number");
-		prophetSubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/SubNumber");
-		prophetCost = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/Cost");
-		prophetLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Prophet/LoveIcon");
-		prophetBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		prophetIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		prophetText.GetComponent<TextMesh> ().color = new Color(prophetText.GetComponent<TextMesh> ().color.r, prophetText.GetComponent<TextMesh> ().color.g, prophetText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		prophetNumber.GetComponent<TextMesh> ().color = new Color(prophetNumber.GetComponent<TextMesh> ().color.r, prophetNumber.GetComponent<TextMesh> ().color.g, prophetNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		prophetSubNumber.GetComponent<TextMesh> ().color = new Color(prophetSubNumber.GetComponent<TextMesh> ().color.r, prophetSubNumber.GetComponent<TextMesh> ().color.g, prophetSubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		prophetCost.GetComponent<TextMesh> ().color = new Color(prophetCost.GetComponent<TextMesh> ().color.r, prophetCost.GetComponent<TextMesh> ().color.g, prophetCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		prophetNumber.SetActive (false);
-		prophetSubNumber.SetActive (false);
-		prophetCost.SetActive (false);
-		prophetLoveIcon.SetActive (false);
-		prophet.SetActive (false);
-
-		temple = GameObject.Find ("Scene1/Capa1/Screen3/Temple");
-		templeBG = GameObject.Find ("Scene1/Capa1/Screen3/Temple/Background");
-		templeIcon = GameObject.Find ("Scene1/Capa1/Screen3/Temple/Icon");
-		templeText = GameObject.Find ("Scene1/Capa1/Screen3/Temple/Text");
-		templeNumber = GameObject.Find ("Scene1/Capa1/Screen3/Temple/Number");
-		templeSubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Temple/SubNumber");
-		templeCost = GameObject.Find ("Scene1/Capa1/Screen3/Temple/Cost");
-		templeLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Temple/LoveIcon");
-		templeBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		templeIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		templeText.GetComponent<TextMesh> ().color = new Color(templeText.GetComponent<TextMesh> ().color.r, templeText.GetComponent<TextMesh> ().color.g, templeText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		templeNumber.GetComponent<TextMesh> ().color = new Color(templeNumber.GetComponent<TextMesh> ().color.r, templeNumber.GetComponent<TextMesh> ().color.g, templeNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		templeSubNumber.GetComponent<TextMesh> ().color = new Color(templeSubNumber.GetComponent<TextMesh> ().color.r, templeSubNumber.GetComponent<TextMesh> ().color.g, templeSubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		templeCost.GetComponent<TextMesh> ().color = new Color(templeCost.GetComponent<TextMesh> ().color.r, templeCost.GetComponent<TextMesh> ().color.g, templeCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		templeNumber.SetActive (false);
-		templeSubNumber.SetActive (false);
-		templeCost.SetActive (false);
-		templeLoveIcon.SetActive (false);
-		temple.SetActive (false);
-
-		ship = GameObject.Find ("Scene1/Capa1/Screen3/Ship");
-		shipBG = GameObject.Find ("Scene1/Capa1/Screen3/Ship/Background");
-		shipIcon = GameObject.Find ("Scene1/Capa1/Screen3/Ship/Icon");
-		shipText = GameObject.Find ("Scene1/Capa1/Screen3/Ship/Text");
-		shipNumber = GameObject.Find ("Scene1/Capa1/Screen3/Ship/Number");
-		shipSubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Ship/SubNumber");
-		shipCost = GameObject.Find ("Scene1/Capa1/Screen3/Ship/Cost");
-		shipLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Ship/LoveIcon");
-		shipBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		shipIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		shipText.GetComponent<TextMesh> ().color = new Color(shipText.GetComponent<TextMesh> ().color.r, shipText.GetComponent<TextMesh> ().color.g, shipText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shipNumber.GetComponent<TextMesh> ().color = new Color(shipNumber.GetComponent<TextMesh> ().color.r, shipNumber.GetComponent<TextMesh> ().color.g, shipNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shipSubNumber.GetComponent<TextMesh> ().color = new Color(shipSubNumber.GetComponent<TextMesh> ().color.r, shipSubNumber.GetComponent<TextMesh> ().color.g, shipSubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shipCost.GetComponent<TextMesh> ().color = new Color(shipCost.GetComponent<TextMesh> ().color.r, shipCost.GetComponent<TextMesh> ().color.g, shipCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shipNumber.SetActive (false);
-		shipSubNumber.SetActive (false);
-		shipCost.SetActive (false);
-		shipLoveIcon.SetActive (false);
-		ship.SetActive (false);
-
-		factory = GameObject.Find ("Scene1/Capa1/Screen3/Factory");
-		factoryBG = GameObject.Find ("Scene1/Capa1/Screen3/Factory/Background");
-		factoryIcon = GameObject.Find ("Scene1/Capa1/Screen3/Factory/Icon");
-		factoryText = GameObject.Find ("Scene1/Capa1/Screen3/Factory/Text");
-		factoryNumber = GameObject.Find ("Scene1/Capa1/Screen3/Factory/Number");
-		factorySubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Factory/SubNumber");
-		factoryCost = GameObject.Find ("Scene1/Capa1/Screen3/Factory/Cost");
-		factoryLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Factory/LoveIcon");
-		factoryBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		factoryIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		factoryText.GetComponent<TextMesh> ().color = new Color(factoryText.GetComponent<TextMesh> ().color.r, factoryText.GetComponent<TextMesh> ().color.g, factoryText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		factoryNumber.GetComponent<TextMesh> ().color = new Color(factoryNumber.GetComponent<TextMesh> ().color.r, factoryNumber.GetComponent<TextMesh> ().color.g, factoryNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		factorySubNumber.GetComponent<TextMesh> ().color = new Color(factorySubNumber.GetComponent<TextMesh> ().color.r, factorySubNumber.GetComponent<TextMesh> ().color.g, factorySubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		factoryCost.GetComponent<TextMesh> ().color = new Color(factoryCost.GetComponent<TextMesh> ().color.r, factoryCost.GetComponent<TextMesh> ().color.g, factoryCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		factoryNumber.SetActive (false);
-		factorySubNumber.SetActive (false);
-		factoryCost.SetActive (false);
-		factoryLoveIcon.SetActive (false);
-		factory.SetActive (false);
-
-		laboratory = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory");
-		laboratoryBG = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/Background");
-		laboratoryIcon = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/Icon");
-		laboratoryText = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/Text");
-		laboratoryNumber = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/Number");
-		laboratorySubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/SubNumber");
-		laboratoryCost = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/Cost");
-		laboratoryLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Laboratory/LoveIcon");
-		laboratoryBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		laboratoryIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		laboratoryText.GetComponent<TextMesh> ().color = new Color(laboratoryText.GetComponent<TextMesh> ().color.r, laboratoryText.GetComponent<TextMesh> ().color.g, laboratoryText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		laboratoryNumber.GetComponent<TextMesh> ().color = new Color(laboratoryNumber.GetComponent<TextMesh> ().color.r, laboratoryNumber.GetComponent<TextMesh> ().color.g, laboratoryNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		laboratorySubNumber.GetComponent<TextMesh> ().color = new Color(laboratorySubNumber.GetComponent<TextMesh> ().color.r, laboratorySubNumber.GetComponent<TextMesh> ().color.g, laboratorySubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		laboratoryCost.GetComponent<TextMesh> ().color = new Color(laboratoryCost.GetComponent<TextMesh> ().color.r, laboratoryCost.GetComponent<TextMesh> ().color.g, laboratoryCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		laboratoryNumber.SetActive (false);
-		laboratorySubNumber.SetActive (false);
-		laboratoryCost.SetActive (false);
-		laboratoryLoveIcon.SetActive (false);
-		laboratory.SetActive (false);
-
-		shop = GameObject.Find ("Scene1/Capa1/Screen3/Shop");
-		shopBG = GameObject.Find ("Scene1/Capa1/Screen3/Shop/Background");
-		shopIcon = GameObject.Find ("Scene1/Capa1/Screen3/Shop/Icon");
-		shopText = GameObject.Find ("Scene1/Capa1/Screen3/Shop/Text");
-		shopNumber = GameObject.Find ("Scene1/Capa1/Screen3/Shop/Number");
-		shopSubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Shop/SubNumber");
-		shopCost = GameObject.Find ("Scene1/Capa1/Screen3/Shop/Cost");
-		shopLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Shop/LoveIcon");
-		shopBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		shopIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		shopText.GetComponent<TextMesh> ().color = new Color(shopText.GetComponent<TextMesh> ().color.r, shopText.GetComponent<TextMesh> ().color.g, shopText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shopNumber.GetComponent<TextMesh> ().color = new Color(shopNumber.GetComponent<TextMesh> ().color.r, shopNumber.GetComponent<TextMesh> ().color.g, shopNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shopSubNumber.GetComponent<TextMesh> ().color = new Color(shopSubNumber.GetComponent<TextMesh> ().color.r, shopSubNumber.GetComponent<TextMesh> ().color.g, shopSubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shopCost.GetComponent<TextMesh> ().color = new Color(shopCost.GetComponent<TextMesh> ().color.r, shopCost.GetComponent<TextMesh> ().color.g, shopCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		shopNumber.SetActive (false);
-		shopSubNumber.SetActive (false);
-		shopCost.SetActive (false);
-		shopLoveIcon.SetActive (false);
-		shop.SetActive (false);
-
-		spaceship = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship");
-		spaceshipBG = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/Background");
-		spaceshipIcon = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/Icon");
-		spaceshipText = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/Text");
-		spaceshipNumber = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/Number");
-		spaceshipSubNumber = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/SubNumber");
-		spaceshipCost = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/Cost");
-		spaceshipLoveIcon = GameObject.Find ("Scene1/Capa1/Screen3/Spaceship/LoveIcon");
-		spaceshipBG.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency);
-		spaceshipIcon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency);
-		spaceshipText.GetComponent<TextMesh> ().color = new Color(spaceshipText.GetComponent<TextMesh> ().color.r, spaceshipText.GetComponent<TextMesh> ().color.g, spaceshipText.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		spaceshipNumber.GetComponent<TextMesh> ().color = new Color(spaceshipNumber.GetComponent<TextMesh> ().color.r, spaceshipNumber.GetComponent<TextMesh> ().color.g, spaceshipNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		spaceshipSubNumber.GetComponent<TextMesh> ().color = new Color(spaceshipSubNumber.GetComponent<TextMesh> ().color.r, spaceshipSubNumber.GetComponent<TextMesh> ().color.g, spaceshipSubNumber.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		spaceshipCost.GetComponent<TextMesh> ().color = new Color(spaceshipCost.GetComponent<TextMesh> ().color.r, spaceshipCost.GetComponent<TextMesh> ().color.g, spaceshipCost.GetComponent<TextMesh> ().color.b, discovered_transparency);
-		spaceshipNumber.SetActive (false);
-		spaceshipSubNumber.SetActive (false);
-		spaceshipCost.SetActive (false);
-		spaceshipLoveIcon.SetActive (false);
-		spaceship.SetActive (false);
 		*/
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		RegularComprobation ("meh", ref servant);
+		RegularComprobation (servant.status, ref human);
+		RegularComprobation (human.status, ref prophet);
+		RegularComprobation (prophet.status, ref temple);
+		RegularComprobation (temple.status, ref ship);
+		RegularComprobation (ship.status, ref factory);
+		RegularComprobation (factory.status, ref laboratory);
+		RegularComprobation (laboratory.status, ref shop);
+		RegularComprobation (shop.status, ref spaceship);
 
 		/*
 		RegularComprobation ("meh", ref servantStatus, ref servant, ref servantBG, ref servantIcon, ref servantText, ref servantNumber, ref servantSubNumber, ref servantCost, ref servantLoveIcon, Lang.SERVANT_NAME);
@@ -291,6 +141,58 @@ public class Capa1Screen3Script : MonoBehaviour {
 		}
 		*/
 
+	}
+
+	private void RegularComprobation(string previousStatus, ref Producer producer) {
+		
+		if (producer.status == "unexistant" && (previousStatus != "undiscovered" && previousStatus != "unexistant")) {
+			producer.root.SetActive(true);
+			producer.status = "undiscovered";
+		} else if ((producer.status == "undiscovered" && GlobalData.thisState.totalLove >= GlobalData.getBaseCost (producer.langCode)) ||
+		           (producer.status == "buyable" && GlobalData.thisState.love < Mathf.Floor(GlobalData.getBaseCost (producer.langCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[producer.langCode])))) {
+			producer.status = "discovered";
+		} else if (producer.status == "discovered" && GlobalData.thisState.love >= Mathf.Floor (GlobalData.getBaseCost (producer.langCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[producer.langCode]))) {
+			producer.status = "buyable";
+		}
+		
+		if (producer.status != "unexistant" && producer.status != "undiscovered") {
+			producer.text.GetComponent<TextMesh> ().text = Lang.getText(producer.langCode);
+			producer.number.GetComponent<TextMesh> ().text = ""+GlobalData.thisState.values[producer.langCode];
+			producer.cost.GetComponent<TextMesh> ().text = ""+GlobalData.FormattedNumber(Mathf.Floor (GlobalData.getBaseCost (producer.langCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[producer.langCode])));
+		}
+		
+		float producerAlpha = 1f;
+		
+		if (selectedStatus == 0f) {
+			producerAlpha = 1f;
+		}
+
+
+		if (producer.status == "undiscovered") {
+			//background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
+			//icon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency*producerAlpha);
+			producer.text.GetComponent<TextMesh> ().color = new Color(producer.text.GetComponent<TextMesh> ().color.r, producer.text.GetComponent<TextMesh> ().color.g, producer.text.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
+			producer.number.GetComponent<TextMesh> ().color = new Color(producer.number.GetComponent<TextMesh> ().color.r, producer.number.GetComponent<TextMesh> ().color.g, producer.number.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
+		} else if (producer.status == "discovered") {
+			//background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
+			//icon.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
+			producer.text.GetComponent<TextMesh> ().color = new Color(producer.text.GetComponent<TextMesh> ().color.r, producer.text.GetComponent<TextMesh> ().color.g, producer.text.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
+			producer.number.GetComponent<TextMesh> ().color = new Color(producer.number.GetComponent<TextMesh> ().color.r, producer.number.GetComponent<TextMesh> ().color.g, producer.number.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
+		} else if (producer.status == "buyable") {
+			//background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f*producerAlpha);
+			//icon.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f*producerAlpha);
+			producer.text.GetComponent<TextMesh> ().color = new Color(producer.text.GetComponent<TextMesh> ().color.r, producer.text.GetComponent<TextMesh> ().color.g, producer.text.GetComponent<TextMesh> ().color.b, 1f*producerAlpha);
+			producer.number.GetComponent<TextMesh> ().color = new Color(producer.number.GetComponent<TextMesh> ().color.r, producer.number.GetComponent<TextMesh> ().color.g, producer.number.GetComponent<TextMesh> ().color.b, 1f*producerAlpha);
+		}
+		
+		if (!producer.number.activeInHierarchy && (producer.status != "unexistant" && producer.status != "undiscovered")) {
+			producer.number.SetActive(true);
+			//subNumber.SetActive(true);
+			producer.cost.SetActive(true);
+			//loveIcon.SetActive(true);
+		}
+
+		
 	}
 
 	private void checkCanBuy(int LangCode) {
@@ -383,71 +285,32 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 	}
 
-	private void RegularComprobation(string previousStatus, ref string status, ref GameObject father, ref GameObject background, ref GameObject icon, ref GameObject text, ref GameObject number, ref GameObject subNumber, ref GameObject cost, ref GameObject loveIcon, int LangCode) {
-
-		if (status == "unexistant" && (previousStatus != "undiscovered" && previousStatus != "unexistant")) {
-			father.SetActive(true);
-			status = "undiscovered";
-		} else if ((status == "undiscovered" && GlobalData.thisState.totalLove >= GlobalData.getBaseCost (LangCode)) ||
-		           (status == "buyable" && GlobalData.thisState.love < Mathf.Floor(GlobalData.getBaseCost (LangCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[LangCode])))) {
-			status = "discovered";
-		} else if (status == "discovered" && GlobalData.thisState.love >= Mathf.Floor (GlobalData.getBaseCost (LangCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[LangCode]))) {
-			status = "buyable";
-		}
-
-		if (status != "unexistant" && status != "undiscovered") {
-			text.GetComponent<TextMesh> ().text = Lang.getText(LangCode);
-			number.GetComponent<TextMesh> ().text = ""+GlobalData.thisState.values[LangCode];
-			cost.GetComponent<TextMesh> ().text = ""+GlobalData.FormattedNumber(Mathf.Floor (GlobalData.getBaseCost (LangCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[LangCode])));
-		}
-
-		float producerAlpha = 1f;
-
-		if (selectedStatus == 0f) {
-			producerAlpha = 1f;
-		}
-
-		if (status == "undiscovered") {
-			background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
-			icon.GetComponent<SpriteRenderer>().material.color = new Color(0f, 0f, 0f, discovered_transparency*producerAlpha);
-			text.GetComponent<TextMesh> ().color = new Color(text.GetComponent<TextMesh> ().color.r, text.GetComponent<TextMesh> ().color.g, text.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
-			number.GetComponent<TextMesh> ().color = new Color(number.GetComponent<TextMesh> ().color.r, number.GetComponent<TextMesh> ().color.g, number.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
-		} else if (status == "discovered") {
-			background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
-			icon.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, discovered_transparency*producerAlpha);
-			text.GetComponent<TextMesh> ().color = new Color(text.GetComponent<TextMesh> ().color.r, text.GetComponent<TextMesh> ().color.g, text.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
-			number.GetComponent<TextMesh> ().color = new Color(number.GetComponent<TextMesh> ().color.r, number.GetComponent<TextMesh> ().color.g, number.GetComponent<TextMesh> ().color.b, discovered_transparency*producerAlpha);
-		} else if (status == "buyable") {
-			background.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f*producerAlpha);
-			icon.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, 1f*producerAlpha);
-			text.GetComponent<TextMesh> ().color = new Color(text.GetComponent<TextMesh> ().color.r, text.GetComponent<TextMesh> ().color.g, text.GetComponent<TextMesh> ().color.b, 1f*producerAlpha);
-			number.GetComponent<TextMesh> ().color = new Color(number.GetComponent<TextMesh> ().color.r, number.GetComponent<TextMesh> ().color.g, number.GetComponent<TextMesh> ().color.b, 1f*producerAlpha);
-		}
-
-		if (!number.activeInHierarchy && (status != "unexistant" && status != "undiscovered")) {
-			number.SetActive(true);
-			subNumber.SetActive(true);
-			cost.SetActive(true);
-			loveIcon.SetActive(true);
-		}
-
-
-	}
-
 
 	public class Producer {
 
 		public GameObject root;
 		public string status;
+		public int langCode;
+		public GameObject text;
+		public GameObject number;
+		public GameObject cost;
 
-		public Producer(GameObject parent, int position, string name) {
+		public Producer(GameObject parent, int position, string name, int langAux) {
 
-			status = "undiscovered";
+			status = "unexistant";
 
 			root =  Instantiate(Resources.Load("Producer")) as GameObject;
 			root.name = name;
 			root.transform.parent = parent.transform;
 			root.transform.localPosition = new Vector3(0, root.transform.localPosition.y +3f -2.5f*position, root.transform.localPosition.z);
+
+			text = root.gameObject.transform.FindChild("Text").gameObject;
+			number = root.gameObject.transform.FindChild("Number").gameObject;
+			cost = root.gameObject.transform.FindChild("Cost").gameObject;
+
+			root.SetActive(false);
+
+			langCode = langAux;
 
 		}
 
