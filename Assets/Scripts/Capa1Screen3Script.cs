@@ -91,41 +91,41 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation (shop.status, ref spaceship);
 
 		if (servant.status != "unexistant" && servant.status != "undiscovered" && ClickedOn (servant.buyButton)) {	
-			checkCanBuy (Lang.SERVANT_NAME);
+			checkCanBuy (servant);
 		} else if (false) {
 			// COMPROBAR SI HA CLICKADO ENCIMA DE LA CABECERA
 		}
 
 		if (human.status != "unexistant" && human.status != "undiscovered" && ClickedOn (human.buyButton)) {	
-			checkCanBuy (Lang.HUMAN_NAME);
+			checkCanBuy (human);
 		}
 
 		if (prophet.status != "unexistant" && prophet.status != "undiscovered" && ClickedOn (prophet.buyButton)) {	
-			checkCanBuy (Lang.PROPHET_NAME);
+			checkCanBuy (prophet);
 		}
 
 		if (temple.status != "unexistant" && temple.status != "undiscovered" && ClickedOn (temple.buyButton)) {	
-			checkCanBuy (Lang.TEMPLE_NAME);
+			checkCanBuy (temple);
 		}
 
 		if (ship.status != "unexistant" && ship.status != "undiscovered" && ClickedOn (ship.buyButton)) {	
-			checkCanBuy (Lang.SHIP_NAME);
+			checkCanBuy (ship);
 		}
 
 		if (factory.status != "unexistant" && factory.status != "undiscovered" && ClickedOn (factory.buyButton)) {	
-			checkCanBuy (Lang.FACTORY_NAME);
+			checkCanBuy (factory);
 		}
 
 		if (laboratory.status != "unexistant" && laboratory.status != "undiscovered" && ClickedOn (laboratory.buyButton)) {	
-			checkCanBuy (Lang.LABORATORY_NAME);
+			checkCanBuy (laboratory);
 		}
 
 		if (shop.status != "unexistant" && shop.status != "undiscovered" && ClickedOn (shop.buyButton)) {	
-			checkCanBuy (Lang.SHOP_NAME);
+			checkCanBuy (shop);
 		}
 
 		if (spaceship.status != "unexistant" && spaceship.status != "undiscovered" && ClickedOn (spaceship.buyButton)) {	
-			checkCanBuy (Lang.SPACESHIP_NAME);
+			checkCanBuy (spaceship);
 		}
 
 
@@ -180,23 +180,29 @@ public class Capa1Screen3Script : MonoBehaviour {
 			producer.loveIcon.SetActive(true);
 
 			producer.buyButton.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
+			producer.icon.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
+			producer.screen.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
 		}
 
 		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking") && producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 			producer.buyButton.GetComponent<Animator> ().Play ("Available", 0, 0f);
+			producer.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
 		}
 
 		
 	}
 
-	private void checkCanBuy(int LangCode) {
+	private void checkCanBuy(Producer producer) {
 
-		if (GlobalData.thisState.love >= Mathf.Floor (GlobalData.getBaseCost(LangCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[LangCode]))) {
+		if (GlobalData.thisState.love >= Mathf.Floor (GlobalData.getBaseCost(producer.langCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[producer.langCode]))) {
 			
-			GlobalData.thisState.love -= Mathf.Floor (GlobalData.getBaseCost(LangCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[LangCode]));
-			GlobalData.thisState.values[LangCode]++;
+			GlobalData.thisState.love -= Mathf.Floor (GlobalData.getBaseCost(producer.langCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[producer.langCode]));
+			GlobalData.thisState.values[producer.langCode]++;
 			
 			float aux = Random.Range(0f, 1f);
+
+			producer.buyButton.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+			producer.icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
 			
 			if (aux > 2f/3f) {
 				buy1.Play();
@@ -290,6 +296,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject loveIcon;
 		public GameObject cost;
 		public GameObject buyButton;
+		public GameObject icon;
+		public GameObject screen;
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
 
@@ -308,6 +316,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 			cost = root.gameObject.transform.FindChild("Cost").gameObject;
 			cost.SetActive(false);
 			buyButton = root.gameObject.transform.FindChild("BuyButton").gameObject;
+			icon = root.gameObject.transform.FindChild("Icon").gameObject;
+			screen = root.gameObject.transform.FindChild("Screen").gameObject;
 
 			root.SetActive(false);
 
