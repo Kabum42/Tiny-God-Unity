@@ -91,8 +91,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 				if (checkCanBuy(producers[i])) {
 					buy (producers[i]);
 				}
-			} else if (false) {
-				// COMPROBAR SI HA CLICKADO ENCIMA DE LA CABECERA
+			} else if (producers[i].status != "unexistant" && producers[i].status != "undiscovered" && ClickedOn (producers[i].hb_head)) {
+				producers[i].root.GetComponent<Animator> ().Play ("Opening", 0, 0f);
 			}
 
 		}
@@ -249,7 +249,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 			} else if (Input.GetMouseButtonUp(0)) { 
 
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
-				
+
+				// BUY MASK
 				RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 				
 				if (hit.collider != null) {
@@ -260,6 +261,23 @@ public class Capa1Screen3Script : MonoBehaviour {
 					
 					if (hit2.collider != null) {
 
+						if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
+						
+					}
+					
+				}
+
+				// HEAD MASK
+				hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+				
+				if (hit.collider != null) {
+					
+					Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
+					
+					RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+					
+					if (hit2.collider != null) {
+						
 						if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
 						
 					}
