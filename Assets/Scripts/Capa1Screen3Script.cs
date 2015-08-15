@@ -25,6 +25,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 	private AudioSource buy1;
 	private AudioSource buy2;
 	private AudioSource buy3;
+	private AudioSource epic_ching;
 
 	// Use this for initialization
 	void Start () {
@@ -43,6 +44,12 @@ public class Capa1Screen3Script : MonoBehaviour {
 		buy3.clip = Resources.Load ("Audio/buy3") as AudioClip;
 		buy3.volume = 1f;
 		buy3.playOnAwake = false;
+
+		epic_ching = gameObject.AddComponent<AudioSource>();
+		epic_ching.clip = Resources.Load ("Audio/epic_ching") as AudioClip;
+		epic_ching.volume = 1f;
+		epic_ching.playOnAwake = false;
+
 
 		servant = new Producer (this.gameObject, 0, "Servant", Lang.SERVANT_NAME);
 		human = new Producer (this.gameObject, 1, "Human", Lang.HUMAN_NAME);
@@ -127,6 +134,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 			producer.buyButton.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
 			producer.icon.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
 			producer.screen.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
+
+			epic_ching.Play();
 
 		}
 
