@@ -20,17 +20,23 @@ public class MainLoadingScript : MonoBehaviour {
 
 		if (!GlobalData.started) { GlobalData.Start(); }
 
-		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-		// enables saving game progress.
-		.EnableSavedGames()
-		.Build();
-		
-		PlayGamesPlatform.InitializeInstance(config);
-		// Activate the Google Play Games platform
-		PlayGamesPlatform.Activate();
+		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
+			GlobalData.connectionStatus = -1;
+		} else {
+			PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+				// enables saving game progress.
+				.EnableSavedGames()
+					.Build();
+			
+			PlayGamesPlatform.InitializeInstance(config);
+			// Activate the Google Play Games platform
+			PlayGamesPlatform.Activate();
+			
+			// authenticate user:
+			AuthenticateLoop ();
+		}
 
-		// authenticate user:
-		AuthenticateLoop ();
+
 
 		StartCoroutine (LoadScreen ());
 
@@ -85,14 +91,18 @@ public class MainLoadingScript : MonoBehaviour {
 
 		if ((GlobalData.connectionStatus <= -1 || GlobalData.connectionStatus == 5) && loadProgress == 100) {
 
-
+			/*
 			if (GlobalData.connectionStatus <= -1) {
 				GlobalData.thisState.love = GlobalData.connectionStatus;
 			}
-
+			*/
 
 			scene1.SetActive (true);
-			Soomla.Store.SoomlaStore.Initialize (new SoomlaAssets());
+			if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
+				// NO HACEMOS NADA
+			} else {
+				Soomla.Store.SoomlaStore.Initialize (new SoomlaAssets());
+			}
 			//GameObject.Find ("Scene0").SetActive (false);
 			GameObject.Destroy(GameObject.Find ("Scene0"));
 
