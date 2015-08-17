@@ -30,6 +30,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		Lang.setLanguage (Lang.FRENCH_VALUE);
+
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
 		buy1.volume = 1f;
@@ -130,6 +132,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 			producer.number.SetActive(true);
 			producer.cost.SetActive(true);
 			producer.loveIcon.SetActive(true);
+			producer.icon_producer.SetActive(true);
 			
 			producer.buyButton.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
 			producer.icon.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
@@ -355,6 +358,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject icon;
 		public GameObject screen;
 		public GameObject hb_head;
+		public GameObject icon_producer;
 
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
@@ -377,12 +381,32 @@ public class Capa1Screen3Script : MonoBehaviour {
 			icon = root.gameObject.transform.FindChild("Icon").gameObject;
 			screen = root.gameObject.transform.FindChild("Screen").gameObject;
 			hb_head = root.gameObject.transform.FindChild("hb_head").gameObject;
+			icon_producer = root.gameObject.transform.FindChild("Icon/icon_base/icon_producer").gameObject;
+
+			if (langAux == Lang.SERVANT_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); }
+			if (langAux == Lang.HUMAN_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); }
+			if (langAux == Lang.PROPHET_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/prophet"); }
+			if (langAux == Lang.TEMPLE_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
+			if (langAux == Lang.SHIP_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
+			if (langAux == Lang.FACTORY_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
+			if (langAux == Lang.LABORATORY_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
+			if (langAux == Lang.SHOP_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
+			if (langAux == Lang.SPACESHIP_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
+
+			icon_producer.SetActive(false);
 
 			root.SetActive(false);
 
 			langCode = langAux;
 
 		}
+
+	}
+
+	void LateUpdate() {
+
+		//servant.icon_producer.GetComponent<SpriteRenderer> ().sprite = servant.true_icon;
+		//servant.icon_producer.
 
 	}
 
