@@ -17,8 +17,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 	private float discovered_transparency = 0.75f;
 
-	private GameObject producerSelected = null;
+	public Producer producerSelected = null;
+	private Producer lastProducerSelected = null;
 	private float selectedStatus = 0f;
+	private Vector3 previousPosition;
 
 	private Vector3 lastMousePosition;
 
@@ -26,11 +28,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 	private AudioSource buy2;
 	private AudioSource buy3;
 	private AudioSource epic_ching;
+	private AudioSource tap;
 
 	// Use this for initialization
 	void Start () {
-
-		Lang.setLanguage (Lang.FRENCH_VALUE);
 
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
@@ -51,6 +52,11 @@ public class Capa1Screen3Script : MonoBehaviour {
 		epic_ching.clip = Resources.Load ("Audio/epic_ching") as AudioClip;
 		epic_ching.volume = 1f;
 		epic_ching.playOnAwake = false;
+
+		tap = gameObject.AddComponent<AudioSource>();
+		tap.clip = Resources.Load ("Audio/tap") as AudioClip;
+		tap.volume = 1f;
+		tap.playOnAwake = false;
 
 
 		servant = new Producer (this.gameObject, 0, "Servant", Lang.SERVANT_NAME);
@@ -78,6 +84,28 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if (producerSelected != null  && selectedStatus < 1f) {
+			selectedStatus += Time.deltaTime*5f;
+			if (selectedStatus > 1f) { 
+
+				selectedStatus = 2f; 
+				previousPosition = producerSelected.root.transform.localPosition;
+				producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
+
+			}
+		}
+
+		if (producerSelected == null  && selectedStatus > 0f) {
+			selectedStatus -= Time.deltaTime*5f;
+			float x_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime*10f);
+			float y_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime*10f);
+			lastProducerSelected.root.transform.localPosition = new Vector3(x_value, y_value, 0);
+			if (selectedStatus < 0f) { 
+				selectedStatus = 0f; 
+				lastProducerSelected.root.transform.localPosition = new Vector3(previousPosition.x, previousPosition.y, 0);
+			}
+		}
+
 		// THIS REGULAR COMPROBATION IS SPECIAL, HAS NO PREVIOUS PRODUCER
 		RegularComprobation ("meh", ref servant);
 
@@ -86,18 +114,41 @@ public class Capa1Screen3Script : MonoBehaviour {
 			RegularComprobation (producers[i-1].status, ref producers[i]);
 		}
 
-		// CHECK FOR BUYINGS
 		for (int i = 0; i < producers.Length; i++) {
 
+			// CHECK FOR BUYINGS
 			if (producers[i].status != "unexistant" && producers[i].status != "undiscovered" && ClickedOn (producers[i].buyButton)) {	
 				if (checkCanBuy(producers[i])) {
 					buy (producers[i]);
 				}
-			} else if (producers[i].status != "unexistant" && producers[i].status != "undiscovered" && ClickedOn (producers[i].hb_head)) {
-				producers[i].root.GetComponent<Animator> ().Play ("Opening", 0, 0f);
+			} else {
+
+				if (producerSelected == null) {
+					
+					if (selectedStatus == 0f) {
+							
+						if (producers[i].status != "unexistant" && producers[i].status != "undiscovered" && ClickedOn (producers[i].hb_head)) {
+							producerSelected = producers[i];
+							lastProducerSelected = producers[i];
+							tap.Play();
+						}
+
+					}
+					
+				} else {
+					
+					if (ClickedOn (producerSelected.hb_head) && producers[i] == producerSelected && selectedStatus == 2f) {
+						producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening2", 0f, 0, 0f);
+						producerSelected = null;
+						tap.Play();
+					}
+					
+				}
+
 			}
 
 		}
+
 
 
 	}
@@ -179,6 +230,17 @@ public class Capa1Screen3Script : MonoBehaviour {
 			producer.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
 		}
 
+		producer.text.GetComponent<TextMesh> ().fontSize = 75;
+
+		while (producer.text.GetComponent<MeshRenderer> ().bounds.size.x > 4.3f) {
+			producer.text.GetComponent<TextMesh> ().fontSize -= 1;
+		}
+
+		producer.cost.GetComponent<TextMesh> ().fontSize = 50;
+
+		while (producer.cost.GetComponent<MeshRenderer> ().bounds.size.x > 3.8f) {
+			producer.cost.GetComponent<TextMesh> ().fontSize -= 1;
+		}
 
 		// CHANGE TRANSPARENCIES
 		/*
@@ -271,20 +333,21 @@ public class Capa1Screen3Script : MonoBehaviour {
 				}
 
 				// HEAD MASK
-				hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
-				
-				if (hit.collider != null) {
-					
+				//hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+				RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+
+				for (int i = 0; i < hits.Length; i++) {
+
 					Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
-					
-					RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
-					
-					if (hit2.collider != null) {
-						
-						if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
-						
+
+					RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+
+					for (int j = 0; j < hits2.Length; j++) {
+
+						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+
 					}
-					
+
 				}
 
 			}
@@ -300,35 +363,37 @@ public class Capa1Screen3Script : MonoBehaviour {
 				} else if (Input.GetTouch(0).phase == TouchPhase.Ended) {
 
 					Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
-
-					RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("ProducerMask"));
-
-					if (hit != null) {
-
-						Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
-						
-						RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("ProducerMask"));
-						
-						if (hit2 != null) {
-							
-							if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
-							
-						}
-
-					}
 					
-					// HEAD MASK
-					hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+					// BUY MASK
+					RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 					
 					if (hit.collider != null) {
 						
 						Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
 						
-						RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+						RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 						
 						if (hit2.collider != null) {
 							
 							if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
+							
+						}
+						
+					}
+					
+					// HEAD MASK
+					//hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+					RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+					
+					for (int i = 0; i < hits.Length; i++) {
+						
+						Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
+						
+						RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+						
+						for (int j = 0; j < hits2.Length; j++) {
+							
+							if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
 							
 						}
 						
@@ -403,10 +468,74 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 	}
 
+	private void Adjust(ref Producer producer) {
+		
+		if (producerSelected == producer) {
+
+			if (selectedStatus == 2f) {
+				producer.root.transform.localPosition = new Vector3(Mathf.Lerp(producer.root.transform.localPosition.x, 0f, Time.deltaTime*10f), Mathf.Lerp(producer.root.transform.localPosition.y, 3f -producer.root.transform.parent.localPosition.y , Time.deltaTime*10f), 0);
+			}
+
+		} else if (lastProducerSelected == producer) {
+
+		} else {
+			
+			float alphaValue = selectedStatus;
+			if (alphaValue > 1f)  { alphaValue = 1f; }
+			alphaValue = 1f - alphaValue;
+
+			foreach (Transform child in producer.root.transform) {
+
+				if (child.gameObject.GetComponent<TextMesh>() != null) {
+					child.gameObject.GetComponent<TextMesh>().color = new Color(child.gameObject.GetComponent<TextMesh>().color.r, child.gameObject.GetComponent<TextMesh>().color.g, child.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
+				}
+
+				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
+					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+				}
+
+			}
+
+			foreach (Transform child in producer.icon.transform) {
+				
+				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
+					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+				}
+				
+			}
+
+			producer.icon_producer.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+
+			foreach (Transform child in producer.screen.transform) {
+				
+				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
+					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+				}
+				
+			}
+
+			foreach (Transform child in producer.buyButton.transform) {
+				
+				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
+					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+				}
+				
+			}
+			
+			//producer.hb_head.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			
+		}
+		
+	}
+
 	void LateUpdate() {
 
-		//servant.icon_producer.GetComponent<SpriteRenderer> ().sprite = servant.true_icon;
-		//servant.icon_producer.
+		for (int i = 0; i < producers.Length; i++) {
+			
+			// ADJUST ALPHA AND POSITION
+			Adjust(ref producers[i]);
+			
+		}
 
 	}
 
