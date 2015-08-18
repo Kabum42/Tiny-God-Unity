@@ -119,7 +119,8 @@ public class YahvyScript : MonoBehaviour {
 		yahvyFrontShadeDetailDown = yahvyFront.transform.FindChild("Yahvy_ShadeDetail_Down").gameObject;
 
 		PlayAnimation ("IdleLoop");
-		ChangeSkin ("Rainbow");
+		ChangeSkin ("Standard");
+		//ChangeSkin ("Rainbow");
 	
 	}
 	
@@ -280,7 +281,7 @@ public class YahvyScript : MonoBehaviour {
 						PlayAnimation("TapCritical");
 					} else {
 						CrossFadeAnimation("TapEye");
-						Application.LoadLevelAdditive("MiniGame");
+						//Application.LoadLevelAdditive("MiniGame");
 					}
 					
 				} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyBody"))) {

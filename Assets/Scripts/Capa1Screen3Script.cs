@@ -442,11 +442,11 @@ public class Capa1Screen3Script : MonoBehaviour {
 			loveIcon.SetActive(false);
 			cost = root.gameObject.transform.FindChild("Cost").gameObject;
 			cost.SetActive(false);
-			buyButton = root.gameObject.transform.FindChild("BuyButton").gameObject;
-			icon = root.gameObject.transform.FindChild("Icon").gameObject;
+			buyButton = root.gameObject.transform.FindChild("Pro_Button").gameObject;
+			icon = root.gameObject.transform.FindChild("Pro_Icon").gameObject;
 			screen = root.gameObject.transform.FindChild("Screen").gameObject;
-			hb_head = root.gameObject.transform.FindChild("hb_head").gameObject;
-			icon_producer = root.gameObject.transform.FindChild("Icon/icon_base/icon_producer").gameObject;
+			hb_head = root.gameObject.transform.FindChild("hb_pix_board").gameObject;
+			icon_producer = root.gameObject.transform.FindChild("Pro_Icon/icon_base/icon_producer").gameObject;
 
 			if (langAux == Lang.SERVANT_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); }
 			if (langAux == Lang.HUMAN_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); }
