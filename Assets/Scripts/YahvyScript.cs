@@ -251,7 +251,7 @@ public class YahvyScript : MonoBehaviour {
 
 		}
 
-		if (touched && Camera.main.GetComponent<MainScript>().currentScreen == 0) {
+		if (touched && GlobalData.currentScreen == 0) {
 
 			lastInteraction = 0f;
 

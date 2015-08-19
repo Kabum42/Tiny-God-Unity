@@ -13,6 +13,7 @@ public static class GlobalData {
 	public static bool started = false;
 
 	public static float CAPA1_WIDTH_SCREEN = 20f;
+	public static int currentScreen = 0;
 
 	public static float connectionStatus = 0f;
 	private static float defaultSaveCooldown = 20f;

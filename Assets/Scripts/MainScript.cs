@@ -4,7 +4,6 @@ using System.Collections;
 public class MainScript : MonoBehaviour {
 
 	public int[] screens = {-2, -1, 0, 1, 2};
-	public int currentScreen = 0;
 
 	private AsyncOperation async;
 
@@ -208,35 +207,35 @@ public class MainScript : MonoBehaviour {
 					
 					slide.Play();
 					
-					currentScreen--;
-					if (currentScreen < -2) { currentScreen = -2; }
+					GlobalData.currentScreen--;
+					if (GlobalData.currentScreen < -2) { GlobalData.currentScreen = -2; }
 					
 				}
 				else if (slideToRight > 0f && slideToRight >= slideToLeft && possibleSlide) {
 					
 					slide.Play();
 					
-					currentScreen++;
-					if (currentScreen > 2) { currentScreen = 2; }
+					GlobalData.currentScreen++;
+					if (GlobalData.currentScreen > 2) { GlobalData.currentScreen = 2; }
 					
 				}
 				else {
 
 					// NINGUN DESLIZAMIENTO BRUSCO, PUNTERO ESTATICO
 					if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
-						currentScreen = 2;
+						GlobalData.currentScreen = 2;
 					}
 					else if (capa1.transform.position.x > -GlobalData.CAPA1_WIDTH_SCREEN*1.5f && capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*0.5f) {
-						currentScreen = 1;
+						GlobalData.currentScreen = 1;
 					}
 					else if (capa1.transform.position.x > -GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*0.5f) {
-						currentScreen = 0;
+						GlobalData.currentScreen = 0;
 					}
 					else if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
-						currentScreen = -1;
+						GlobalData.currentScreen = -1;
 					}
 					else if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
-						currentScreen = -2;
+						GlobalData.currentScreen = -2;
 					}
 					
 				}
@@ -245,7 +244,7 @@ public class MainScript : MonoBehaviour {
 		}
 		else {
 			// PUNTERO NO ESTA INTERACTUANDO
-			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(currentScreen*-GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
+			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(GlobalData.currentScreen*-GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
 		}
 
 		UpdateMousePosition ();

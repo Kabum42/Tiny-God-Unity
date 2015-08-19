@@ -74,36 +74,38 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if (GlobalData.currentScreen == 1) {
 
-
-		if (producerSelected != null  && selectedStatus < 2.5f) {
-			selectedStatus += Time.deltaTime*5f;
-			if (selectedStatus > 1f && selectedStatus < 2f) { 
-
-				selectedStatus = 2f; 
-				previousPosition = producerSelected.root.transform.localPosition;
-				producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
-				producerSelected.info.SetActive(true);
-				producerSelected.info.GetComponent<TextMesh>().color = new Color(producerSelected.info.GetComponent<TextMesh>().color.r, producerSelected.info.GetComponent<TextMesh>().color.g, producerSelected.info.GetComponent<TextMesh>().color.b, 0f);
-
+			if (producerSelected != null  && selectedStatus < 2.5f) {
+				selectedStatus += Time.deltaTime*5f;
+				if (selectedStatus > 1f && selectedStatus < 2f) { 
+					
+					selectedStatus = 2f; 
+					previousPosition = producerSelected.root.transform.localPosition;
+					producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
+					producerSelected.info.SetActive(true);
+					producerSelected.info.GetComponent<TextMesh>().color = new Color(producerSelected.info.GetComponent<TextMesh>().color.r, producerSelected.info.GetComponent<TextMesh>().color.g, producerSelected.info.GetComponent<TextMesh>().color.b, 0f);
+					
+				}
+				
+				if (selectedStatus > 2.5f) {
+					selectedStatus = 2.5f;
+				}
+			}
+			
+			if (producerSelected == null  && selectedStatus > 0f) {
+				selectedStatus -= Time.deltaTime*5f;
+				float x_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime*10f);
+				float y_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime*10f);
+				lastProducerSelected.root.transform.localPosition = new Vector3(x_value, y_value, 0);
+				lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, Mathf.Lerp(lastProducerSelected.info.GetComponent<TextMesh>().color.a, 0f, Time.deltaTime*50f));
+				if (selectedStatus < 0f) { 
+					selectedStatus = 0f; 
+					lastProducerSelected.root.transform.localPosition = new Vector3(previousPosition.x, previousPosition.y, 0);
+					lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, 0f);
+				}
 			}
 
-			if (selectedStatus > 2.5f) {
-				selectedStatus = 2.5f;
-			}
-		}
-
-		if (producerSelected == null  && selectedStatus > 0f) {
-			selectedStatus -= Time.deltaTime*5f;
-			float x_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime*10f);
-			float y_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime*10f);
-			lastProducerSelected.root.transform.localPosition = new Vector3(x_value, y_value, 0);
-			lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, Mathf.Lerp(lastProducerSelected.info.GetComponent<TextMesh>().color.a, 0f, Time.deltaTime*50f));
-			if (selectedStatus < 0f) { 
-				selectedStatus = 0f; 
-				lastProducerSelected.root.transform.localPosition = new Vector3(previousPosition.x, previousPosition.y, 0);
-				lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, 0f);
-			}
 		}
 
 		// THIS REGULAR COMPROBATION IS SPECIAL, HAS NO PREVIOUS PRODUCER
@@ -119,17 +121,17 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation (laboratory.status, ref shop);
 		RegularComprobation (shop.status, ref spaceship);
 
-		ClickingComprobation (ref servant);
-		ClickingComprobation (ref human);
-		ClickingComprobation (ref prophet);
-		ClickingComprobation (ref temple);
-		ClickingComprobation (ref ship);
-		ClickingComprobation (ref factory);
-		ClickingComprobation (ref laboratory);
-		ClickingComprobation (ref shop);
-		ClickingComprobation (ref spaceship);
-
-
+		if (GlobalData.currentScreen == 1) {
+			ClickingComprobation (ref servant);
+			ClickingComprobation (ref human);
+			ClickingComprobation (ref prophet);
+			ClickingComprobation (ref temple);
+			ClickingComprobation (ref ship);
+			ClickingComprobation (ref factory);
+			ClickingComprobation (ref laboratory);
+			ClickingComprobation (ref shop);
+			ClickingComprobation (ref spaceship);
+		}
 
 	}
 
@@ -477,43 +479,72 @@ public class Capa1Screen3Script : MonoBehaviour {
 			text = root.gameObject.transform.FindChild("Text").gameObject;
 			number = root.gameObject.transform.FindChild("Number").gameObject;
 			number.SetActive(false);
-			loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
-			loveIcon.SetActive(false);
 			cost = root.gameObject.transform.FindChild("Cost").gameObject;
 			cost.SetActive(false);
 			buyButton = root.gameObject.transform.FindChild("Pro_Button").gameObject;
-			icon = root.gameObject.transform.FindChild("Pro_Icon").gameObject;
 			screen = root.gameObject.transform.FindChild("Screen").gameObject;
+			icon = root.gameObject.transform.FindChild("Pro_Icon").gameObject;
+
+			loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
+			Material mat = Instantiate(loveIcon.GetComponent<SpriteRenderer>().material) as Material;
+			loveIcon.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			loveIcon.SetActive(false);
 
 			hb_head = root.gameObject.transform.FindChild("hb_pix_board").gameObject;
+			hb_head.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			hb_botcorner_right = root.gameObject.transform.FindChild("hb_botcorner_right").gameObject;
+			hb_botcorner_right.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			hb_botcorner_left = root.gameObject.transform.FindChild("hb_botcorner_left").gameObject;
+			hb_botcorner_left.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			hb_pix_foot = root.gameObject.transform.FindChild("hb_pix_foot").gameObject;
+			hb_pix_foot.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			hb_topcorner_right = root.gameObject.transform.FindChild("hb_topcorner_right").gameObject;
+			hb_topcorner_right.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			hb_topcorner_left = root.gameObject.transform.FindChild("hb_topcorner_left").gameObject;
+			hb_topcorner_left.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			hb_pix_section = root.gameObject.transform.FindChild("hb_pix_section").gameObject;
+			hb_pix_section.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			hb_pix_panel = root.gameObject.transform.FindChild("hb_pix_panel").gameObject;
+			hb_pix_panel.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
 			icon_shine = root.gameObject.transform.FindChild("Pro_Icon/icon_shine").gameObject;
+			icon_shine.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_heart = root.gameObject.transform.FindChild("Pro_Icon/icon_heart").gameObject;
+			icon_heart.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_heartside = root.gameObject.transform.FindChild("Pro_Icon/icon_heartside").gameObject;
+			icon_heartside.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_cover = root.gameObject.transform.FindChild("Pro_Icon/icon_cover").gameObject;
+			icon_cover.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_base = root.gameObject.transform.FindChild("Pro_Icon/icon_base").gameObject;
+			icon_base.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_side = root.gameObject.transform.FindChild("Pro_Icon/icon_side").gameObject;
+			icon_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_producer = root.gameObject.transform.FindChild("Pro_Icon/icon_base/icon_producer").gameObject;
+			icon_producer.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
 			icon_cover_s = root.gameObject.transform.FindChild("Screen/icon_cover").gameObject;
+			icon_cover_s.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			sc_side = root.gameObject.transform.FindChild("Screen/sc_side").gameObject;
+			sc_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			sc_on = root.gameObject.transform.FindChild("Screen/sc_on").gameObject;
+			sc_on.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			sc_off = root.gameObject.transform.FindChild("Screen/sc_off").gameObject;
+			sc_off.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
 			bb_plus = root.gameObject.transform.FindChild("Pro_Button/bb_plus").gameObject;
+			bb_plus.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			bb_plus_side = root.gameObject.transform.FindChild("Pro_Button/bb_plus_side").gameObject;
+			bb_plus_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			bb_cross = root.gameObject.transform.FindChild("Pro_Button/bb_cross").gameObject;
+			bb_cross.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_cover_b = root.gameObject.transform.FindChild("Pro_Button/icon_cover").gameObject;
+			icon_cover_b.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			bb_lock = root.gameObject.transform.FindChild("Pro_Button/bb_lock").gameObject;
+			bb_lock.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			bb_square = root.gameObject.transform.FindChild("Pro_Button/bb_square").gameObject;
+			bb_square.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			bb_square_side = root.gameObject.transform.FindChild("Pro_Button/bb_square_side").gameObject;
+			bb_square_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
 			info = root.gameObject.transform.FindChild("Info").gameObject;
 
@@ -604,50 +635,16 @@ public class Capa1Screen3Script : MonoBehaviour {
 		} else if (lastProducerSelected == producer) {
 
 		} else {
-			
+
 			float alphaValue = selectedStatus;
 			if (alphaValue > 1f)  { alphaValue = 1f; }
 			alphaValue = 1f - alphaValue;
 
-			// ROOT
-			producer.hb_head.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.hb_botcorner_right.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.hb_botcorner_left.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.hb_pix_foot.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.hb_topcorner_right.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.hb_topcorner_left.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.hb_pix_section.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.hb_pix_panel.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.loveIcon.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_head.gameObject.GetComponent<SpriteRenderer>().sharedMaterial.color = new Color(1f, 1f, 1f, alphaValue);
 
-			// ICON
-			producer.icon_shine.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.icon_heart.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.icon_heartside.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.icon_cover.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.icon_base.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.icon_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.icon_producer.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-
-			// TEXTS
-			producer.text.GetComponent<TextMesh>().color = new Color(producer.text.GetComponent<TextMesh>().color.r, producer.text.GetComponent<TextMesh>().color.g, producer.text.GetComponent<TextMesh>().color.b, alphaValue);
-			producer.cost.GetComponent<TextMesh>().color = new Color (producer.cost.GetComponent<TextMesh>().color.r, producer.cost.GetComponent<TextMesh>().color.g, producer.cost.GetComponent<TextMesh>().color.b, alphaValue);
-			producer.number.GetComponent<TextMesh>().color = new Color(producer.number.GetComponent<TextMesh>().color.r, producer.number.GetComponent<TextMesh>().color.g, producer.number.GetComponent<TextMesh>().color.b, alphaValue);
-
-			// SCREEN
-			producer.icon_cover_s.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.sc_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.sc_on.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.sc_off.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-
-			// BUTTON
-			producer.bb_plus.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.bb_plus_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.bb_cross.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.icon_cover_b.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.bb_lock.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.bb_square.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-			producer.bb_square_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.text.gameObject.GetComponent<TextMesh>().color = new Color (producer.text.gameObject.GetComponent<TextMesh>().color.r, producer.text.gameObject.GetComponent<TextMesh>().color.g, producer.text.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
+			producer.cost.gameObject.GetComponent<TextMesh>().color = new Color (producer.cost.gameObject.GetComponent<TextMesh>().color.r, producer.cost.gameObject.GetComponent<TextMesh>().color.g, producer.cost.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
+			producer.number.gameObject.GetComponent<TextMesh>().color = new Color(producer.number.gameObject.GetComponent<TextMesh>().color.r, producer.number.gameObject.GetComponent<TextMesh>().color.g, producer.number.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
 			
 		}
 
@@ -657,16 +654,18 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 	void LateUpdate() {
 
-		Adjust (ref servant);
-		Adjust (ref human);
-		Adjust (ref prophet);
-		Adjust (ref temple);
-		Adjust (ref ship);
-		Adjust (ref factory);
-		Adjust (ref laboratory);
-		Adjust (ref shop);
-		Adjust (ref spaceship);
-
+		if (GlobalData.currentScreen == 1) {
+			Adjust (ref servant);
+			Adjust (ref human);
+			Adjust (ref prophet);
+			Adjust (ref temple);
+			Adjust (ref ship);
+			Adjust (ref factory);
+			Adjust (ref laboratory);
+			Adjust (ref shop);
+			Adjust (ref spaceship);
+		}
+		
 	}
 
 }
