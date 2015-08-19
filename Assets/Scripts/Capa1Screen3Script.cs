@@ -33,6 +33,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+
+
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
 		buy1.volume = 1f;
@@ -68,21 +70,13 @@ public class Capa1Screen3Script : MonoBehaviour {
 		laboratory = new Producer (this.gameObject, 6, "Laboratory", Lang.LABORATORY_NAME);
 		shop = new Producer (this.gameObject, 7, "Shop", Lang.SHOP_NAME);
 		spaceship = new Producer (this.gameObject, 8, "Spaceship", Lang.SPACESHIP_NAME);
-
-		producers [0] = servant;
-		producers [1] = human;
-		producers [2] = prophet;
-		producers [3] = temple;
-		producers [4] = ship;
-		producers [5] = factory;
-		producers [6] = laboratory;
-		producers [7] = shop;
-		producers [8] = spaceship;
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+
 
 		if (producerSelected != null  && selectedStatus < 1f) {
 			selectedStatus += Time.deltaTime*5f;
@@ -110,46 +104,49 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation ("meh", ref servant);
 
 		// OTHER REGULAR COMPROBATIONS
-		for (int i = 1; i < producers.Length; i++) {
-			RegularComprobation (producers[i-1].status, ref producers[i]);
-		}
+		RegularComprobation (servant.status, ref human);
+		RegularComprobation (human.status, ref prophet);
+		RegularComprobation (prophet.status, ref temple);
+		RegularComprobation (temple.status, ref ship);
+		RegularComprobation (ship.status, ref factory);
+		RegularComprobation (factory.status, ref laboratory);
+		RegularComprobation (laboratory.status, ref shop);
+		RegularComprobation (shop.status, ref spaceship);
 
-		for (int i = 0; i < producers.Length; i++) {
+		ClickingComprobation (ref servant);
+		ClickingComprobation (ref human);
+		ClickingComprobation (ref prophet);
+		ClickingComprobation (ref temple);
+		ClickingComprobation (ref ship);
+		ClickingComprobation (ref factory);
+		ClickingComprobation (ref laboratory);
+		ClickingComprobation (ref shop);
+		ClickingComprobation (ref spaceship);
 
-			// CHECK FOR BUYINGS
-			if (producers[i].status != "unexistant" && producers[i].status != "undiscovered" && ClickedOn (producers[i].buyButton)) {	
-				if (checkCanBuy(producers[i])) {
-					buy (producers[i]);
-				}
-			} else {
 
-				if (producerSelected == null) {
-					
-					if (selectedStatus == 0f) {
-							
-						if (producers[i].status != "unexistant" && producers[i].status != "undiscovered" && ClickedOn (producers[i].hb_head)) {
-							producerSelected = producers[i];
-							lastProducerSelected = producers[i];
-							tap.Play();
-						}
+	}
 
-					}
-					
-				} else {
-					
-					if (ClickedOn (producerSelected.hb_head) && producers[i] == producerSelected && selectedStatus == 2f) {
-						producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening2", 0f, 0, 0f);
-						producerSelected = null;
+	private void ClickingComprobation(ref Producer producer) {
+
+		if (producer.status != "unexistant" && producer.status != "undiscovered" && ClickedOn (producer.buyButton)) {	
+			if (checkCanBuy(producer)) { buy (producer); }
+		} else {	
+			if (producerSelected == null) {
+				if (selectedStatus == 0f) {
+					if (producer.status != "unexistant" && producer.status != "undiscovered" && ClickedOn (producer.hb_head)) {
+						producerSelected = producer;
+						lastProducerSelected = producer;
 						tap.Play();
 					}
-					
 				}
-
+			} else {
+				if (ClickedOn (producerSelected.hb_head) && producer == producerSelected && selectedStatus == 2f) {
+					producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening2", 0f, 0, 0f);
+					producerSelected = null;
+					tap.Play();
+				}
 			}
-
 		}
-
-
 
 	}
 
@@ -422,8 +419,28 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject buyButton;
 		public GameObject icon;
 		public GameObject screen;
+
 		public GameObject hb_head;
+		public GameObject hb_botcorner_right;
+		public GameObject hb_botcorner_left;
+		public GameObject hb_pix_foot;
+		public GameObject hb_topcorner_right;
+		public GameObject hb_topcorner_left;
+		public GameObject hb_pix_section;
+		public GameObject hb_pix_panel;
+
+		public GameObject icon_shine;
+		public GameObject icon_heart;
+		public GameObject icon_heartside;
+		public GameObject icon_cover;
+		public GameObject icon_base;
+		public GameObject icon_side;
 		public GameObject icon_producer;
+
+		public GameObject icon_cover_s;
+		public GameObject sc_side;
+		public GameObject sc_on;
+		public GameObject sc_off;
 
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
@@ -445,8 +462,28 @@ public class Capa1Screen3Script : MonoBehaviour {
 			buyButton = root.gameObject.transform.FindChild("Pro_Button").gameObject;
 			icon = root.gameObject.transform.FindChild("Pro_Icon").gameObject;
 			screen = root.gameObject.transform.FindChild("Screen").gameObject;
+
 			hb_head = root.gameObject.transform.FindChild("hb_pix_board").gameObject;
+			hb_botcorner_right = root.gameObject.transform.FindChild("hb_botcorner_right").gameObject;
+			hb_botcorner_left = root.gameObject.transform.FindChild("hb_botcorner_left").gameObject;
+			hb_pix_foot = root.gameObject.transform.FindChild("hb_pix_foot").gameObject;
+			hb_topcorner_right = root.gameObject.transform.FindChild("hb_topcorner_right").gameObject;
+			hb_topcorner_left = root.gameObject.transform.FindChild("hb_topcorner_left").gameObject;
+			hb_pix_section = root.gameObject.transform.FindChild("hb_pix_section").gameObject;
+			hb_pix_panel = root.gameObject.transform.FindChild("hb_pix_panel").gameObject;
+
+			icon_shine = root.gameObject.transform.FindChild("Pro_Icon/icon_shine").gameObject;
+			icon_heart = root.gameObject.transform.FindChild("Pro_Icon/icon_heart").gameObject;
+			icon_heartside = root.gameObject.transform.FindChild("Pro_Icon/icon_heartside").gameObject;
+			icon_cover = root.gameObject.transform.FindChild("Pro_Icon/icon_cover").gameObject;
+			icon_base = root.gameObject.transform.FindChild("Pro_Icon/icon_base").gameObject;
+			icon_side = root.gameObject.transform.FindChild("Pro_Icon/icon_side").gameObject;
 			icon_producer = root.gameObject.transform.FindChild("Pro_Icon/icon_base/icon_producer").gameObject;
+
+			icon_cover_s = root.gameObject.transform.FindChild("Screen/icon_cover").gameObject;
+			sc_side = root.gameObject.transform.FindChild("Screen/sc_side").gameObject;
+			sc_on = root.gameObject.transform.FindChild("Screen/sc_on").gameObject;
+			sc_off = root.gameObject.transform.FindChild("Screen/sc_off").gameObject;
 
 			if (langAux == Lang.SERVANT_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); }
 			if (langAux == Lang.HUMAN_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); }
@@ -469,7 +506,9 @@ public class Capa1Screen3Script : MonoBehaviour {
 	}
 
 	private void Adjust(ref Producer producer) {
-		
+
+
+
 		if (producerSelected == producer) {
 
 			if (selectedStatus == 2f) {
@@ -484,27 +523,39 @@ public class Capa1Screen3Script : MonoBehaviour {
 			if (alphaValue > 1f)  { alphaValue = 1f; }
 			alphaValue = 1f - alphaValue;
 
-			foreach (Transform child in producer.root.transform) {
+			// ROOT
+			producer.hb_head.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_botcorner_right.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_botcorner_left.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_pix_foot.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_topcorner_right.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_topcorner_left.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_pix_section.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.hb_pix_panel.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.loveIcon.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
 
-				if (child.gameObject.GetComponent<TextMesh>() != null) {
-					child.gameObject.GetComponent<TextMesh>().color = new Color(child.gameObject.GetComponent<TextMesh>().color.r, child.gameObject.GetComponent<TextMesh>().color.g, child.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
-				}
-
-				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
-					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-				}
-
-			}
-
-			foreach (Transform child in producer.icon.transform) {
-				
-				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
-					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-				}
-				
-			}
-
+			// ICON
+			producer.icon_shine.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.icon_heart.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.icon_heartside.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.icon_cover.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.icon_base.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.icon_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
 			producer.icon_producer.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+
+			// TEXTS
+			producer.text.GetComponent<TextMesh>().color = new Color(producer.text.GetComponent<TextMesh>().color.r, producer.text.GetComponent<TextMesh>().color.g, producer.text.GetComponent<TextMesh>().color.b, alphaValue);
+			producer.cost.GetComponent<TextMesh>().color = new Color (producer.cost.GetComponent<TextMesh>().color.r, producer.cost.GetComponent<TextMesh>().color.g, producer.cost.GetComponent<TextMesh>().color.b, alphaValue);
+			producer.number.GetComponent<TextMesh>().color = new Color(producer.number.GetComponent<TextMesh>().color.r, producer.number.GetComponent<TextMesh>().color.g, producer.number.GetComponent<TextMesh>().color.b, alphaValue);
+
+			// SCREEN
+			producer.icon_cover_s.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.sc_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.sc_on.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.sc_off.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+
+
+			/*
 
 			foreach (Transform child in producer.screen.transform) {
 				
@@ -521,21 +572,28 @@ public class Capa1Screen3Script : MonoBehaviour {
 				}
 				
 			}
-			
+
+			*/
+
 			//producer.hb_head.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
 			
 		}
+
+
 		
 	}
 
 	void LateUpdate() {
 
-		for (int i = 0; i < producers.Length; i++) {
-			
-			// ADJUST ALPHA AND POSITION
-			Adjust(ref producers[i]);
-			
-		}
+		Adjust (ref servant);
+		Adjust (ref human);
+		Adjust (ref prophet);
+		Adjust (ref temple);
+		Adjust (ref ship);
+		Adjust (ref factory);
+		Adjust (ref laboratory);
+		Adjust (ref shop);
+		Adjust (ref spaceship);
 
 	}
 
