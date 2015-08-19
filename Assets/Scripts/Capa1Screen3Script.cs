@@ -128,7 +128,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 	private void ClickingComprobation(ref Producer producer) {
 
-		if (producer.status != "unexistant" && producer.status != "undiscovered" && ClickedOn (producer.buyButton)) {	
+		if (producer.status != "unexistant" && producer.status != "undiscovered" && ClickedOn (producer.buyButton) && (producerSelected == null || producerSelected == producer)) {	
 			if (checkCanBuy(producer)) { buy (producer); }
 		} else {	
 			if (producerSelected == null) {
@@ -442,6 +442,14 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject sc_on;
 		public GameObject sc_off;
 
+		public GameObject bb_plus;
+		public GameObject bb_plus_side;
+		public GameObject bb_cross;
+		public GameObject icon_cover_b;
+		public GameObject bb_lock;
+		public GameObject bb_square;
+		public GameObject bb_square_side;
+
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
 
@@ -484,6 +492,14 @@ public class Capa1Screen3Script : MonoBehaviour {
 			sc_side = root.gameObject.transform.FindChild("Screen/sc_side").gameObject;
 			sc_on = root.gameObject.transform.FindChild("Screen/sc_on").gameObject;
 			sc_off = root.gameObject.transform.FindChild("Screen/sc_off").gameObject;
+
+			bb_plus = root.gameObject.transform.FindChild("Pro_Button/bb_plus").gameObject;
+			bb_plus_side = root.gameObject.transform.FindChild("Pro_Button/bb_plus_side").gameObject;
+			bb_cross = root.gameObject.transform.FindChild("Pro_Button/bb_cross").gameObject;
+			icon_cover_b = root.gameObject.transform.FindChild("Pro_Button/icon_cover").gameObject;
+			bb_lock = root.gameObject.transform.FindChild("Pro_Button/bb_lock").gameObject;
+			bb_square = root.gameObject.transform.FindChild("Pro_Button/bb_square").gameObject;
+			bb_square_side = root.gameObject.transform.FindChild("Pro_Button/bb_square_side").gameObject;
 
 			if (langAux == Lang.SERVANT_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); }
 			if (langAux == Lang.HUMAN_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); }
@@ -554,28 +570,14 @@ public class Capa1Screen3Script : MonoBehaviour {
 			producer.sc_on.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
 			producer.sc_off.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
 
-
-			/*
-
-			foreach (Transform child in producer.screen.transform) {
-				
-				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
-					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-				}
-				
-			}
-
-			foreach (Transform child in producer.buyButton.transform) {
-				
-				if (child.gameObject.GetComponent<SpriteRenderer>() != null) {
-					child.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
-				}
-				
-			}
-
-			*/
-
-			//producer.hb_head.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			// BUTTON
+			producer.bb_plus.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.bb_plus_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.bb_cross.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.icon_cover_b.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.bb_lock.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.bb_square.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
+			producer.bb_square_side.gameObject.GetComponent<SpriteRenderer>().material.color = new Color(1f, 1f, 1f, alphaValue);
 			
 		}
 
