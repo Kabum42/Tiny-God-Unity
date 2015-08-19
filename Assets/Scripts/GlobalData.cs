@@ -148,7 +148,7 @@ public static class GlobalData {
 
 		int iterations = 0;
 		
-		while (d > 1000) {
+		while (d >= 1000) {
 			iterations++;
 			d = d / 1000;
 		}

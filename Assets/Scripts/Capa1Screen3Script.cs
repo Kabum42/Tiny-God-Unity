@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class Capa1Screen3Script : MonoBehaviour {
-
-	private Producer[]producers = new Producer[9];
-
+	
 	private Producer servant;
 	private Producer human;
 	private Producer prophet;
@@ -33,7 +31,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-
+		Lang.setLanguage (Lang.SPANISH_VALUE);
 
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
@@ -78,14 +76,20 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 
 
-		if (producerSelected != null  && selectedStatus < 1f) {
+		if (producerSelected != null  && selectedStatus < 2.5f) {
 			selectedStatus += Time.deltaTime*5f;
-			if (selectedStatus > 1f) { 
+			if (selectedStatus > 1f && selectedStatus < 2f) { 
 
 				selectedStatus = 2f; 
 				previousPosition = producerSelected.root.transform.localPosition;
 				producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
+				producerSelected.info.SetActive(true);
+				producerSelected.info.GetComponent<TextMesh>().color = new Color(producerSelected.info.GetComponent<TextMesh>().color.r, producerSelected.info.GetComponent<TextMesh>().color.g, producerSelected.info.GetComponent<TextMesh>().color.b, 0f);
 
+			}
+
+			if (selectedStatus > 2.5f) {
+				selectedStatus = 2.5f;
 			}
 		}
 
@@ -94,9 +98,11 @@ public class Capa1Screen3Script : MonoBehaviour {
 			float x_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime*10f);
 			float y_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime*10f);
 			lastProducerSelected.root.transform.localPosition = new Vector3(x_value, y_value, 0);
+			lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, Mathf.Lerp(lastProducerSelected.info.GetComponent<TextMesh>().color.a, 0f, Time.deltaTime*50f));
 			if (selectedStatus < 0f) { 
 				selectedStatus = 0f; 
 				lastProducerSelected.root.transform.localPosition = new Vector3(previousPosition.x, previousPosition.y, 0);
+				lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, 0f);
 			}
 		}
 
@@ -124,6 +130,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		ClickingComprobation (ref spaceship);
 
 
+
 	}
 
 	private void ClickingComprobation(ref Producer producer) {
@@ -140,7 +147,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 					}
 				}
 			} else {
-				if (ClickedOn (producerSelected.hb_head) && producer == producerSelected && selectedStatus == 2f) {
+				if (ClickedOn (producerSelected.hb_head) && producer == producerSelected && selectedStatus == 2.5f) {
 					producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening2", 0f, 0, 0f);
 					producerSelected = null;
 					tap.Play();
@@ -151,6 +158,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 	}
 
 	private void RegularComprobation(string previousStatus, ref Producer producer) {
+
+
 
 		// UNEXISTANT TO UNDISCOVERED
 		if (producer.status == "unexistant" && (previousStatus != "undiscovered" && previousStatus != "unexistant")) {
@@ -238,6 +247,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 		while (producer.cost.GetComponent<MeshRenderer> ().bounds.size.x > 3.8f) {
 			producer.cost.GetComponent<TextMesh> ().fontSize -= 1;
 		}
+
+
 
 		// CHANGE TRANSPARENCIES
 		/*
@@ -412,6 +423,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject root;
 		public string status;
 		public int langCode;
+		public int description;
 		public GameObject text;
 		public GameObject number;
 		public GameObject loveIcon;
@@ -449,6 +461,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject bb_lock;
 		public GameObject bb_square;
 		public GameObject bb_square_side;
+
+		public GameObject info;
 
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
@@ -501,17 +515,47 @@ public class Capa1Screen3Script : MonoBehaviour {
 			bb_square = root.gameObject.transform.FindChild("Pro_Button/bb_square").gameObject;
 			bb_square_side = root.gameObject.transform.FindChild("Pro_Button/bb_square_side").gameObject;
 
-			if (langAux == Lang.SERVANT_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); }
-			if (langAux == Lang.HUMAN_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); }
-			if (langAux == Lang.PROPHET_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/prophet"); }
-			if (langAux == Lang.TEMPLE_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
-			if (langAux == Lang.SHIP_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
-			if (langAux == Lang.FACTORY_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
-			if (langAux == Lang.LABORATORY_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
-			if (langAux == Lang.SHOP_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
-			if (langAux == Lang.SPACESHIP_NAME) { icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); }
+			info = root.gameObject.transform.FindChild("Info").gameObject;
+
+			if (langAux == Lang.SERVANT_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); 
+				description = Lang.SERVANT_DESCRIPTION;
+			}
+			if (langAux == Lang.HUMAN_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); 
+				description = Lang.HUMAN_DESCRIPTION;
+			}
+			if (langAux == Lang.PROPHET_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/prophet"); 
+				description = Lang.PROPHET_DESCRIPTION;
+			}
+			if (langAux == Lang.TEMPLE_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				description = Lang.TEMPLE_DESCRIPTION;
+			}
+			if (langAux == Lang.SHIP_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
+				description = Lang.SHIP_DESCRIPTION;
+			}
+			if (langAux == Lang.FACTORY_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				description = Lang.FACTORY_DESCRIPTION;
+			}
+			if (langAux == Lang.LABORATORY_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				description = Lang.LABORATORY_DESCRIPTION;
+			}
+			if (langAux == Lang.SHOP_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				description = Lang.SHOP_DESCRIPTION;
+			}
+			if (langAux == Lang.SPACESHIP_NAME) { 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
+				description = Lang.SPACESHIP_DESCRIPTION;
+			}
 
 			icon_producer.SetActive(false);
+			info.SetActive(false);
 
 			root.SetActive(false);
 
@@ -521,14 +565,40 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 	}
 
+	private void smartText(string original, GameObject target) {
+
+		string builder = "";
+		target.GetComponent<TextMesh> ().text = "";
+		float rowLimit = 4.5f; //find the sweet spot    
+		string[] parts = original.Split(' ');
+
+		for (int i = 0; i < parts.Length; i++)
+		{
+			target.GetComponent<TextMesh> ().text += parts[i] + " ";
+			if (target.GetComponent<MeshRenderer> ().bounds.extents.x > rowLimit)
+			{
+				target.GetComponent<TextMesh> ().text = builder.TrimEnd() + System.Environment.NewLine + parts[i] + " ";
+			}
+			builder = target.GetComponent<TextMesh> ().text;
+		}
+
+	}
+
 	private void Adjust(ref Producer producer) {
-
-
 
 		if (producerSelected == producer) {
 
-			if (selectedStatus == 2f) {
+			if (selectedStatus >= 2f) {
 				producer.root.transform.localPosition = new Vector3(Mathf.Lerp(producer.root.transform.localPosition.x, 0f, Time.deltaTime*10f), Mathf.Lerp(producer.root.transform.localPosition.y, 3f -producer.root.transform.parent.localPosition.y , Time.deltaTime*10f), 0);
+				if (selectedStatus >= 2.5f) {
+					string originalText = Lang.getText(producer.description);
+					originalText += System.Environment.NewLine + System.Environment.NewLine + "1x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);
+					if (GlobalData.thisState.values[producer.langCode] > 1) {
+						originalText += System.Environment.NewLine + GlobalData.thisState.values[producer.langCode] +"x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)*GlobalData.thisState.values[producer.langCode]) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);
+					}
+					smartText(originalText, producer.info);
+					producer.info.GetComponent<TextMesh>().color = new Color(producer.info.GetComponent<TextMesh>().color.r, producer.info.GetComponent<TextMesh>().color.g, producer.info.GetComponent<TextMesh>().color.b, Mathf.Lerp(producer.info.GetComponent<TextMesh>().color.a, 1f, Time.deltaTime*10f));
+				}
 			}
 
 		} else if (lastProducerSelected == producer) {

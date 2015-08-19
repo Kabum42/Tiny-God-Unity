@@ -1801,7 +1801,7 @@ public static class Lang {
 		
 		// SPACESHIP
 		FRENCH_WORDS[SPACESHIP_NAME] = "Vaisseau spatial";
-		FRENCH_WORDS[SPACESHIP_DESCRIPTION] = "n vaisseau spatial pour étendre l'amour dans les autres galaxies";
+		FRENCH_WORDS[SPACESHIP_DESCRIPTION] = "Un vaisseau spatial pour étendre l'amour dans les autres galaxies";
 		FRENCH_WORDS[SPACESHIP_UPGRADE_1] = "Le chien astronaute";
 		FRENCH_WORDS[SPACESHIP_UPGRADE_1_JOKE] = "Oups, on a oublié de lui donner sa nourriture spatiale";
 		FRENCH_WORDS[SPACESHIP_UPGRADE_2] = "Un faux alunissage";
