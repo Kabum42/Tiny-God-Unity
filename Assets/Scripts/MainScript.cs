@@ -9,10 +9,10 @@ public class MainScript : MonoBehaviour {
 
 	public GameObject capa0;
 	public GameObject capa1;
-	public GameObject capa1Screen1CloudLeft;
+	public GameObject capa1CloudLeft;
 	public GameObject capa1Screen2Yahvy;
 	public GameObject capa1Screen3;
-	public GameObject capa1Screen3CloudRight;
+	public GameObject capa1CloudRight;
 	public GameObject capa2;
 	public GameObject capa2TopText;
 
@@ -43,10 +43,10 @@ public class MainScript : MonoBehaviour {
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
-		capa1Screen1CloudLeft = GameObject.Find ("Capa1/Screen1/CloudLeft");
+		capa1CloudLeft = GameObject.Find ("Capa1/CloudLeft");
 		capa1Screen2Yahvy = GameObject.Find ("Capa1/Screen2/Yahvy");
 		capa1Screen3 = GameObject.Find ("Capa1/Screen3");
-		capa1Screen3CloudRight = GameObject.Find ("Capa1/Screen3/CloudRight");
+		capa1CloudRight = GameObject.Find ("Capa1/CloudRight");
 		capa2 = GameObject.Find ("Capa2");
 		capa2TopText = GameObject.Find ("Capa2/Top/TopText");
 
@@ -252,16 +252,17 @@ public class MainScript : MonoBehaviour {
 			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(GlobalData.currentScreen*-GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
 		}
 
-		//Debug.Log (capa1.transform.position.x);
 		float anim_left = (float)capa1.transform.position.x / 20f;
 		if (anim_left < 0f) { anim_left = 0f; }
-		else if (anim_left > 1f) { anim_left = 1f; }
-		capa1Screen1CloudLeft.GetComponent<Animator> ().Play ("Covering", 0, anim_left);
-
+		else if (anim_left > 1f) { anim_left = 0.99f; }
+		capa1CloudLeft.GetComponent<Animator> ().Play ("Covering", 0, anim_left);
+		capa1CloudLeft.transform.localPosition = new Vector3 (-10 - capa1.transform.position.x/1.5f , 0, -4);
+		
 		float anim_right = (float)-capa1.transform.position.x / 20f;
 		if (anim_right < 0f) { anim_right = 0f; }
-		else if (anim_right > 1f) { anim_right = 1f; }
-		capa1Screen3CloudRight.GetComponent<Animator> ().Play ("Covering", 0, anim_right);
+		else if (anim_right > 1f) { anim_right = 0.99f; }
+		capa1CloudRight.GetComponent<Animator> ().Play ("Covering", 0, anim_right);
+		capa1CloudRight.transform.localPosition = new Vector3 (10 - capa1.transform.position.x/1.5f , 0, -4);
 		
 		/*
 		if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
