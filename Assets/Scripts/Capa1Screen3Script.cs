@@ -326,17 +326,17 @@ public class Capa1Screen3Script : MonoBehaviour {
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 
 				// BUY MASK
-				RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+				RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 				
-				if (hit.collider != null) {
+				for (int i = 0; i < hits.Length; i++) {
 					
 					Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
 					
-					RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+					RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 					
-					if (hit2.collider != null) {
-
-						if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
+					for (int j = 0; j < hits2.Length; j++) {
+						
+						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
 						
 					}
 					
@@ -344,7 +344,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 				// HEAD MASK
 				//hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
-				RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
+				hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("HeadMask"));
 
 				for (int i = 0; i < hits.Length; i++) {
 

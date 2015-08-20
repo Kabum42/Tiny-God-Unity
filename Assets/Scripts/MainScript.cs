@@ -254,13 +254,13 @@ public class MainScript : MonoBehaviour {
 
 		float anim_left = (float)capa1.transform.position.x / 20f;
 		if (anim_left < 0f) { anim_left = 0f; }
-		else if (anim_left > 1f) { anim_left = 0.99f; }
+		else if (anim_left > 1f) { anim_left = 0.97f; }
 		capa1CloudLeft.GetComponent<Animator> ().Play ("Covering", 0, anim_left);
 		capa1CloudLeft.transform.localPosition = new Vector3 (-10 - capa1.transform.position.x/1.5f , 0, -4);
 		
 		float anim_right = (float)-capa1.transform.position.x / 20f;
 		if (anim_right < 0f) { anim_right = 0f; }
-		else if (anim_right > 1f) { anim_right = 0.99f; }
+		else if (anim_right > 1f) { anim_right = 0.97f; }
 		capa1CloudRight.GetComponent<Animator> ().Play ("Covering", 0, anim_right);
 		capa1CloudRight.transform.localPosition = new Vector3 (10 - capa1.transform.position.x/1.5f , 0, -4);
 		
