@@ -300,7 +300,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		float aux = Random.Range(0f, 1f);
 		
 		producer.buyButton.GetComponent<Animator> ().Play ("Buying", 0, 0f);
-		producer.icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+		//producer.icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
 		
 		if (aux > 2f/3f) {
 			buy1.Play();

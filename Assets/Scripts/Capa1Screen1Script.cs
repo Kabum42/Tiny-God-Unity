@@ -3,14 +3,46 @@ using System.Collections;
 
 public class Capa1Screen1Script : MonoBehaviour {
 
-	private Upgrade[] upgrades = new Upgrade[100];
+	private Upgrade[] upgrades = new Upgrade[96];
 
 	// Use this for initialization
 	void Start () {
 
-		for (int i = 0; i < 100; i++) {
+		int current_upgrade = 22;
 
-			Upgrade upgrade = new Upgrade(this.gameObject, 0, "Upgrade_"+i, 0);
+		for (int i = 0; i < 96; i++) {
+
+			Upgrade upgrade = new Upgrade(this.gameObject, "Upgrade_"+i, current_upgrade);
+
+			current_upgrade+= 2;
+
+			if (current_upgrade == 42) {
+				// THIS IS THE MOTHERFLIPPING HUMAN!!!
+				current_upgrade = 44;
+			} else if (current_upgrade == 78) {
+				// THIS SPECIAL HUMAN DOESN'T EXIST
+				current_upgrade = 86;
+			} else if (current_upgrade == 106) {
+				// THIS IS THE MOTHERFLIPPING TEMPLE!!!
+				current_upgrade = 108;
+			} else if (current_upgrade == 128) {
+				// THIS IS THE MOTHERFLIPPING SHIP!!!
+				current_upgrade = 130;
+			} else if (current_upgrade == 150) {
+				// THIS IS THE MOTHERFLIPPING FACTORY!!!
+				current_upgrade = 152;
+			} else if (current_upgrade == 172) {
+				// THIS IS THE MOTHERFLIPPING LABORATORY!!!
+				current_upgrade = 174;
+			} else if (current_upgrade == 194) {
+				// THIS IS THE MOTHERFLIPPING SHOP!!!
+				current_upgrade = 196;
+			} else if (current_upgrade == 216) {
+				// THIS IS THE MOTHERFLIPPING SPACESHIP!!!
+				current_upgrade = 218;
+			}
+
+			Debug.Log (current_upgrade);
 
 			//GameObject auxGO =  Instantiate(Resources.Load("Upgrade")) as GameObject;
 			//auxGO.name = "Upgrade_"+i;
@@ -28,6 +60,35 @@ public class Capa1Screen1Script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		Upgrade[] upgradesClosed = new Upgrade[96];
+		Upgrade[] upgradesShrinked = new Upgrade[96];
+		int currentClosed = 0;
+		int currentShrinked = 0;
+		float current_Y = 0f;
+
+		for (int i = 0; i < upgrades.Length; i++) {
+
+			if (upgrades[i].status == "unexistant") {
+				// PUEDE ESTAR PARA COMPRAR O HABER SIDO COMPRADO YA
+				if (GlobalData.thisState.values[upgrades[i].langCode] == 0 && GlobalData.thisState.values[upgrades[i].typeRequired] >= upgrades[i].amountRequired) {
+					upgrades[i].text.GetComponent<TextMesh>().text = Lang.getText(upgrades[i].langCode);
+					upgrades[i].root.SetActive(true);
+					upgrades[i].root.transform.localPosition = new Vector3(0f, 2.7f -current_Y, upgrades[i].root.transform.localPosition.z);
+					current_Y += 2.5f;
+				}
+			}
+
+			if (upgrades[i].status == "available" || upgrades[i].status == "buyable") {
+				upgradesClosed[currentClosed] = upgrades[i];
+				currentClosed++;
+			}
+			if (upgrades[i].status == "bought") {
+				upgradesShrinked[currentShrinked] = upgrades[i];
+				currentShrinked++;
+			}
+
+		}
 
 		/*
 		int num_actives = 0;
@@ -56,14 +117,16 @@ public class Capa1Screen1Script : MonoBehaviour {
 	public class Upgrade {
 		
 		public GameObject root;
-
-
-		//public string status;
-		//public int langCode;
+		public string status;
+		public int langCode;
+		public double price;
 		//public int description;
-		//public GameObject text;
+		public GameObject text;
 		//public GameObject loveIcon;
-		//public GameObject cost;
+		public GameObject cost;
+
+		public int typeRequired;
+		public int amountRequired;
 
 		public GameObject board;
 		public GameObject button;
@@ -113,18 +176,17 @@ public class Capa1Screen1Script : MonoBehaviour {
 		*/
 		
 		
-		public Upgrade(GameObject parent, int position, string name, int langAux) {
+		public Upgrade(GameObject parent, string name, int langAux) {
 			
-			//status = "unexistant";
+			status = "unexistant";
 			
 			root =  Instantiate(Resources.Load("Upgrade")) as GameObject;
 			root.name = name;
 			root.transform.parent = parent.transform;
-			root.transform.localPosition = new Vector3(0, root.transform.localPosition.y +3f -2.5f*position, root.transform.localPosition.z);
+			root.transform.localPosition = new Vector3(0, root.transform.localPosition.y +29f -langAux*1.2f, root.transform.localPosition.z);
 			
-			//text = root.gameObject.transform.FindChild("Text").gameObject;
-			//cost = root.gameObject.transform.FindChild("Cost").gameObject;
-			//cost.SetActive(false);
+			text = root.gameObject.transform.FindChild("Text").gameObject;
+			cost = root.gameObject.transform.FindChild("Cost").gameObject;
 
 			
 			//loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
@@ -143,56 +205,127 @@ public class Capa1Screen1Script : MonoBehaviour {
 			icon.SetActive(false);
 
 			staticClosedU = root.gameObject.transform.FindChild("Closed_Unavailable").gameObject;
-			staticClosedU.SetActive(false);
+			root.gameObject.transform.FindChild("Shrinked/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+			//staticClosedU.SetActive(false);
 
 			staticClosedA = root.gameObject.transform.FindChild("Closed_Available").gameObject;
 			staticClosedA.SetActive(false);
 
 			staticShrinked = root.gameObject.transform.FindChild("Shrinked").gameObject; 
-			//staticShrinked.SetActive(false);
+			root.gameObject.transform.FindChild("Shrinked/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+			staticShrinked.SetActive(false);
 
-			/*
-			if (langAux == Lang.SERVANT_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); 
-				description = Lang.SERVANT_DESCRIPTION;
+
+			if (langAux <= Lang.SERVANT_UPGRADE_10) {
+				typeRequired = Lang.SERVANT_NAME;
+				int aux_position = (langAux - Lang.SERVANT_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SERVANT_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			if (langAux == Lang.HUMAN_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); 
-				description = Lang.HUMAN_DESCRIPTION;
+			else if (langAux <= Lang.HUMAN_UPGRADE_10) { 
+				typeRequired = Lang.HUMAN_NAME;
+				int aux_position = (langAux - Lang.HUMAN_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.HUMAN_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			if (langAux == Lang.PROPHET_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/prophet"); 
-				description = Lang.PROPHET_DESCRIPTION;
+			else if (langAux <= Lang.SPECIAL_HUMAN_10) {
+				int aux_position = (langAux - Lang.SPECIAL_HUMAN_1)/2;
+				if (aux_position == 0) {
+					typeRequired = Lang.PROPHET_NAME;
+					price = Mathf.Floor(GlobalData.getBaseCost(Lang.PROPHET_NAME));
+				}
+				else if (aux_position == 1) {
+					typeRequired = Lang.TEMPLE_NAME;
+					price = Mathf.Floor(GlobalData.getBaseCost(Lang.TEMPLE_NAME));
+				}
+				else if (aux_position == 2) {
+					typeRequired = Lang.SHIP_NAME;
+					price = Mathf.Floor(GlobalData.getBaseCost(Lang.SHIP_NAME));
+				}
+				else if (aux_position == 3) {
+					typeRequired = Lang.FACTORY_NAME;
+					price = Mathf.Floor(GlobalData.getBaseCost(Lang.FACTORY_NAME));
+				}
+				else if (aux_position == 4) {
+					typeRequired = Lang.LABORATORY_NAME;
+					price = Mathf.Floor(GlobalData.getBaseCost(Lang.LABORATORY_NAME));
+				}
+				else if (aux_position == 5) {
+					typeRequired = Lang.SHOP_NAME;
+					price = Mathf.Floor(GlobalData.getBaseCost(Lang.SHOP_NAME));
+				}
+				else if (aux_position == 6) {
+					typeRequired = Lang.SPACESHIP_NAME;
+					price = Mathf.Floor(GlobalData.getBaseCost(Lang.SPACESHIP_NAME));
+				}
+				amountRequired = 5;
 			}
-			if (langAux == Lang.TEMPLE_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
-				description = Lang.TEMPLE_DESCRIPTION;
+			else if (langAux <= Lang.PROPHET_UPGRADE_10) { 
+				typeRequired = Lang.PROPHET_NAME;
+				int aux_position = (langAux - Lang.PROPHET_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.PROPHET_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			if (langAux == Lang.SHIP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
-				description = Lang.SHIP_DESCRIPTION;
+			else if (langAux <= Lang.TEMPLE_UPGRADE_10) { 
+				typeRequired = Lang.TEMPLE_NAME;
+				int aux_position = (langAux - Lang.TEMPLE_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.TEMPLE_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			if (langAux == Lang.FACTORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
-				description = Lang.FACTORY_DESCRIPTION;
+			else if (langAux <= Lang.SHIP_UPGRADE_10) { 
+				typeRequired = Lang.SHIP_NAME;
+				int aux_position = (langAux - Lang.SHIP_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SHIP_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			if (langAux == Lang.LABORATORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
-				description = Lang.LABORATORY_DESCRIPTION;
+			else if (langAux <= Lang.FACTORY_UPGRADE_10) { 
+				typeRequired = Lang.FACTORY_NAME;
+				int aux_position = (langAux - Lang.FACTORY_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.FACTORY_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			if (langAux == Lang.SHOP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
-				description = Lang.SHOP_DESCRIPTION;
+			else if (langAux <= Lang.LABORATORY_UPGRADE_10) { 
+				typeRequired = Lang.LABORATORY_NAME;
+				int aux_position = (langAux - Lang.LABORATORY_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.LABORATORY_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			if (langAux == Lang.SPACESHIP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
-				description = Lang.SPACESHIP_DESCRIPTION;
+			else if (langAux <= Lang.SHOP_UPGRADE_10) { 
+				typeRequired = Lang.SHOP_NAME;
+				int aux_position = (langAux - Lang.SHOP_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SHOP_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
 			}
-			*/
+			else if (langAux <= Lang.SPACESHIP_UPGRADE_10) { 
+				typeRequired = Lang.SPACESHIP_NAME;
+				int aux_position = (langAux - Lang.SPACESHIP_UPGRADE_1)/2;
+				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SPACESHIP_NAME)*Mathf.Pow(10f, aux_position));
+				if (aux_position == 0) { amountRequired = 1; }
+				else if (aux_position == 1) { amountRequired = 10; }
+				else { amountRequired = (aux_position-1)*25; }
+			}
+
+			cost.gameObject.GetComponent<TextMesh>().text = GlobalData.FormattedNumber(price);
 			
-			root.SetActive(true);
+			root.SetActive(false);
 			
-			//langCode = langAux;
+			langCode = langAux;
 			
 		}
 		
