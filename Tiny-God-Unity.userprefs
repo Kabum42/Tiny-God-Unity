@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MainScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\GlobalData.cs" Line="164" Column="27" />
-      <File FileName="Assets\Scripts\MainScript.cs" Line="113" Column="15" />
-      <File FileName="Assets\Scripts\Capa1Screen3Script.cs" Line="604" Column="40" />
+      <File FileName="Assets\Scripts\MainScript.cs" Line="283" Column="44" />
+      <File FileName="Assets\Scripts\GlobalData.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Capa1Screen3Script.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Lang.cs" Line="1" Column="1" />
       <File FileName="c:\Users\Roberto\Desktop\Programar\Unity\Tiny-God-Unity\Assets\Scripts\SoomlaAssets.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Capa1Screen1Script.cs" Line="1" Column="1" />
