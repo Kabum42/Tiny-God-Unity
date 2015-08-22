@@ -265,6 +265,8 @@ public class YahvyScript : MonoBehaviour {
 
 				CrossFadeAnimation("TapCritical");
 
+				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
+
 			} else {
 
 				// CLICK NORMAL
@@ -272,6 +274,8 @@ public class YahvyScript : MonoBehaviour {
 				//GlobalData.thisState.totalLove += GlobalData.thisState.getClickValue();
 				GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
 				GlobalData.thisState.love += GlobalData.thisState.love +1;
+
+				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 				

@@ -15,9 +15,11 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa1Screen2Yahvy;
 	public GameObject capa1Screen3;
 	public GameObject capa2;
+	public GameObject capa2Top;
 	public GameObject capa2TopText;
 	public GameObject capa2TopText2;
 	public GameObject capa2Dots;
+	public GameObject capa2Heart;
 
 	public GameObject sceneReward;
 
@@ -52,9 +54,11 @@ public class MainScript : MonoBehaviour {
 		capa1Screen2Yahvy = GameObject.Find ("Capa1/Screen2/Yahvy");
 		capa1Screen3 = GameObject.Find ("Capa1/Screen3");
 		capa2 = GameObject.Find ("Capa2");
+		capa2Top = GameObject.Find ("Capa2/Top");
 		capa2TopText = GameObject.Find ("Capa2/Top/TopText");
 		capa2TopText2 = GameObject.Find ("Capa2/Top/TopText2");
 		capa2Dots = GameObject.Find ("Capa2/Dots");
+		capa2Heart = GameObject.Find ("Capa2/Heart");
 
 		sceneReward = GameObject.Find ("SceneReward");
 		sceneReward.transform.FindChild("Second Camera").gameObject.GetComponent<RewardScript>().scene1 = GameObject.Find ("Scene1");
@@ -117,6 +121,12 @@ public class MainScript : MonoBehaviour {
 			capa2TopText2.GetComponent<TextMesh> ().text = parts [1];
 		} else {
 			capa2TopText2.GetComponent<TextMesh> ().text = "";
+		}
+
+		capa2TopText2.GetComponent<TextMesh> ().fontSize = 40;
+		
+		while (capa2TopText2.GetComponent<MeshRenderer> ().bounds.size.x > 1.5f) {
+			capa2TopText2.GetComponent<TextMesh> ().fontSize -= 1;
 		}
 
 		UpdateLastSlides ();
@@ -300,11 +310,18 @@ public class MainScript : MonoBehaviour {
 
 		}
 
-
 		float anim_dots = 0.5f - (float)capa1.transform.position.x / 80f;
 		if (anim_dots >= 0.49f && anim_dots <= 0.51f) { anim_dots = 0.49f; }
 		if (anim_dots >= 0.74f && anim_dots <= 0.76f) { anim_dots = 0.74f; }
+		if (anim_dots > 0.99f) { anim_dots = 0.99f; }
 		capa2Dots.GetComponent<Animator> ().Play ("Slide", 0, anim_dots);
+
+		anim_dots += 0.060f;
+		capa2Top.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
+
+		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+			capa2Heart.GetComponent<Animator>().Play("Idle", 0, 0);
+		}
 		
 		/*
 		if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
