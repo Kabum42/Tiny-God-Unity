@@ -265,7 +265,7 @@ public class YahvyScript : MonoBehaviour {
 
 				CrossFadeAnimation("TapCritical");
 
-				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
+				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 
 			} else {
 
