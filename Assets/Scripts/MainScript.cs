@@ -15,6 +15,7 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa1CloudRight;
 	public GameObject capa2;
 	public GameObject capa2TopText;
+	public GameObject capa2TopText2;
 	public GameObject capa2Dots;
 
 	public GameObject sceneReward;
@@ -50,6 +51,7 @@ public class MainScript : MonoBehaviour {
 		capa1CloudRight = GameObject.Find ("Capa1/CloudRight");
 		capa2 = GameObject.Find ("Capa2");
 		capa2TopText = GameObject.Find ("Capa2/Top/TopText");
+		capa2TopText2 = GameObject.Find ("Capa2/Top/TopText2");
 		capa2Dots = GameObject.Find ("Capa2/Dots");
 
 		sceneReward = GameObject.Find ("SceneReward");
@@ -105,7 +107,15 @@ public class MainScript : MonoBehaviour {
 	void Update () {
 
 		GlobalData.Update ();
-		capa2TopText.GetComponent<TextMesh> ().text = GlobalData.FormattedNumber(GlobalData.thisState.love);
+
+		string original = GlobalData.FormattedNumber(GlobalData.thisState.love);
+		string[] parts = original.Split(' ');
+		capa2TopText.GetComponent<TextMesh> ().text = parts[0];
+		if (parts [1] != null) {
+			capa2TopText2.GetComponent<TextMesh> ().text = parts [1];
+		} else {
+			capa2TopText2.GetComponent<TextMesh> ().text = "";
+		}
 
 		UpdateLastSlides ();
 
