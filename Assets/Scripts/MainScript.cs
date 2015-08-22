@@ -15,6 +15,7 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa1CloudRight;
 	public GameObject capa2;
 	public GameObject capa2TopText;
+	public GameObject capa2Dots;
 
 	public GameObject sceneReward;
 
@@ -49,6 +50,7 @@ public class MainScript : MonoBehaviour {
 		capa1CloudRight = GameObject.Find ("Capa1/CloudRight");
 		capa2 = GameObject.Find ("Capa2");
 		capa2TopText = GameObject.Find ("Capa2/Top/TopText");
+		capa2Dots = GameObject.Find ("Capa2/Dots");
 
 		sceneReward = GameObject.Find ("SceneReward");
 		sceneReward.transform.FindChild("Second Camera").gameObject.GetComponent<RewardScript>().scene1 = GameObject.Find ("Scene1");
@@ -263,6 +265,11 @@ public class MainScript : MonoBehaviour {
 		else if (anim_right > 1f) { anim_right = 0.97f; }
 		capa1CloudRight.GetComponent<Animator> ().Play ("Covering", 0, anim_right);
 		capa1CloudRight.transform.localPosition = new Vector3 (10 - capa1.transform.position.x/1.5f , 0, -4);
+
+		float anim_dots = 0.5f - (float)capa1.transform.position.x / 80f;
+		if (anim_dots >= 0.49f && anim_dots <= 0.51f) { anim_dots = 0.49f; }
+		if (anim_dots >= 0.74f && anim_dots <= 0.76f) { anim_dots = 0.74f; }
+		capa2Dots.GetComponent<Animator> ().Play ("Slide", 0, anim_dots);
 		
 		/*
 		if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
