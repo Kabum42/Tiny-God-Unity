@@ -77,7 +77,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		if (GlobalData.currentScreen == 1) {
 
 			if (producerSelected != null  && selectedStatus < 2.5f) {
-				selectedStatus += Time.deltaTime*5f;
+				selectedStatus += Time.deltaTime*8f;
 				if (selectedStatus > 1f && selectedStatus < 2f) { 
 					
 					selectedStatus = 2f; 
@@ -94,7 +94,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 			}
 			
 			if (producerSelected == null  && selectedStatus > 0f) {
-				selectedStatus -= Time.deltaTime*5f;
+				selectedStatus -= Time.deltaTime*8f;
 				float x_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime*10f);
 				float y_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime*10f);
 				lastProducerSelected.root.transform.localPosition = new Vector3(x_value, y_value, 0);

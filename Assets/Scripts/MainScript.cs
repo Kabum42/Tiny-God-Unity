@@ -20,6 +20,9 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa2TopText2;
 	public GameObject capa2Dots;
 	public GameObject capa2Heart;
+	public GameObject capa2Miracle1;
+	public GameObject capa2MiracleHeader;
+	public GameObject capa2MiracleBar;
 
 	public GameObject sceneReward;
 
@@ -59,6 +62,9 @@ public class MainScript : MonoBehaviour {
 		capa2TopText2 = GameObject.Find ("Capa2/Top/TopText2");
 		capa2Dots = GameObject.Find ("Capa2/Dots");
 		capa2Heart = GameObject.Find ("Capa2/Heart");
+		capa2Miracle1 = GameObject.Find ("Capa2/Miracle1");
+		capa2MiracleHeader = GameObject.Find ("Capa2/Miracle1/MiracleHeader");
+		capa2MiracleBar = GameObject.Find ("Capa2/Miracle1/MiracleBar");
 
 		sceneReward = GameObject.Find ("SceneReward");
 		sceneReward.transform.FindChild("Second Camera").gameObject.GetComponent<RewardScript>().scene1 = GameObject.Find ("Scene1");
@@ -318,10 +324,24 @@ public class MainScript : MonoBehaviour {
 
 		anim_dots += 0.060f;
 		capa2Top.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
+		capa2MiracleHeader.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
+
+		capa2MiracleBar.GetComponent<Animator> ().Play ("Grow", 0, (float) GlobalData.thisState.minigame_timer);
+
+		if (GlobalData.thisState.minigame_timer == 1f) {
+			if (capa2Miracle1.transform.localPosition.y > -11.5f) {
+				float aux_y = Mathf.Lerp (capa2Miracle1.transform.localPosition.y, -11.51f, Time.deltaTime*5f);
+				capa2Miracle1.transform.localPosition = new Vector3(0, aux_y, -17.7f);
+				if (aux_y <= -11.5f) { capa2Miracle1.SetActive(false); }
+			}
+
+		}
 
 		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 0.99f) {
 			capa2Heart.GetComponent<Animator>().Play("Idle", 0, 0);
 		}
+
+
 		
 		/*
 		if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
