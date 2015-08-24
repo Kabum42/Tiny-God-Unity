@@ -319,7 +319,7 @@ public class MainScript : MonoBehaviour {
 		anim_dots += 0.060f;
 		capa2Top.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
 
-		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 0.99f) {
 			capa2Heart.GetComponent<Animator>().Play("Idle", 0, 0);
 		}
 		
