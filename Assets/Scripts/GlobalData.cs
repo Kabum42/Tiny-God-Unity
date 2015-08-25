@@ -41,6 +41,7 @@ public static class GlobalData {
 		thisState.love += getAllLps () * Time.deltaTime;
 		thisState.totalLove += getAllLps () * Time.deltaTime;
 
+
 		if (thisState.minigame_timer < 1f) {
 			thisState.minigame_timer += Time.deltaTime / 3f; // El numero es la cantidad de segundos que tarda la barra en llenarse
 			if (thisState.minigame_timer > 1f) {

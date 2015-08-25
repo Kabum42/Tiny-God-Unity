@@ -620,7 +620,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		if (producerSelected == producer) {
 
 			if (selectedStatus >= 2f) {
-				producer.root.transform.localPosition = new Vector3(Mathf.Lerp(producer.root.transform.localPosition.x, 0f, Time.deltaTime*10f), Mathf.Lerp(producer.root.transform.localPosition.y, 3f -producer.root.transform.parent.localPosition.y , Time.deltaTime*10f), 0);
+				producer.root.transform.localPosition = new Vector3(Mathf.Lerp(producer.root.transform.localPosition.x, 0f, Time.deltaTime*10f), Mathf.Lerp(producer.root.transform.localPosition.y, 4.25f -producer.root.transform.parent.localPosition.y , Time.deltaTime*10f), 0);
 				if (selectedStatus >= 2.5f) {
 					string originalText = Lang.getText(producer.description);
 					originalText += System.Environment.NewLine + System.Environment.NewLine + "1x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);
