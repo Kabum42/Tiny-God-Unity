@@ -28,10 +28,16 @@ public class Capa1Screen3Script : MonoBehaviour {
 	private AudioSource epic_ching;
 	private AudioSource tap;
 
+	private GameObject fogUp;
+	private GameObject fogDown;
+
 	// Use this for initialization
 	void Start () {
 
 		Lang.setLanguage (Lang.SPANISH_VALUE);
+
+		fogUp = GameObject.Find ("Capa1/Screen3/FogUp");
+		fogDown = GameObject.Find ("Capa1/Screen3/FogDown");
 
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
@@ -73,6 +79,9 @@ public class Capa1Screen3Script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
+		fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
 
 		if (GlobalData.currentScreen == 1) {
 
