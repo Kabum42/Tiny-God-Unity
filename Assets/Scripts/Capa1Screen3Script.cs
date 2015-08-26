@@ -28,10 +28,16 @@ public class Capa1Screen3Script : MonoBehaviour {
 	private AudioSource epic_ching;
 	private AudioSource tap;
 
+	private GameObject fogUp;
+	private GameObject fogDown;
+
 	// Use this for initialization
 	void Start () {
 
 		Lang.setLanguage (Lang.SPANISH_VALUE);
+
+		fogUp = GameObject.Find ("Capa1/Screen3/FogUp");
+		fogDown = GameObject.Find ("Capa1/Screen3/FogDown");
 
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
@@ -74,10 +80,13 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
+		fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
+
 		if (GlobalData.currentScreen == 1) {
 
 			if (producerSelected != null  && selectedStatus < 2.5f) {
-				selectedStatus += Time.deltaTime*5f;
+				selectedStatus += Time.deltaTime*8f;
 				if (selectedStatus > 1f && selectedStatus < 2f) { 
 					
 					selectedStatus = 2f; 
@@ -94,7 +103,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 			}
 			
 			if (producerSelected == null  && selectedStatus > 0f) {
-				selectedStatus -= Time.deltaTime*5f;
+				selectedStatus -= Time.deltaTime*8f;
 				float x_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime*10f);
 				float y_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime*10f);
 				lastProducerSelected.root.transform.localPosition = new Vector3(x_value, y_value, 0);
@@ -620,7 +629,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		if (producerSelected == producer) {
 
 			if (selectedStatus >= 2f) {
-				producer.root.transform.localPosition = new Vector3(Mathf.Lerp(producer.root.transform.localPosition.x, 0f, Time.deltaTime*10f), Mathf.Lerp(producer.root.transform.localPosition.y, 3f -producer.root.transform.parent.localPosition.y , Time.deltaTime*10f), 0);
+				producer.root.transform.localPosition = new Vector3(Mathf.Lerp(producer.root.transform.localPosition.x, 0f, Time.deltaTime*10f), Mathf.Lerp(producer.root.transform.localPosition.y, 4.25f -producer.root.transform.parent.localPosition.y , Time.deltaTime*10f), 0);
 				if (selectedStatus >= 2.5f) {
 					string originalText = Lang.getText(producer.description);
 					originalText += System.Environment.NewLine + System.Environment.NewLine + "1x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);

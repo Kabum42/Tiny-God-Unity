@@ -42,7 +42,7 @@ public class Capa1Screen1Script : MonoBehaviour {
 				current_upgrade = 218;
 			}
 
-			Debug.Log (current_upgrade);
+			//Debug.Log (current_upgrade);
 
 			//GameObject auxGO =  Instantiate(Resources.Load("Upgrade")) as GameObject;
 			//auxGO.name = "Upgrade_"+i;

@@ -41,6 +41,15 @@ public static class GlobalData {
 		thisState.love += getAllLps () * Time.deltaTime;
 		thisState.totalLove += getAllLps () * Time.deltaTime;
 
+
+		if (thisState.minigame_timer < 1f) {
+			thisState.minigame_timer += Time.deltaTime / 3f; // El numero es la cantidad de segundos que tarda la barra en llenarse
+			if (thisState.minigame_timer > 1f) {
+				thisState.minigame_timer = 1f;
+			}
+		}
+
+
 		thisState.timeOfDay += Time.deltaTime*(1f/10f);
 		if (thisState.timeOfDay > 1f) {
 			thisState.timeOfDay -= 1f;
@@ -387,6 +396,7 @@ public static class GlobalData {
 		public double love = 0f;
 		public double totalLove = 0f;
 		public double clicks = 0f;
+		public double minigame_timer = 0f;
 
 		public double fragments = 0f;
 		public double gems = 0f;

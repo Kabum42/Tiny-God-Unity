@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MainScript : MonoBehaviour {
 
+	private Vector3 lastMousePosition;
+
 	public int[] screens = {-2, -1, 0, 1, 2};
 
 	private AsyncOperation async;
@@ -20,6 +22,12 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa2TopText2;
 	public GameObject capa2Dots;
 	public GameObject capa2Heart;
+	public GameObject capa2Miracle1;
+	public GameObject capa2MiracleHeader;
+	public GameObject capa2MiracleBar;
+	public GameObject capa2Miracle2;
+	public GameObject capa2MiracleButtonBase;
+	public GameObject capa2MiracleButton;
 
 	public GameObject sceneReward;
 
@@ -59,6 +67,14 @@ public class MainScript : MonoBehaviour {
 		capa2TopText2 = GameObject.Find ("Capa2/Top/TopText2");
 		capa2Dots = GameObject.Find ("Capa2/Dots");
 		capa2Heart = GameObject.Find ("Capa2/Heart");
+		capa2Miracle1 = GameObject.Find ("Capa2/Miracle1");
+		capa2MiracleHeader = GameObject.Find ("Capa2/Miracle1/MiracleHeader");
+		capa2MiracleBar = GameObject.Find ("Capa2/Miracle1/MiracleBar");
+		capa2Miracle2 = GameObject.Find ("Capa2/Miracle2");
+		capa2MiracleButtonBase = GameObject.Find ("Capa2/Miracle2/ButtonBase");
+		capa2MiracleButton = GameObject.Find ("Capa2/Miracle2/MiracleButton");
+
+		capa2Miracle2.SetActive (false);
 
 		sceneReward = GameObject.Find ("SceneReward");
 		sceneReward.transform.FindChild("Second Camera").gameObject.GetComponent<RewardScript>().scene1 = GameObject.Find ("Scene1");
@@ -318,26 +334,60 @@ public class MainScript : MonoBehaviour {
 
 		anim_dots += 0.060f;
 		capa2Top.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
+		capa2MiracleHeader.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
+		capa2MiracleButtonBase.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
 
-		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+		capa2MiracleBar.GetComponent<Animator> ().Play ("Grow", 0, (float) GlobalData.thisState.minigame_timer);
+
+		if (GlobalData.thisState.minigame_timer == 1f) {
+			if (capa2Miracle1.transform.localPosition.y > -11.5f) {
+				float aux_y = Mathf.Lerp (capa2Miracle1.transform.localPosition.y, -11.51f, Time.deltaTime*10f);
+				capa2Miracle1.transform.localPosition = new Vector3(0, aux_y, -17.7f);
+				if (aux_y <= -11.5f) { 
+					capa2Miracle1.SetActive(false); 
+					capa2Miracle2.SetActive(true);
+				}
+			} else {
+
+				if (capa2Miracle2.transform.localPosition.y < -10.1f) {
+					float aux_y = Mathf.Lerp (capa2Miracle2.transform.localPosition.y, -10f, Time.deltaTime*10f);
+					capa2Miracle2.transform.localPosition = new Vector3(0, aux_y, -17.7f);
+					if (aux_y >= -10.1f) { 
+						capa2Miracle2.transform.localPosition = new Vector3(0, -10f, -17.7f);
+					}
+				}
+
+				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Idle") && capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+					capa2MiracleButton.GetComponent<Animator> ().Play ("Idle", 0, 0f);
+				}
+
+				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Idle") && ClickedOn(capa2MiracleButton)) {
+					capa2MiracleButton.GetComponent<Animator> ().Play ("Pressing", 0, 0f);
+				}
+
+				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Pressing") && capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+					Application.LoadLevelAdditive("MiniGame");
+				}
+
+			}
+
+		}
+
+		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 0.99f) {
 			capa2Heart.GetComponent<Animator>().Play("Idle", 0, 0);
 		}
-		
-		/*
-		if (capa1.transform.position.x <= -GlobalData.CAPA1_WIDTH_SCREEN*1.5) {
-			GlobalData.currentScreen = 2;
-		}
-		*/
 
 		UpdateMousePosition ();
 
 		capa0.transform.position = new Vector3 (capa1.transform.position.x/15f, 0, 0);
 
+		/*
 		if (Input.GetKeyDown (KeyCode.M)) {
 
 			Application.LoadLevelAdditive("MiniGame");
 
 		}
+		*/
 
 	}
 
@@ -369,6 +419,76 @@ public class MainScript : MonoBehaviour {
 			}
 		}
 
+	}
+
+	private bool ClickedOn(GameObject target) {
+		
+		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
+			
+			if (Input.GetMouseButtonDown(0)) { 
+				
+				lastMousePosition = Input.mousePosition;
+				
+			} else if (Input.GetMouseButtonUp(0)) { 
+				
+				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
+				
+				// BUY MASK
+				RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+				
+				for (int i = 0; i < hits.Length; i++) {
+					
+					Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
+					
+					RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+					
+					for (int j = 0; j < hits2.Length; j++) {
+						
+						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						
+					}
+					
+				}
+				
+			}
+			
+		} else {
+			
+			if (Input.touchCount > 0) { 
+				
+				if (Input.GetTouch(0).phase == TouchPhase.Began) {
+					
+					lastMousePosition = Input.GetTouch(0).position;
+					
+				} else if (Input.GetTouch(0).phase == TouchPhase.Ended) {
+					
+					Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
+					
+					// BUY MASK
+					RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+					
+					if (hit.collider != null) {
+						
+						Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
+						
+						RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+						
+						if (hit2.collider != null) {
+							
+							if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
+							
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		return false;
+		
 	}
 
 

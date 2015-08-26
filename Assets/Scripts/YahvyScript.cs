@@ -265,7 +265,7 @@ public class YahvyScript : MonoBehaviour {
 
 				CrossFadeAnimation("TapCritical");
 
-				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
+				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 
 			} else {
 
@@ -275,7 +275,6 @@ public class YahvyScript : MonoBehaviour {
 				GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
 				GlobalData.thisState.love += GlobalData.thisState.love +1;
 
-				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 
 				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 				
@@ -283,8 +282,10 @@ public class YahvyScript : MonoBehaviour {
 					
 					if (state == "SleepLoop") {
 						PlayAnimation("TapCritical");
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 					} else {
 						CrossFadeAnimation("TapEye");
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 						//Application.LoadLevelAdditive("MiniGame");
 					}
 					
@@ -292,8 +293,10 @@ public class YahvyScript : MonoBehaviour {
 					
 					if (state == "SleepLoop") {
 						PlayAnimation("TapCritical");
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 					} else {
 						CrossFadeAnimation("TapBody");
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 					}
 					
 				} else {
@@ -307,8 +310,10 @@ public class YahvyScript : MonoBehaviour {
 					
 					if (state == "SleepLoop") {
 						PlayAnimation("TapCritical");
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 					} else {
 						CrossFadeAnimation("TapScreen");
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 					}
 					
 				}
