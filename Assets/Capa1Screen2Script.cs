@@ -23,7 +23,7 @@ public class Capa1Screen2Script : MonoBehaviour {
 	void Update () {
 
 		randomCooldown -= Time.deltaTime;
-		windDirection = Random.Range(-1.5f, 1.5f);
+		windDirection = Random.Range(-0.75f, 0.75f);
 
 		if (randomCooldown <= 0f) {
 
@@ -49,7 +49,7 @@ public class Capa1Screen2Script : MonoBehaviour {
 				miniLeft.GetComponent<Animator> ().Play ("Transformation", 0, 0f);
 			}
 
-			miniLeft.transform.localPosition = new Vector3(miniLeft.transform.localPosition.x - Time.deltaTime*(2f - windDirection), miniLeft.transform.localPosition.y, 0.1f);
+			miniLeft.transform.localPosition = new Vector3(miniLeft.transform.localPosition.x - Time.deltaTime*(1f - windDirection), miniLeft.transform.localPosition.y, 0.1f);
 
 			if (miniLeft.transform.localPosition.x <= -15f) {
 				miniLeft.SetActive(false);
@@ -63,7 +63,7 @@ public class Capa1Screen2Script : MonoBehaviour {
 				miniRight.GetComponent<Animator> ().Play ("Transformation", 0, 0f);
 			}
 
-			miniRight.transform.localPosition = new Vector3(miniRight.transform.localPosition.x + Time.deltaTime*(2f + windDirection), miniRight.transform.localPosition.y, 0.1f);
+			miniRight.transform.localPosition = new Vector3(miniRight.transform.localPosition.x + Time.deltaTime*(1f + windDirection), miniRight.transform.localPosition.y, 0.1f);
 
 			if (miniRight.transform.localPosition.x >= 15f) {
 				miniRight.SetActive(false);

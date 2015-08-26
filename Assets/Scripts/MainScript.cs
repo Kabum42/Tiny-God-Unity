@@ -207,8 +207,11 @@ public class MainScript : MonoBehaviour {
 
 						float max_y = 0f;
 
+						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.TEMPLE_NAME)) {
+							max_y += 2.5f;
+						}
 						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHIP_NAME)) {
-							max_y += 1.5f;
+							max_y += 2.5f;
 						}
 						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.FACTORY_NAME)) {
 							max_y += 2.5f;
