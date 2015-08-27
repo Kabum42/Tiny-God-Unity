@@ -72,16 +72,64 @@ public class Capa1Screen1Script : MonoBehaviour {
 			if (upgrades[i].status == "unexistant") {
 				// PUEDE ESTAR PARA COMPRAR O HABER SIDO COMPRADO YA
 				if (GlobalData.thisState.values[upgrades[i].langCode] == 0 && GlobalData.thisState.values[upgrades[i].typeRequired] >= upgrades[i].amountRequired) {
-					upgrades[i].text.GetComponent<TextMesh>().text = Lang.getText(upgrades[i].langCode);
-					upgrades[i].root.SetActive(true);
+
 					upgrades[i].root.transform.localPosition = new Vector3(0f, 2.7f -current_Y, upgrades[i].root.transform.localPosition.z);
 					current_Y += 2.5f;
+					upgrades[i].status = "available";
+
+					upgrades[i].text.GetComponent<TextMesh>().text = Lang.getText(upgrades[i].langCode);
+					upgrades[i].root.SetActive(true);
+
 				}
 			}
 
 			if (upgrades[i].status == "available" || upgrades[i].status == "buyable") {
+
 				upgradesClosed[currentClosed] = upgrades[i];
 				currentClosed++;
+
+				upgrades[i].root.transform.localPosition = new Vector3(0f, Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
+				current_Y += 2.5f;
+
+				if (upgrades[i].status == "available" && upgrades[i].staticClosedU.activeInHierarchy && GlobalData.thisState.love >= upgrades[i].price) {
+
+					upgrades[i].staticClosedU.SetActive(false);
+					upgrades[i].board.SetActive(true);
+					upgrades[i].icon.SetActive(true);
+					upgrades[i].button.SetActive(true);
+					upgrades[i].button.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
+
+					upgrades[i].status = "buyable";
+
+				} 
+				else if (upgrades[i].status == "buyable" && upgrades[i].button.activeInHierarchy && upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+
+					upgrades[i].board.SetActive(false);
+					upgrades[i].icon.SetActive(false);
+					upgrades[i].button.SetActive(false);
+					upgrades[i].staticClosedA.SetActive(true);
+
+				}
+				else if (upgrades[i].status == "buyable" && upgrades[i].staticClosedA.activeInHierarchy && GlobalData.thisState.love < upgrades[i].price) {
+					
+					upgrades[i].staticClosedA.SetActive(false);
+					upgrades[i].board.SetActive(true);
+					upgrades[i].icon.SetActive(true);
+					upgrades[i].button.SetActive(true);
+					upgrades[i].button.GetComponent<Animator> ().Play ("Changing", 0, 0f);
+					
+					upgrades[i].status = "available";
+					
+				}
+				else if (upgrades[i].status == "available" && upgrades[i].button.activeInHierarchy && upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+					
+					upgrades[i].board.SetActive(false);
+					upgrades[i].icon.SetActive(false);
+					upgrades[i].button.SetActive(false);
+					upgrades[i].staticClosedU.SetActive(true);
+					
+				}
+
 			}
 			if (upgrades[i].status == "bought") {
 				upgradesShrinked[currentShrinked] = upgrades[i];
@@ -202,6 +250,7 @@ public class Capa1Screen1Script : MonoBehaviour {
 			button.SetActive(false);
 
 			icon = root.gameObject.transform.FindChild("Upg_Icon").gameObject;
+			root.gameObject.transform.FindChild("Upg_Icon/icon_base/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 			icon.SetActive(false);
 
 			staticClosedU = root.gameObject.transform.FindChild("Closed_Unavailable").gameObject;

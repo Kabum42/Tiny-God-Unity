@@ -295,7 +295,7 @@ public class MainScript : MonoBehaviour {
 			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(GlobalData.currentScreen*-GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
 		}
 
-		if (capa1.transform.position.x <= 1 && capa1.transform.position.x > -19) {
+		if (capa1.transform.position.x > -18 && capa1.transform.position.x < -2) {
 
 			capa1AnimatedCloud.SetActive(true);
 			capa1Cloud.transform.localScale = new Vector3 (-1, 1.05f, 1);
@@ -309,7 +309,7 @@ public class MainScript : MonoBehaviour {
 			capa1Cloud.transform.localPosition = new Vector3 (10 - capa1.transform.position.x / 1.5f, 0, -4);
 			capa1BackgroundCloud.transform.localPosition = new Vector3(-50 - capa1.transform.position.x *1.8f, 0, 4);
 
-		} else if (capa1.transform.position.x > 1 && capa1.transform.position.x < 19) {
+		} else if (capa1.transform.position.x > 2 && capa1.transform.position.x < 18) {
 
 			capa1AnimatedCloud.SetActive(true);
 			capa1Cloud.transform.localScale = new Vector3 (1, 1.05f, 1);
