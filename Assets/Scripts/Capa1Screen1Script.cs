@@ -6,13 +6,26 @@ public class Capa1Screen1Script : MonoBehaviour {
 	private Vector3 lastMousePosition;
 	private Upgrade[] upgrades = new Upgrade[96];
 
+	public Upgrade upgradeSelected = null;
+	private Upgrade lastUpgradeSelected = null;
+	private float selectedStatus = 0f;
+	private Vector3 previousPosition;
+
 	private AudioSource buy1;
 	private AudioSource buy2;
 	private AudioSource buy3;
 	private AudioSource tap;
 
+	private GameObject fogUp;
+	private GameObject fogDown;
+
+	public float current_maxY = 0f;
+
 	// Use this for initialization
 	void Start () {
+
+		fogUp = GameObject.Find ("Capa1/Screen1/FogUp");
+		fogDown = GameObject.Find ("Capa1/Screen1/FogDown");
 
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
@@ -87,12 +100,43 @@ public class Capa1Screen1Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
+		fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
+
 		Upgrade[] upgradesClosed = new Upgrade[96];
 		Upgrade[] upgradesShrinked = new Upgrade[96];
 		int currentClosed = 0;
 		int currentShrinked = 0;
 		float current_Y = 0f;
 		float current_X = 0f;
+
+		if (upgradeSelected != null  && selectedStatus < 2.5f) {
+			selectedStatus += Time.deltaTime*8f;
+			if (selectedStatus > 1f && selectedStatus < 2f) { 
+				
+				selectedStatus = 2f; 
+				previousPosition = upgradeSelected.root.transform.localPosition;
+
+			}
+			
+			if (selectedStatus > 2.5f) {
+				selectedStatus = 2.5f;
+			}
+
+		}
+
+
+		if (upgradeSelected == null  && selectedStatus > 0f) {
+
+			selectedStatus -= Time.deltaTime*8f;
+
+			if (selectedStatus < 0f) { 
+				selectedStatus = 0f; 
+			}
+
+		}
+
+
 
 		for (int i = 0; i < upgrades.Length; i++) {
 
@@ -189,6 +233,21 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 				}
 
+				upgrades[i].text.GetComponent<TextMesh> ().fontSize = 75;
+				
+				while (upgrades[i].text.GetComponent<MeshRenderer> ().bounds.size.x > 6f) {
+					upgrades[i].text.GetComponent<TextMesh> ().fontSize -= 1;
+				}
+
+				float alphaValue = selectedStatus;
+				if (alphaValue > 1f)  { alphaValue = 1f; }
+				alphaValue = 1f - alphaValue;
+				
+				upgrades[i].loveIcon.gameObject.GetComponent<SpriteRenderer>().sharedMaterial.color = new Color(1f, 1f, 1f, alphaValue);
+
+				upgrades[i].text.gameObject.GetComponent<TextMesh>().color = new Color (upgrades[i].text.gameObject.GetComponent<TextMesh>().color.r, upgrades[i].text.gameObject.GetComponent<TextMesh>().color.g, upgrades[i].text.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
+				upgrades[i].cost.gameObject.GetComponent<TextMesh>().color = new Color (upgrades[i].cost.gameObject.GetComponent<TextMesh>().color.r, upgrades[i].cost.gameObject.GetComponent<TextMesh>().color.g, upgrades[i].cost.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
+
 			}
 
 
@@ -197,19 +256,44 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 		for (int i = 0; i < upgrades.Length; i++) {
 
-			if (upgrades[i].status == "bought") {
+			if (upgrades[i].status == "bought" || upgrades[i].status == "expanded") {
 				
 				upgradesShrinked[currentShrinked] = upgrades[i];
 				currentShrinked++;
+
+				if (upgrades[i].status == "expanded") {
+
+					/*
+					if (current_X != 0f) {
+						current_Y += 3.5f;
+					}
+					current_X = 3.5f;
+					*/
+
+					current_X = 3.5f;
+					current_Y = 0f;
+
+				}
 				
 				upgrades[i].root.transform.localPosition = new Vector3(Mathf.Lerp(upgrades[i].root.transform.localPosition.x, -3.5f +current_X, Time.deltaTime*10f) , Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
 
-				current_X += 3.5f;
+				if (upgrades[i].status == "expanded") {
 
-				if (current_X >= 3.5f*3f) {
 					current_X = 0f;
-					current_Y += 2.5f;
+					current_Y += 7.8f;
+
+				} else {
+
+					current_X += 3.5f;
+
+					if (current_X >= 3.5f*3f) {
+						current_X = 0f;
+						current_Y += 2.5f;
+					}
+
 				}
+
+
 
 				if (upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Shrinking") && upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 					
@@ -219,32 +303,119 @@ public class Capa1Screen1Script : MonoBehaviour {
 					upgrades[i].staticShrinked.SetActive(true);
 					
 				}
+				else if (upgrades[i].staticShrinked.activeInHierarchy && ClickedOn(upgrades[i].staticShrinked) && selectedStatus == 0f) {
+
+					upgrades[i].staticShrinked.SetActive(false);
+					upgrades[i].board.SetActive(true);
+					upgrades[i].icon.SetActive(true);
+
+					upgrades[i].text.SetActive(true);
+					upgrades[i].info.SetActive(true);
+
+					upgrades[i].board.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
+					upgrades[i].icon.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
+
+					upgradeSelected = upgrades[i];
+
+					upgrades[i].text.GetComponent<TextMesh>().color = new Color(upgrades[i].text.GetComponent<TextMesh>().color.r, upgrades[i].text.GetComponent<TextMesh>().color.g, upgrades[i].text.GetComponent<TextMesh>().color.b, 0f);
+					upgrades[i].info.GetComponent<TextMesh>().color = new Color(upgrades[i].info.GetComponent<TextMesh>().color.r, upgrades[i].info.GetComponent<TextMesh>().color.g, upgrades[i].info.GetComponent<TextMesh>().color.b, 0f);
+
+					previousPosition = upgradeSelected.root.transform.localPosition;
+
+					tap.Play();
+
+					upgrades[i].status = "expanded";
+
+				}
+
+
+				if (upgradeSelected == upgrades[i]) {
+
+
+					if (selectedStatus >= 2.5f) {
+
+						/*
+						string originalText = Lang.getText(producer.description);
+						originalText += System.Environment.NewLine + System.Environment.NewLine + "1x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);
+						if (GlobalData.thisState.values[producer.langCode] > 1) {
+							originalText += System.Environment.NewLine + GlobalData.thisState.values[producer.langCode] +"x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)*GlobalData.thisState.values[producer.langCode]) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);
+						}
+						*/
+						//smartText(originalText, producer.info);
+
+						upgrades[i].text.GetComponent<TextMesh> ().fontSize = 75;
+						
+						while (upgrades[i].text.GetComponent<MeshRenderer> ().bounds.size.x > 7.2f) {
+							upgrades[i].text.GetComponent<TextMesh> ().fontSize -= 1;
+						}
+
+						smartText(Lang.getText(upgrades[i].langCode +1),  upgrades[i].info);
+						upgrades[i].info.GetComponent<TextMesh>().color = new Color(upgrades[i].info.GetComponent<TextMesh>().color.r, upgrades[i].info.GetComponent<TextMesh>().color.g, upgrades[i].info.GetComponent<TextMesh>().color.b, Mathf.Lerp(upgrades[i].info.GetComponent<TextMesh>().color.a, 1f, Time.deltaTime*10f));
+						upgrades[i].text.GetComponent<TextMesh>().color = new Color(upgrades[i].text.GetComponent<TextMesh>().color.r, upgrades[i].text.GetComponent<TextMesh>().color.g, upgrades[i].text.GetComponent<TextMesh>().color.b, Mathf.Lerp(upgrades[i].text.GetComponent<TextMesh>().color.a, 1f, Time.deltaTime*10f));
+
+					}
+
+					if (ClickedOn(upgrades[i].board) && selectedStatus == 2.5f) {
+						
+						upgrades[i].text.SetActive(false);
+						upgrades[i].info.SetActive(false);
+						upgrades[i].loveIcon.SetActive(false);
+						
+						upgrades[i].board.GetComponent<Animator> ().Play ("Shrinking", 0, 0f);
+						upgrades[i].icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+						
+						upgrades[i].status = "bought";
+
+						lastUpgradeSelected = upgrades[i];
+						upgradeSelected = null;
+						
+						tap.Play();
+
+					}
+
+				}
+				else {
+
+					float alphaValue = selectedStatus;
+					if (alphaValue > 1f)  { alphaValue = 1f; }
+					alphaValue = 1f - alphaValue;
+
+					upgrades[i].loveIcon.gameObject.GetComponent<SpriteRenderer>().sharedMaterial.color = new Color(1f, 1f, 1f, alphaValue);
+
+
+				}
+					
+
+				
 				
 			}
 
 		}
 
-		/*
-		int num_actives = 0;
-		float origin_y = 2f;
-
-
-		for (int i = 0; i < 100; i++) {
-
-
-			float x_position = -1f + num_actives % 3f;
-			float y_position = -Mathf.Floor(num_actives / 3);
-
-			upgrades[i].SetActive(true);
-			upgrades[i].transform.localPosition = new Vector3(x_position*3.2f, origin_y + y_position*2.5f, upgrades[i].transform.localPosition.z);
-
-			if (true) {
-				num_actives++;
-			}
-
+		current_maxY = current_Y;
+		if (current_X == 0f) {
+			current_maxY -= 2.5f;
 		}
-		*/
 	
+	}
+
+	private void smartText(string original, GameObject target) {
+		
+		string builder = "";
+		target.GetComponent<TextMesh> ().text = "";
+		float rowLimit = 4.5f; //find the sweet spot    
+		string[] parts = original.Split(' ');
+		
+		for (int i = 0; i < parts.Length; i++)
+		{
+			target.GetComponent<TextMesh> ().text += parts[i] + " ";
+			if (target.GetComponent<MeshRenderer> ().bounds.extents.x > rowLimit)
+			{
+				target.GetComponent<TextMesh> ().text = builder.TrimEnd() + System.Environment.NewLine + parts[i] + " ";
+			}
+			builder = target.GetComponent<TextMesh> ().text;
+		}
+		
 	}
 
 
@@ -269,41 +440,9 @@ public class Capa1Screen1Script : MonoBehaviour {
 		public GameObject staticClosedU;
 		public GameObject staticClosedA;
 		public GameObject staticShrinked;
-
-		/*
-
-		public GameObject hb_head;
-		public GameObject hb_botcorner_right;
-		public GameObject hb_botcorner_left;
-		public GameObject hb_pix_foot;
-		public GameObject hb_topcorner_right;
-		public GameObject hb_topcorner_left;
-		public GameObject hb_pix_section;
-		public GameObject hb_pix_panel;
-		
-		public GameObject icon_shine;
-		public GameObject icon_heart;
-		public GameObject icon_heartside;
-		public GameObject icon_cover;
-		public GameObject icon_base;
-		public GameObject icon_side;
-		public GameObject icon_producer;
-		
-		public GameObject icon_cover_s;
-		public GameObject sc_side;
-		public GameObject sc_on;
-		public GameObject sc_off;
-		
-		public GameObject bb_plus;
-		public GameObject bb_plus_side;
-		public GameObject bb_cross;
-		public GameObject icon_cover_b;
-		public GameObject bb_lock;
-		public GameObject bb_square;
-		public GameObject bb_square_side;
 		
 		public GameObject info;
-		*/
+
 		
 		
 		public Upgrade(GameObject parent, string name, int langAux) {
@@ -319,11 +458,9 @@ public class Capa1Screen1Script : MonoBehaviour {
 			cost = root.gameObject.transform.FindChild("Cost").gameObject;
 			loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
 
-			
-			//loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
-			//Material mat = Instantiate(loveIcon.GetComponent<SpriteRenderer>().material) as Material;
-			//loveIcon.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			//loveIcon.SetActive(false);
+
+			Material mat = Instantiate(loveIcon.GetComponent<SpriteRenderer>().material) as Material;
+			loveIcon.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			
 		
 			board = root.gameObject.transform.FindChild("Upg_Board").gameObject;
@@ -338,14 +475,23 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 			staticClosedU = root.gameObject.transform.FindChild("Closed_Unavailable").gameObject;
 			root.gameObject.transform.FindChild("Shrinked/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+			staticClosedU.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Closed_Unavailable/icon_producer").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			//staticClosedU.SetActive(false);
 
 			staticClosedA = root.gameObject.transform.FindChild("Closed_Available").gameObject;
+			staticClosedA.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Closed_Available/icon_producer").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			staticClosedA.SetActive(false);
 
 			staticShrinked = root.gameObject.transform.FindChild("Shrinked").gameObject; 
+			staticShrinked.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			root.gameObject.transform.FindChild("Shrinked/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+			root.gameObject.transform.FindChild("Shrinked/icon_producer").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			staticShrinked.SetActive(false);
+
+			info = root.gameObject.transform.FindChild("Info").gameObject;
+			info.SetActive(false);
 
 
 			if (langAux <= Lang.SERVANT_UPGRADE_10) {

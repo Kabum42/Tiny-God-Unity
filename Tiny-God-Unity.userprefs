@@ -1,12 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Capa1Screen1Script.cs">
     <Files>
-      <File FileName="Assets\Scripts\Capa1Screen1Script.cs" Line="219" Column="32" />
-      <File FileName="Assets\Capa1Screen2Script.cs" Line="4" Column="10" />
-      <File FileName="Assets\Scripts\MainScript.cs" Line="326" Column="11" />
-      <File FileName="Assets\Scripts\Capa1Screen3Script.cs" Line="312" Column="1" />
-      <File FileName="Assets\Scripts\YahvyScript.cs" Line="227" Column="36" />
+      <File FileName="Assets\Scripts\Capa1Screen1Script.cs" Line="397" Column="25" />
+      <File FileName="Assets\Scripts\MainScript.cs" Line="410" Column="81" />
+      <File FileName="Assets\Scripts\Capa1Screen3Script.cs" Line="88" Column="58" />
+      <File FileName="Assets\Scripts\YahvyScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GlobalData.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\RewardScript.cs" Line="1" Column="1" />
     </Files>
