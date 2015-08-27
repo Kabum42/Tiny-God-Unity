@@ -3,10 +3,36 @@ using System.Collections;
 
 public class Capa1Screen1Script : MonoBehaviour {
 
+	private Vector3 lastMousePosition;
 	private Upgrade[] upgrades = new Upgrade[96];
+
+	private AudioSource buy1;
+	private AudioSource buy2;
+	private AudioSource buy3;
+	private AudioSource tap;
 
 	// Use this for initialization
 	void Start () {
+
+		buy1 = gameObject.AddComponent<AudioSource>();
+		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
+		buy1.volume = 1f;
+		buy1.playOnAwake = false;
+		
+		buy2 = gameObject.AddComponent<AudioSource>();
+		buy2.clip = Resources.Load ("Audio/buy2") as AudioClip;
+		buy2.volume = 1f;
+		buy2.playOnAwake = false;
+		
+		buy3 = gameObject.AddComponent<AudioSource>();
+		buy3.clip = Resources.Load ("Audio/buy3") as AudioClip;
+		buy3.volume = 1f;
+		buy3.playOnAwake = false;
+		
+		tap = gameObject.AddComponent<AudioSource>();
+		tap.clip = Resources.Load ("Audio/tap") as AudioClip;
+		tap.volume = 1f;
+		tap.playOnAwake = false;
 
 		int current_upgrade = 22;
 
@@ -66,26 +92,134 @@ public class Capa1Screen1Script : MonoBehaviour {
 		int currentClosed = 0;
 		int currentShrinked = 0;
 		float current_Y = 0f;
+		float current_X = 0f;
 
 		for (int i = 0; i < upgrades.Length; i++) {
 
 			if (upgrades[i].status == "unexistant") {
 				// PUEDE ESTAR PARA COMPRAR O HABER SIDO COMPRADO YA
 				if (GlobalData.thisState.values[upgrades[i].langCode] == 0 && GlobalData.thisState.values[upgrades[i].typeRequired] >= upgrades[i].amountRequired) {
-					upgrades[i].text.GetComponent<TextMesh>().text = Lang.getText(upgrades[i].langCode);
-					upgrades[i].root.SetActive(true);
+
 					upgrades[i].root.transform.localPosition = new Vector3(0f, 2.7f -current_Y, upgrades[i].root.transform.localPosition.z);
 					current_Y += 2.5f;
+					upgrades[i].status = "available";
+
+					upgrades[i].text.GetComponent<TextMesh>().text = Lang.getText(upgrades[i].langCode);
+					upgrades[i].root.SetActive(true);
+
 				}
 			}
 
 			if (upgrades[i].status == "available" || upgrades[i].status == "buyable") {
+
 				upgradesClosed[currentClosed] = upgrades[i];
 				currentClosed++;
+
+				upgrades[i].root.transform.localPosition = new Vector3(0f, Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
+				current_Y += 2.5f;
+
+				if (upgrades[i].status == "available" && upgrades[i].staticClosedU.activeInHierarchy && GlobalData.thisState.love >= upgrades[i].price) {
+
+					upgrades[i].staticClosedU.SetActive(false);
+					upgrades[i].board.SetActive(true);
+					upgrades[i].icon.SetActive(true);
+					upgrades[i].button.SetActive(true);
+					upgrades[i].button.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
+
+					upgrades[i].status = "buyable";
+
+				} 
+				else if (upgrades[i].status == "buyable" && upgrades[i].button.activeInHierarchy && upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+
+					upgrades[i].board.SetActive(false);
+					upgrades[i].icon.SetActive(false);
+					upgrades[i].button.SetActive(false);
+					upgrades[i].staticClosedA.SetActive(true);
+
+				}
+				else if (upgrades[i].status == "buyable" && upgrades[i].staticClosedA.activeInHierarchy && GlobalData.thisState.love < upgrades[i].price) {
+					
+					upgrades[i].staticClosedA.SetActive(false);
+					upgrades[i].board.SetActive(true);
+					upgrades[i].icon.SetActive(true);
+					upgrades[i].button.SetActive(true);
+					upgrades[i].button.GetComponent<Animator> ().Play ("Changing", 0, 0f);
+					
+					upgrades[i].status = "available";
+					
+				}
+				else if (upgrades[i].status == "available" && upgrades[i].button.activeInHierarchy && upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+					
+					upgrades[i].board.SetActive(false);
+					upgrades[i].icon.SetActive(false);
+					upgrades[i].button.SetActive(false);
+					upgrades[i].staticClosedU.SetActive(true);
+					
+				}
+				else if (upgrades[i].status == "buyable" && GlobalData.thisState.love >= upgrades[i].price && (ClickedOn(upgrades[i].staticClosedA) || ClickedOn(upgrades[i].button))) {
+
+					GlobalData.thisState.love -= upgrades[i].price;
+					GlobalData.thisState.values[upgrades[i].langCode] = 1;
+
+					float aux = Random.Range(0f, 1f);
+					
+					if (aux > 2f/3f) {
+						buy1.Play();
+					} else if (aux > 1f/3f) {
+						buy2.Play();
+					}
+					else {
+						buy3.Play();
+					}
+
+					upgrades[i].staticClosedA.SetActive(false);
+					upgrades[i].board.SetActive(true);
+					upgrades[i].icon.SetActive(true);
+					upgrades[i].button.SetActive(true);
+
+					upgrades[i].text.SetActive(false);
+					upgrades[i].cost.SetActive(false);
+					upgrades[i].loveIcon.SetActive(false);
+
+					upgrades[i].board.GetComponent<Animator> ().Play ("Shrinking", 0, 0f);
+					upgrades[i].icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+					upgrades[i].button.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+
+					upgrades[i].status = "bought";
+
+				}
+
 			}
+
+
+
+		}
+
+		for (int i = 0; i < upgrades.Length; i++) {
+
 			if (upgrades[i].status == "bought") {
+				
 				upgradesShrinked[currentShrinked] = upgrades[i];
 				currentShrinked++;
+				
+				upgrades[i].root.transform.localPosition = new Vector3(Mathf.Lerp(upgrades[i].root.transform.localPosition.x, -3.5f +current_X, Time.deltaTime*10f) , Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
+
+				current_X += 3.5f;
+
+				if (current_X >= 3.5f*3f) {
+					current_X = 0f;
+					current_Y += 2.5f;
+				}
+
+				if (upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Shrinking") && upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+					
+					upgrades[i].board.SetActive(false);
+					upgrades[i].icon.SetActive(false);
+					upgrades[i].button.SetActive(false);
+					upgrades[i].staticShrinked.SetActive(true);
+					
+				}
+				
 			}
 
 		}
@@ -122,7 +256,7 @@ public class Capa1Screen1Script : MonoBehaviour {
 		public double price;
 		//public int description;
 		public GameObject text;
-		//public GameObject loveIcon;
+		public GameObject loveIcon;
 		public GameObject cost;
 
 		public int typeRequired;
@@ -138,10 +272,6 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 		/*
 
-		public GameObject buyButton;
-		public GameObject icon;
-		public GameObject screen;
-		
 		public GameObject hb_head;
 		public GameObject hb_botcorner_right;
 		public GameObject hb_botcorner_left;
@@ -187,6 +317,7 @@ public class Capa1Screen1Script : MonoBehaviour {
 			
 			text = root.gameObject.transform.FindChild("Text").gameObject;
 			cost = root.gameObject.transform.FindChild("Cost").gameObject;
+			loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
 
 			
 			//loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
@@ -202,6 +333,7 @@ public class Capa1Screen1Script : MonoBehaviour {
 			button.SetActive(false);
 
 			icon = root.gameObject.transform.FindChild("Upg_Icon").gameObject;
+			root.gameObject.transform.FindChild("Upg_Icon/icon_base/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 			icon.SetActive(false);
 
 			staticClosedU = root.gameObject.transform.FindChild("Closed_Unavailable").gameObject;
@@ -328,6 +460,77 @@ public class Capa1Screen1Script : MonoBehaviour {
 			langCode = langAux;
 			
 		}
+		
+	}
+
+	private bool ClickedOn(GameObject target) {
+		
+		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
+			
+			if (Input.GetMouseButtonDown(0)) { 
+				
+				lastMousePosition = Input.mousePosition;
+				
+			} else if (Input.GetMouseButtonUp(0)) { 
+				
+				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
+				
+				// BUY MASK
+				RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+				
+				for (int i = 0; i < hits.Length; i++) {
+					
+					Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
+					
+					RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+					
+					for (int j = 0; j < hits2.Length; j++) {
+						
+						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						
+					}
+					
+				}
+
+				
+			}
+			
+		} else {
+			
+			if (Input.touchCount > 0) { 
+				
+				if (Input.GetTouch(0).phase == TouchPhase.Began) {
+					
+					lastMousePosition = Input.GetTouch(0).position;
+					
+				} else if (Input.GetTouch(0).phase == TouchPhase.Ended) {
+					
+					Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
+					
+					// BUY MASK
+					RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+					
+					if (hit.collider != null) {
+						
+						Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
+						
+						RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+						
+						if (hit2.collider != null) {
+							
+							if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
+							
+						}
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		return false;
 		
 	}
 
