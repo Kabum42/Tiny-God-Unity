@@ -14,6 +14,7 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa1Cloud;
 	public GameObject capa1AnimatedCloud;
 	public GameObject capa1BackgroundCloud;
+	public GameObject capa1Screen1;
 	public GameObject capa1Screen2Yahvy;
 	public GameObject capa1Screen3;
 	public GameObject capa2;
@@ -60,6 +61,7 @@ public class MainScript : MonoBehaviour {
 		capa1AnimatedCloud = GameObject.Find ("Capa1/Cloud/AnimatedCloud");
 		capa1BackgroundCloud = GameObject.Find ("Capa1/Cloud/Background");
 		capa1Screen2Yahvy = GameObject.Find ("Capa1/Screen2/Yahvy");
+		capa1Screen1 = GameObject.Find ("Capa1/Screen1");
 		capa1Screen3 = GameObject.Find ("Capa1/Screen3");
 		capa2 = GameObject.Find ("Capa2");
 		capa2Top = GameObject.Find ("Capa2/Top");
@@ -199,7 +201,7 @@ public class MainScript : MonoBehaviour {
 				else {
 
 					// Y WINS OVER X
-					if (capa1.transform.position.x > GlobalData.CAPA1_WIDTH_SCREEN*-1.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*-0.5f) {
+					if (capa1.transform.position.x >= GlobalData.CAPA1_WIDTH_SCREEN*-1.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*-0.5f) {
 
 						if (capa1Screen3.GetComponent<Capa1Screen3Script>().producerSelected == null) {
 							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen3.transform.position.z);
@@ -228,6 +230,19 @@ public class MainScript : MonoBehaviour {
 						}
 						else if (capa1Screen3.transform.position.y > max_y) {
 							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, max_y, capa1Screen3.transform.position.z);
+						}
+						
+					}
+					else if (capa1.transform.position.x >= GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*1.5f) {
+						
+						if (capa1Screen1.GetComponent<Capa1Screen1Script>().upgradeSelected == null) {
+							capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, capa1Screen1.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen1.transform.position.z);
+						}
+						
+
+						
+						if (capa1Screen1.transform.position.y < 0f) {
+							capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, 0f, capa1Screen1.transform.position.z);
 						}
 						
 					}
@@ -391,6 +406,13 @@ public class MainScript : MonoBehaviour {
 
 		}
 		*/
+
+		float max_y2 = capa1Screen1.GetComponent<Capa1Screen1Script>().current_maxY -7f;
+		if (max_y2 < 0f) { max_y2 = 0f; }
+		
+		if (capa1Screen1.transform.position.y > max_y2) {
+			capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, Mathf.Lerp (capa1Screen1.transform.position.y, max_y2, Time.deltaTime*10f), capa1Screen1.transform.position.z);
+		}
 
 	}
 
