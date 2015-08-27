@@ -5,6 +5,7 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 	private Vector3 lastMousePosition;
 	private Upgrade[] upgrades = new Upgrade[96];
+	private Upgrade upgradeSelected = null;
 
 	private AudioSource buy1;
 	private AudioSource buy2;
@@ -197,19 +198,39 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 		for (int i = 0; i < upgrades.Length; i++) {
 
-			if (upgrades[i].status == "bought") {
+			if (upgrades[i].status == "bought" || upgrades[i].status == "expanded") {
 				
 				upgradesShrinked[currentShrinked] = upgrades[i];
 				currentShrinked++;
+
+				if (upgrades[i].status == "expanded") {
+
+					if (current_X != 0f) {
+						current_Y += 3.5f;
+					}
+					current_X = 3.5f;
+
+				}
 				
 				upgrades[i].root.transform.localPosition = new Vector3(Mathf.Lerp(upgrades[i].root.transform.localPosition.x, -3.5f +current_X, Time.deltaTime*10f) , Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
 
-				current_X += 3.5f;
+				if (upgrades[i].status == "expanded") {
 
-				if (current_X >= 3.5f*3f) {
 					current_X = 0f;
-					current_Y += 2.5f;
+					current_Y += 7.8f;
+
+				} else {
+
+					current_X += 3.5f;
+
+					if (current_X >= 3.5f*3f) {
+						current_X = 0f;
+						current_Y += 2.5f;
+					}
+
 				}
+
+
 
 				if (upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Shrinking") && upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
 					
@@ -218,6 +239,22 @@ public class Capa1Screen1Script : MonoBehaviour {
 					upgrades[i].button.SetActive(false);
 					upgrades[i].staticShrinked.SetActive(true);
 					
+				}
+				else if (upgrades[i].staticShrinked.activeInHierarchy && ClickedOn(upgrades[i].staticShrinked)) {
+
+					upgrades[i].staticShrinked.SetActive(false);
+					upgrades[i].board.SetActive(true);
+					upgrades[i].icon.SetActive(true);
+
+					upgrades[i].board.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
+					upgrades[i].icon.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
+
+					upgradeSelected = upgrades[i];
+
+					tap.Play();
+
+					upgrades[i].status = "expanded";
+
 				}
 				
 			}
