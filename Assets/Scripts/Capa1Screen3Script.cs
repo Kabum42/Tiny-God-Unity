@@ -305,12 +305,12 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 		GlobalData.thisState.love -= Mathf.Floor (GlobalData.getBaseCost(producer.langCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[producer.langCode]));
 		GlobalData.thisState.values[producer.langCode]++;
-		
-		float aux = Random.Range(0f, 1f);
-		
+
 		producer.buyButton.GetComponent<Animator> ().Play ("Buying", 0, 0f);
 		//producer.icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
-		
+
+		float aux = Random.Range(0f, 1f);
+
 		if (aux > 2f/3f) {
 			buy1.Play();
 		} else if (aux > 1f/3f) {
