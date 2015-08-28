@@ -261,21 +261,16 @@ public class Capa1Screen1Script : MonoBehaviour {
 				upgradesShrinked[currentShrinked] = upgrades[i];
 				currentShrinked++;
 
+				float aux_current_Y = current_Y;
+
 				if (upgrades[i].status == "expanded") {
 
-					/*
-					if (current_X != 0f) {
-						current_Y += 3.5f;
-					}
 					current_X = 3.5f;
-					*/
-
-					current_X = 3.5f;
-					current_Y = 0f;
+					aux_current_Y = 0f +upgrades[i].root.transform.parent.localPosition.y;
 
 				}
 				
-				upgrades[i].root.transform.localPosition = new Vector3(Mathf.Lerp(upgrades[i].root.transform.localPosition.x, -3.5f +current_X, Time.deltaTime*10f) , Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
+				upgrades[i].root.transform.localPosition = new Vector3(Mathf.Lerp(upgrades[i].root.transform.localPosition.x, -3.5f +current_X, Time.deltaTime*10f) , Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -aux_current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
 
 				if (upgrades[i].status == "expanded") {
 
@@ -333,15 +328,6 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 
 					if (selectedStatus >= 2.5f) {
-
-						/*
-						string originalText = Lang.getText(producer.description);
-						originalText += System.Environment.NewLine + System.Environment.NewLine + "1x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);
-						if (GlobalData.thisState.values[producer.langCode] > 1) {
-							originalText += System.Environment.NewLine + GlobalData.thisState.values[producer.langCode] +"x " + Lang.getText(producer.langCode) + " = " + GlobalData.FormattedNumber(GlobalData.getBaseLps(producer.langCode)*GlobalData.thisState.values[producer.langCode]) + " " +Lang.getText(Lang.LOVE_PER_SECOND_WORD);
-						}
-						*/
-						//smartText(originalText, producer.info);
 
 						upgrades[i].text.GetComponent<TextMesh> ().fontSize = 75;
 						
