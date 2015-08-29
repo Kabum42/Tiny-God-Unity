@@ -100,287 +100,356 @@ public class Capa1Screen1Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
-		fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
+		if (Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x > 8f && Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x < 32) {
 
-		Upgrade[] upgradesClosed = new Upgrade[96];
-		Upgrade[] upgradesShrinked = new Upgrade[96];
-		int currentClosed = 0;
-		int currentShrinked = 0;
-		float current_Y = 0f;
-		float current_X = 0f;
+			// ACTUALIZAMOS LA INFO VISUAL
+			if (!fogUp.activeInHierarchy) {
 
-		if (upgradeSelected != null  && selectedStatus < 2.5f) {
-			selectedStatus += Time.deltaTime*8f;
-			if (selectedStatus > 1f && selectedStatus < 2f) { 
+				fogUp.SetActive(true);
+				fogDown.SetActive(true);
+
+				for (int i = 0; i < upgrades.Length; i++) {
+					if (upgrades[i].status != "unexistant") {
+						upgrades[i].root.SetActive(true);
+						upgrades[i].board.GetComponent<Animator> ().Play (upgrades[i].boardAnimation, 0, upgrades[i].timeAnimation);
+						upgrades[i].button.GetComponent<Animator> ().Play (upgrades[i].buttonAnimation, 0, upgrades[i].timeAnimation);
+						upgrades[i].icon.GetComponent<Animator> ().Play (upgrades[i].iconAnimation, 0, upgrades[i].timeAnimation);
+					}
+				}
+
+			}
+
+			fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
+			fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
+			
+			float current_Y = 0f;
+			float current_X = 0f;
+			
+			if (upgradeSelected != null && selectedStatus < 2.5f) {
+				selectedStatus += Time.deltaTime * 8f;
+				if (selectedStatus > 1f && selectedStatus < 2f) { 
+					
+					selectedStatus = 2f; 
+					previousPosition = upgradeSelected.root.transform.localPosition;
+					
+				}
 				
-				selectedStatus = 2f; 
-				previousPosition = upgradeSelected.root.transform.localPosition;
-
+				if (selectedStatus > 2.5f) {
+					selectedStatus = 2.5f;
+				}
+				
 			}
 			
-			if (selectedStatus > 2.5f) {
-				selectedStatus = 2.5f;
-			}
-
-		}
-
-
-		if (upgradeSelected == null  && selectedStatus > 0f) {
-
-			selectedStatus -= Time.deltaTime*8f;
-
-			if (selectedStatus < 0f) { 
-				selectedStatus = 0f; 
-			}
-
-		}
-
-
-
-		for (int i = 0; i < upgrades.Length; i++) {
-
-			if (upgrades[i].status == "unexistant") {
-				// PUEDE ESTAR PARA COMPRAR O HABER SIDO COMPRADO YA
-				if (GlobalData.thisState.values[upgrades[i].langCode] == 0 && GlobalData.thisState.values[upgrades[i].typeRequired] >= upgrades[i].amountRequired) {
-
-					upgrades[i].root.transform.localPosition = new Vector3(0f, 2.7f -current_Y, upgrades[i].root.transform.localPosition.z);
-					current_Y += 2.5f;
-					upgrades[i].status = "available";
-
-					upgrades[i].text.GetComponent<TextMesh>().text = Lang.getText(upgrades[i].langCode);
-					upgrades[i].root.SetActive(true);
-
-				}
-			}
-
-			if (upgrades[i].status == "available" || upgrades[i].status == "buyable") {
-
-				upgradesClosed[currentClosed] = upgrades[i];
-				currentClosed++;
-
-				upgrades[i].root.transform.localPosition = new Vector3(0f, Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
-				current_Y += 2.5f;
-
-				if (upgrades[i].status == "available" && upgrades[i].staticClosedU.activeInHierarchy && GlobalData.thisState.love >= upgrades[i].price) {
-
-					upgrades[i].staticClosedU.SetActive(false);
-					upgrades[i].board.SetActive(true);
-					upgrades[i].icon.SetActive(true);
-					upgrades[i].button.SetActive(true);
-					upgrades[i].button.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
-
-					upgrades[i].status = "buyable";
-
-				} 
-				else if (upgrades[i].status == "buyable" && upgrades[i].button.activeInHierarchy && upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-
-					upgrades[i].board.SetActive(false);
-					upgrades[i].icon.SetActive(false);
-					upgrades[i].button.SetActive(false);
-					upgrades[i].staticClosedA.SetActive(true);
-
-				}
-				else if (upgrades[i].status == "buyable" && upgrades[i].staticClosedA.activeInHierarchy && GlobalData.thisState.love < upgrades[i].price) {
-					
-					upgrades[i].staticClosedA.SetActive(false);
-					upgrades[i].board.SetActive(true);
-					upgrades[i].icon.SetActive(true);
-					upgrades[i].button.SetActive(true);
-					upgrades[i].button.GetComponent<Animator> ().Play ("Changing", 0, 0f);
-					
-					upgrades[i].status = "available";
-					
-				}
-				else if (upgrades[i].status == "available" && upgrades[i].button.activeInHierarchy && upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-					
-					upgrades[i].board.SetActive(false);
-					upgrades[i].icon.SetActive(false);
-					upgrades[i].button.SetActive(false);
-					upgrades[i].staticClosedU.SetActive(true);
-					
-				}
-				else if (upgrades[i].status == "buyable" && GlobalData.thisState.love >= upgrades[i].price && (ClickedOn(upgrades[i].staticClosedA) || ClickedOn(upgrades[i].button))) {
-
-					GlobalData.thisState.love -= upgrades[i].price;
-					GlobalData.thisState.values[upgrades[i].langCode] = 1;
-
-					float aux = Random.Range(0f, 1f);
-					
-					if (aux > 2f/3f) {
-						buy1.Play();
-					} else if (aux > 1f/3f) {
-						buy2.Play();
-					}
-					else {
-						buy3.Play();
-					}
-
-					upgrades[i].staticClosedA.SetActive(false);
-					upgrades[i].board.SetActive(true);
-					upgrades[i].icon.SetActive(true);
-					upgrades[i].button.SetActive(true);
-
-					upgrades[i].text.SetActive(false);
-					upgrades[i].cost.SetActive(false);
-					upgrades[i].loveIcon.SetActive(false);
-
-					upgrades[i].board.GetComponent<Animator> ().Play ("Shrinking", 0, 0f);
-					upgrades[i].icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
-					upgrades[i].button.GetComponent<Animator> ().Play ("Buying", 0, 0f);
-
-					upgrades[i].status = "bought";
-
-				}
-
-				upgrades[i].text.GetComponent<TextMesh> ().fontSize = 75;
+			
+			if (upgradeSelected == null && selectedStatus > 0f) {
 				
-				while (upgrades[i].text.GetComponent<MeshRenderer> ().bounds.size.x > 6f) {
-					upgrades[i].text.GetComponent<TextMesh> ().fontSize -= 1;
-				}
-
-				float alphaValue = selectedStatus;
-				if (alphaValue > 1f)  { alphaValue = 1f; }
-				alphaValue = 1f - alphaValue;
+				selectedStatus -= Time.deltaTime * 8f;
 				
-				upgrades[i].loveIcon.gameObject.GetComponent<SpriteRenderer>().sharedMaterial.color = new Color(1f, 1f, 1f, alphaValue);
-
-				upgrades[i].text.gameObject.GetComponent<TextMesh>().color = new Color (upgrades[i].text.gameObject.GetComponent<TextMesh>().color.r, upgrades[i].text.gameObject.GetComponent<TextMesh>().color.g, upgrades[i].text.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
-				upgrades[i].cost.gameObject.GetComponent<TextMesh>().color = new Color (upgrades[i].cost.gameObject.GetComponent<TextMesh>().color.r, upgrades[i].cost.gameObject.GetComponent<TextMesh>().color.g, upgrades[i].cost.gameObject.GetComponent<TextMesh>().color.b, alphaValue);
-
-			}
-
-
-
-		}
-
-		for (int i = 0; i < upgrades.Length; i++) {
-
-			if (upgrades[i].status == "bought" || upgrades[i].status == "expanded") {
-				
-				upgradesShrinked[currentShrinked] = upgrades[i];
-				currentShrinked++;
-
-				float aux_current_Y = current_Y;
-
-				if (upgrades[i].status == "expanded") {
-
-					current_X = 3.5f;
-					aux_current_Y = 0f +upgrades[i].root.transform.parent.localPosition.y;
-
+				if (selectedStatus < 0f) { 
+					selectedStatus = 0f; 
 				}
 				
-				upgrades[i].root.transform.localPosition = new Vector3(Mathf.Lerp(upgrades[i].root.transform.localPosition.x, -3.5f +current_X, Time.deltaTime*10f) , Mathf.Lerp(upgrades[i].root.transform.localPosition.y, 2.7f -aux_current_Y, Time.deltaTime*10f), upgrades[i].root.transform.localPosition.z);
-
-				if (upgrades[i].status == "expanded") {
-
-					current_X = 0f;
-					current_Y += 7.8f;
-
-				} else {
-
-					current_X += 3.5f;
-
-					if (current_X >= 3.5f*3f) {
-						current_X = 0f;
+			}
+			
+			
+			
+			for (int i = 0; i < upgrades.Length; i++) {
+				
+				if (upgrades [i].status == "unexistant") {
+					// PUEDE ESTAR PARA COMPRAR O HABER SIDO COMPRADO YA
+					if (GlobalData.thisState.values [upgrades [i].langCode] == 0 && GlobalData.thisState.values [upgrades [i].typeRequired] >= upgrades [i].amountRequired) {
+						
+						upgrades [i].root.transform.localPosition = new Vector3 (0f, 2.7f - current_Y, upgrades [i].root.transform.localPosition.z);
 						current_Y += 2.5f;
-					}
-
-				}
-
-
-
-				if (upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Shrinking") && upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-					
-					upgrades[i].board.SetActive(false);
-					upgrades[i].icon.SetActive(false);
-					upgrades[i].button.SetActive(false);
-					upgrades[i].staticShrinked.SetActive(true);
-					
-				}
-				else if (upgrades[i].staticShrinked.activeInHierarchy && ClickedOn(upgrades[i].staticShrinked) && selectedStatus == 0f) {
-
-					upgrades[i].staticShrinked.SetActive(false);
-					upgrades[i].board.SetActive(true);
-					upgrades[i].icon.SetActive(true);
-
-					upgrades[i].text.SetActive(true);
-					upgrades[i].info.SetActive(true);
-
-					upgrades[i].board.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
-					upgrades[i].icon.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
-
-					upgradeSelected = upgrades[i];
-
-					upgrades[i].text.GetComponent<TextMesh>().color = new Color(upgrades[i].text.GetComponent<TextMesh>().color.r, upgrades[i].text.GetComponent<TextMesh>().color.g, upgrades[i].text.GetComponent<TextMesh>().color.b, 0f);
-					upgrades[i].info.GetComponent<TextMesh>().color = new Color(upgrades[i].info.GetComponent<TextMesh>().color.r, upgrades[i].info.GetComponent<TextMesh>().color.g, upgrades[i].info.GetComponent<TextMesh>().color.b, 0f);
-
-					previousPosition = upgradeSelected.root.transform.localPosition;
-
-					tap.Play();
-
-					upgrades[i].status = "expanded";
-
-				}
-
-
-				if (upgradeSelected == upgrades[i]) {
-
-
-					if (selectedStatus >= 2.5f) {
-
-						upgrades[i].text.GetComponent<TextMesh> ().fontSize = 75;
+						upgrades [i].status = "available";
 						
-						while (upgrades[i].text.GetComponent<MeshRenderer> ().bounds.size.x > 7.2f) {
-							upgrades[i].text.GetComponent<TextMesh> ().fontSize -= 1;
+						upgrades [i].text.GetComponent<TextMesh> ().text = Lang.getText (upgrades [i].langCode);
+						upgrades [i].root.SetActive (true);
+						
+					}
+				} else if (!upgrades [i].root.activeInHierarchy) {
+					upgrades [i].root.SetActive (true);
+				}
+				
+				if (upgrades [i].status == "available" || upgrades [i].status == "buyable") {
+					
+					//upgradesClosed[currentClosed] = upgrades[i];
+					//currentClosed++;
+					
+					upgrades [i].root.transform.localPosition = new Vector3 (0f, Mathf.Lerp (upgrades [i].root.transform.localPosition.y, 2.7f - current_Y, Time.deltaTime * 10f), upgrades [i].root.transform.localPosition.z);
+					current_Y += 2.5f;
+					
+					if (upgrades [i].status == "available" && upgrades [i].staticClosedU.activeInHierarchy && GlobalData.thisState.love >= upgrades [i].price) {
+						
+						upgrades [i].staticClosedU.SetActive (false);
+						upgrades [i].board.SetActive (true);
+						upgrades [i].icon.SetActive (true);
+						upgrades [i].button.SetActive (true);
+						upgrades [i].button.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
+						
+						upgrades [i].status = "buyable";
+						
+					} else if (upgrades [i].status == "buyable" && upgrades [i].button.activeInHierarchy && upgrades [i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+						
+						upgrades [i].board.SetActive (false);
+						upgrades [i].icon.SetActive (false);
+						upgrades [i].button.SetActive (false);
+						upgrades [i].staticClosedA.SetActive (true);
+						
+					} else if (upgrades [i].status == "buyable" && upgrades [i].staticClosedA.activeInHierarchy && GlobalData.thisState.love < upgrades [i].price) {
+						
+						upgrades [i].staticClosedA.SetActive (false);
+						upgrades [i].board.SetActive (true);
+						upgrades [i].icon.SetActive (true);
+						upgrades [i].button.SetActive (true);
+						upgrades [i].button.GetComponent<Animator> ().Play ("Changing", 0, 0f);
+						
+						upgrades [i].status = "available";
+						
+					} else if (upgrades [i].status == "available" && upgrades [i].button.activeInHierarchy && upgrades [i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+						
+						upgrades [i].board.SetActive (false);
+						upgrades [i].icon.SetActive (false);
+						upgrades [i].button.SetActive (false);
+						upgrades [i].staticClosedU.SetActive (true);
+						
+					} else if (upgrades [i].status == "buyable" && GlobalData.thisState.love >= upgrades [i].price && (ClickedOn (upgrades [i].staticClosedA) || ClickedOn (upgrades [i].button)) && upgradeSelected == null) {
+						
+						GlobalData.thisState.love -= upgrades [i].price;
+						GlobalData.thisState.values [upgrades [i].langCode] = 1;
+						
+						float aux = Random.Range (0f, 1f);
+						
+						if (aux > 2f / 3f) {
+							buy1.Play ();
+						} else if (aux > 1f / 3f) {
+							buy2.Play ();
+						} else {
+							buy3.Play ();
 						}
-
-						smartText(Lang.getText(upgrades[i].langCode +1),  upgrades[i].info);
-						upgrades[i].info.GetComponent<TextMesh>().color = new Color(upgrades[i].info.GetComponent<TextMesh>().color.r, upgrades[i].info.GetComponent<TextMesh>().color.g, upgrades[i].info.GetComponent<TextMesh>().color.b, Mathf.Lerp(upgrades[i].info.GetComponent<TextMesh>().color.a, 1f, Time.deltaTime*10f));
-						upgrades[i].text.GetComponent<TextMesh>().color = new Color(upgrades[i].text.GetComponent<TextMesh>().color.r, upgrades[i].text.GetComponent<TextMesh>().color.g, upgrades[i].text.GetComponent<TextMesh>().color.b, Mathf.Lerp(upgrades[i].text.GetComponent<TextMesh>().color.a, 1f, Time.deltaTime*10f));
-
+						
+						upgrades [i].staticClosedA.SetActive (false);
+						upgrades [i].board.SetActive (true);
+						upgrades [i].icon.SetActive (true);
+						upgrades [i].button.SetActive (true);
+						
+						upgrades [i].text.SetActive (false);
+						upgrades [i].cost.SetActive (false);
+						upgrades [i].loveIcon.SetActive (false);
+						
+						upgrades [i].board.GetComponent<Animator> ().Play ("Shrinking", 0, 0f);
+						upgrades [i].icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+						upgrades [i].button.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+						
+						upgrades [i].status = "bought";
+						
 					}
-
-					if (ClickedOn(upgrades[i].board) && selectedStatus == 2.5f) {
-						
-						upgrades[i].text.SetActive(false);
-						upgrades[i].info.SetActive(false);
-						upgrades[i].loveIcon.SetActive(false);
-						
-						upgrades[i].board.GetComponent<Animator> ().Play ("Shrinking", 0, 0f);
-						upgrades[i].icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
-						
-						upgrades[i].status = "bought";
-
-						lastUpgradeSelected = upgrades[i];
-						upgradeSelected = null;
-						
-						tap.Play();
-
-					}
-
-				}
-				else {
-
-					float alphaValue = selectedStatus;
-					if (alphaValue > 1f)  { alphaValue = 1f; }
-					alphaValue = 1f - alphaValue;
-
-					upgrades[i].loveIcon.gameObject.GetComponent<SpriteRenderer>().sharedMaterial.color = new Color(1f, 1f, 1f, alphaValue);
-
-
-				}
 					
-
+					upgrades [i].text.GetComponent<TextMesh> ().fontSize = 75;
+					
+					while (upgrades[i].text.GetComponent<MeshRenderer> ().bounds.size.x > 6f) {
+						upgrades [i].text.GetComponent<TextMesh> ().fontSize -= 1;
+					}
+					
+					float alphaValue = selectedStatus;
+					if (alphaValue > 1f) {
+						alphaValue = 1f;
+					}
+					alphaValue = 1f - alphaValue;
+					
+					upgrades [i].loveIcon.gameObject.GetComponent<SpriteRenderer> ().sharedMaterial.color = new Color (1f, 1f, 1f, alphaValue);
+					
+					upgrades [i].text.gameObject.GetComponent<TextMesh> ().color = new Color (upgrades [i].text.gameObject.GetComponent<TextMesh> ().color.r, upgrades [i].text.gameObject.GetComponent<TextMesh> ().color.g, upgrades [i].text.gameObject.GetComponent<TextMesh> ().color.b, alphaValue);
+					upgrades [i].cost.gameObject.GetComponent<TextMesh> ().color = new Color (upgrades [i].cost.gameObject.GetComponent<TextMesh> ().color.r, upgrades [i].cost.gameObject.GetComponent<TextMesh> ().color.g, upgrades [i].cost.gameObject.GetComponent<TextMesh> ().color.b, alphaValue);
+					
+				}
+				
 				
 				
 			}
+			
+			for (int i = 0; i < upgrades.Length; i++) {
+				
+				if (upgrades [i].status == "bought" || upgrades [i].status == "expanded") {
+					
+					//upgradesShrinked[currentShrinked] = upgrades[i];
+					//currentShrinked++;
+					
+					float aux_current_Y = current_Y;
+					
+					if (upgrades [i].status == "expanded") {
+						
+						current_X = 3.5f;
+						aux_current_Y = 0f + upgrades [i].root.transform.parent.localPosition.y;
+						
+					}
+					
+					upgrades [i].root.transform.localPosition = new Vector3 (Mathf.Lerp (upgrades [i].root.transform.localPosition.x, -3.5f + current_X, Time.deltaTime * 10f), Mathf.Lerp (upgrades [i].root.transform.localPosition.y, 2.7f - aux_current_Y, Time.deltaTime * 10f), upgrades [i].root.transform.localPosition.z);
+					
+					if (upgrades [i].status == "expanded") {
+						
+						current_X = 0f;
+						current_Y += 7.8f;
+						
+					} else {
+						
+						current_X += 3.5f;
+						
+						if (current_X >= 3.5f * 3f) {
+							current_X = 0f;
+							current_Y += 2.5f;
+						}
+						
+					}
+					
+					
+					
+					if (upgrades [i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Shrinking") && upgrades [i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+						
+						upgrades [i].board.SetActive (false);
+						upgrades [i].icon.SetActive (false);
+						upgrades [i].button.SetActive (false);
+						upgrades [i].staticShrinked.SetActive (true);
+						
+					} else if (upgrades [i].staticShrinked.activeInHierarchy && ClickedOn (upgrades [i].staticShrinked) && selectedStatus == 0f) {
+						
+						upgrades [i].staticShrinked.SetActive (false);
+						upgrades [i].board.SetActive (true);
+						upgrades [i].icon.SetActive (true);
+						
+						upgrades [i].text.SetActive (true);
+						upgrades [i].info.SetActive (true);
+						
+						upgrades [i].board.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
+						upgrades [i].icon.GetComponent<Animator> ().Play ("Expanding", 0, 0f);
+						
+						upgradeSelected = upgrades [i];
+						
+						upgrades [i].text.GetComponent<TextMesh> ().color = new Color (upgrades [i].text.GetComponent<TextMesh> ().color.r, upgrades [i].text.GetComponent<TextMesh> ().color.g, upgrades [i].text.GetComponent<TextMesh> ().color.b, 0f);
+						upgrades [i].info.GetComponent<TextMesh> ().color = new Color (upgrades [i].info.GetComponent<TextMesh> ().color.r, upgrades [i].info.GetComponent<TextMesh> ().color.g, upgrades [i].info.GetComponent<TextMesh> ().color.b, 0f);
+						
+						previousPosition = upgradeSelected.root.transform.localPosition;
+						
+						tap.Play ();
+						
+						upgrades [i].status = "expanded";
+						
+					}
+					
+					
+					if (upgradeSelected == upgrades [i]) {
+						
+						
+						if (selectedStatus >= 2.5f) {
+							
+							upgrades [i].text.GetComponent<TextMesh> ().fontSize = 75;
+							
+							while (upgrades[i].text.GetComponent<MeshRenderer> ().bounds.size.x > 7.2f) {
+								upgrades [i].text.GetComponent<TextMesh> ().fontSize -= 1;
+							}
+							
+							smartText (Lang.getText (upgrades [i].langCode + 1), upgrades [i].info);
+							upgrades [i].info.GetComponent<TextMesh> ().color = new Color (upgrades [i].info.GetComponent<TextMesh> ().color.r, upgrades [i].info.GetComponent<TextMesh> ().color.g, upgrades [i].info.GetComponent<TextMesh> ().color.b, Mathf.Lerp (upgrades [i].info.GetComponent<TextMesh> ().color.a, 1f, Time.deltaTime * 10f));
+							upgrades [i].text.GetComponent<TextMesh> ().color = new Color (upgrades [i].text.GetComponent<TextMesh> ().color.r, upgrades [i].text.GetComponent<TextMesh> ().color.g, upgrades [i].text.GetComponent<TextMesh> ().color.b, Mathf.Lerp (upgrades [i].text.GetComponent<TextMesh> ().color.a, 1f, Time.deltaTime * 10f));
+							
+						}
+						
+						if (ClickedOn (upgrades [i].board) && selectedStatus == 2.5f) {
+							
+							upgrades [i].text.SetActive (false);
+							upgrades [i].info.SetActive (false);
+							upgrades [i].loveIcon.SetActive (false);
+							
+							upgrades [i].board.GetComponent<Animator> ().Play ("Shrinking", 0, 0f);
+							upgrades [i].icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+							
+							upgrades [i].status = "bought";
+							
+							lastUpgradeSelected = upgrades [i];
+							upgradeSelected = null;
+							
+							tap.Play ();
+							
+						}
+						
+					} else {
+						
+						float alphaValue = selectedStatus;
+						if (alphaValue > 1f) {
+							alphaValue = 1f;
+						}
+						alphaValue = 1f - alphaValue;
+						
+						upgrades [i].loveIcon.gameObject.GetComponent<SpriteRenderer> ().sharedMaterial.color = new Color (1f, 1f, 1f, alphaValue);
+						
+						
+					}
+					
+					
+					
+					
+				}
+				
+			}
+			
+			current_maxY = current_Y;
+			if (current_X == 0f) {
+				current_maxY -= 2.5f;
+			}
 
-		}
+		} else {
 
-		current_maxY = current_Y;
-		if (current_X == 0f) {
-			current_maxY -= 2.5f;
+			// DESACTIVAMOS LO QUE NO HACE FALTA
+
+			if (fogUp.activeInHierarchy) {
+				fogUp.SetActive (false);
+				fogDown.SetActive(false);
+				
+				for (int i = 0; i < upgrades.Length; i++) {
+
+					upgrades[i].timeAnimation = upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime;
+
+					if (upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Closed")) {
+						upgrades[i].boardAnimation = "Closed";
+					}
+					else if (upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Shrinking")) {
+						upgrades[i].boardAnimation = "Shrinking";
+					}
+					else if (upgrades[i].board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Expanding")) {
+						upgrades[i].boardAnimation = "Expanding";
+					}
+
+					if (upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Available")) {
+						upgrades[i].buttonAnimation = "Available";
+					}
+					else if (upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Changing")) {
+						upgrades[i].buttonAnimation = "Changing";
+					}
+					else if (upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Changing2")) {
+						upgrades[i].buttonAnimation = "Changing2";
+					}
+					else if (upgrades[i].button.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Buying")) {
+						upgrades[i].buttonAnimation = "Buying";
+					}
+
+					if (upgrades[i].icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Expanded")) {
+						upgrades[i].iconAnimation = "Expanded";
+					}
+					else if (upgrades[i].icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Shrinking")) {
+						upgrades[i].iconAnimation = "Shrinking";
+					}
+					else if (upgrades[i].icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Expanding")) {
+						upgrades[i].iconAnimation = "Expanding";
+					}
+					else if (upgrades[i].icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Buying")) {
+						upgrades[i].iconAnimation = "Buying";
+					}
+
+					upgrades[i].root.SetActive(false);
+
+				}
+			}
+
 		}
 	
 	}
@@ -428,6 +497,11 @@ public class Capa1Screen1Script : MonoBehaviour {
 		public GameObject staticShrinked;
 		
 		public GameObject info;
+
+		public float timeAnimation = 0f;
+		public string boardAnimation = "Closed";
+		public string buttonAnimation = "Available";
+		public string iconAnimation = "Expanded";
 
 		
 		

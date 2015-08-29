@@ -43,6 +43,9 @@ public class MainScript : MonoBehaviour {
 	private float slideToLeft = 0f;
 	private float slideToRight = 0f;
 
+	private AudioSource rise3;
+	private AudioSource tap;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -54,6 +57,16 @@ public class MainScript : MonoBehaviour {
 		slide.clip = Resources.Load ("Audio/slide") as AudioClip;
 		slide.playOnAwake = false;
 		slide.volume = 1f;
+
+		rise3 = gameObject.AddComponent<AudioSource>();
+		rise3.clip = Resources.Load ("Audio/rise3") as AudioClip;
+		rise3.volume = 1f;
+		rise3.playOnAwake = false;
+
+		tap = gameObject.AddComponent<AudioSource>();
+		tap.clip = Resources.Load ("Audio/tap") as AudioClip;
+		tap.volume = 1f;
+		tap.playOnAwake = false;
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
@@ -359,6 +372,9 @@ public class MainScript : MonoBehaviour {
 
 		if (GlobalData.thisState.minigame_timer == 1f) {
 			if (capa2Miracle1.transform.localPosition.y > -11.5f) {
+				if (capa2Miracle1.transform.localPosition.y == -10f) {
+					rise3.Play();
+				}
 				float aux_y = Mathf.Lerp (capa2Miracle1.transform.localPosition.y, -11.51f, Time.deltaTime*10f);
 				capa2Miracle1.transform.localPosition = new Vector3(0, aux_y, -17.7f);
 				if (aux_y <= -11.5f) { 
@@ -380,6 +396,7 @@ public class MainScript : MonoBehaviour {
 				}
 
 				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Idle") && ClickedOn(capa2MiracleButton)) {
+					tap.Play();
 					capa2MiracleButton.GetComponent<Animator> ().Play ("Pressing", 0, 0f);
 				}
 

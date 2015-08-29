@@ -80,10 +80,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
-		fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
-
 		if (GlobalData.currentScreen == 1) {
+
+			fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
+			fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
 
 			if (producerSelected != null  && selectedStatus < 2.5f) {
 				selectedStatus += Time.deltaTime*8f;
@@ -570,19 +570,19 @@ public class Capa1Screen3Script : MonoBehaviour {
 				description = Lang.PROPHET_DESCRIPTION;
 			}
 			if (langAux == Lang.TEMPLE_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/temple"); 
 				description = Lang.TEMPLE_DESCRIPTION;
 			}
 			if (langAux == Lang.SHIP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/ship");
 				description = Lang.SHIP_DESCRIPTION;
 			}
 			if (langAux == Lang.FACTORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/factory"); 
 				description = Lang.FACTORY_DESCRIPTION;
 			}
 			if (langAux == Lang.LABORATORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/laboratory"); 
 				description = Lang.LABORATORY_DESCRIPTION;
 			}
 			if (langAux == Lang.SHOP_NAME) { 
