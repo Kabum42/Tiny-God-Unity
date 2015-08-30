@@ -25,7 +25,6 @@ public static class GlobalData {
 	public static SaveState thisState; 
 
 	public static int currentMiniGame = 1;
-
 	
 	public static void Start() {
 
@@ -50,7 +49,7 @@ public static class GlobalData {
 		}
 
 
-		thisState.timeOfDay += Time.deltaTime*(1f/10f);
+		thisState.timeOfDay += Time.deltaTime*(1f/40f); // El segundo numero es lo que tarda el ciclo entero
 		if (thisState.timeOfDay > 1f) {
 			thisState.timeOfDay -= 1f;
 		}
