@@ -43,6 +43,12 @@ public class MainScript : MonoBehaviour {
 	private float slideToLeft = 0f;
 	private float slideToRight = 0f;
 
+	private AudioSource rise3;
+	private AudioSource tap;
+
+	private AudioSource daySong;
+	private AudioSource nightSong;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -54,6 +60,28 @@ public class MainScript : MonoBehaviour {
 		slide.clip = Resources.Load ("Audio/slide") as AudioClip;
 		slide.playOnAwake = false;
 		slide.volume = 1f;
+
+		rise3 = gameObject.AddComponent<AudioSource>();
+		rise3.clip = Resources.Load ("Audio/rise3") as AudioClip;
+		rise3.volume = 1f;
+		rise3.playOnAwake = false;
+
+		tap = gameObject.AddComponent<AudioSource>();
+		tap.clip = Resources.Load ("Audio/tap") as AudioClip;
+		tap.volume = 1f;
+		tap.playOnAwake = false;
+
+		daySong = gameObject.AddComponent<AudioSource>();
+		daySong.clip = Resources.Load ("Audio/day") as AudioClip;
+		daySong.loop = true;
+		daySong.volume = 0.5f;
+		daySong.Play ();
+
+		nightSong = gameObject.AddComponent<AudioSource>();
+		nightSong.clip = Resources.Load ("Audio/night") as AudioClip;
+		nightSong.loop = true;
+		nightSong.volume = 0f;
+		nightSong.Play ();
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
@@ -131,6 +159,18 @@ public class MainScript : MonoBehaviour {
 	void Update () {
 
 		GlobalData.Update ();
+
+		if (GlobalData.thisState.timeOfDay < 0.5f) {
+
+			daySong.volume = Mathf.Lerp(daySong.volume, 0.5f, Time.deltaTime*10f);
+			nightSong.volume = Mathf.Lerp(nightSong.volume, 0f, Time.deltaTime*10f);
+
+		} else {
+
+			daySong.volume = Mathf.Lerp(daySong.volume, 0f, Time.deltaTime*10f);
+			nightSong.volume = Mathf.Lerp(nightSong.volume, 0.5f, Time.deltaTime*10f);
+
+		}
 
 		string original = GlobalData.FormattedNumber(GlobalData.thisState.love);
 		string[] parts = original.Split(' ');
@@ -359,6 +399,9 @@ public class MainScript : MonoBehaviour {
 
 		if (GlobalData.thisState.minigame_timer == 1f) {
 			if (capa2Miracle1.transform.localPosition.y > -11.5f) {
+				if (capa2Miracle1.transform.localPosition.y == -10f) {
+					rise3.Play();
+				}
 				float aux_y = Mathf.Lerp (capa2Miracle1.transform.localPosition.y, -11.51f, Time.deltaTime*10f);
 				capa2Miracle1.transform.localPosition = new Vector3(0, aux_y, -17.7f);
 				if (aux_y <= -11.5f) { 
@@ -380,6 +423,7 @@ public class MainScript : MonoBehaviour {
 				}
 
 				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Idle") && ClickedOn(capa2MiracleButton)) {
+					tap.Play();
 					capa2MiracleButton.GetComponent<Animator> ().Play ("Pressing", 0, 0f);
 				}
 

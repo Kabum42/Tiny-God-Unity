@@ -41,17 +41,17 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 		buy1 = gameObject.AddComponent<AudioSource>();
 		buy1.clip = Resources.Load ("Audio/buy1") as AudioClip;
-		buy1.volume = 1f;
+		buy1.volume = 0.8f;
 		buy1.playOnAwake = false;
 
 		buy2 = gameObject.AddComponent<AudioSource>();
 		buy2.clip = Resources.Load ("Audio/buy2") as AudioClip;
-		buy2.volume = 1f;
+		buy2.volume = 0.8f;
 		buy2.playOnAwake = false;
 
 		buy3 = gameObject.AddComponent<AudioSource>();
 		buy3.clip = Resources.Load ("Audio/buy3") as AudioClip;
-		buy3.volume = 1f;
+		buy3.volume = 0.8f;
 		buy3.playOnAwake = false;
 
 		epic_ching = gameObject.AddComponent<AudioSource>();
@@ -80,10 +80,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
-		fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
-
 		if (GlobalData.currentScreen == 1) {
+
+			fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
+			fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
 
 			if (producerSelected != null  && selectedStatus < 2.5f) {
 				selectedStatus += Time.deltaTime*8f;
@@ -570,19 +570,19 @@ public class Capa1Screen3Script : MonoBehaviour {
 				description = Lang.PROPHET_DESCRIPTION;
 			}
 			if (langAux == Lang.TEMPLE_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/temple"); 
 				description = Lang.TEMPLE_DESCRIPTION;
 			}
 			if (langAux == Lang.SHIP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/ship");
 				description = Lang.SHIP_DESCRIPTION;
 			}
 			if (langAux == Lang.FACTORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/factory"); 
 				description = Lang.FACTORY_DESCRIPTION;
 			}
 			if (langAux == Lang.LABORATORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/laboratory"); 
 				description = Lang.LABORATORY_DESCRIPTION;
 			}
 			if (langAux == Lang.SHOP_NAME) { 
