@@ -34,7 +34,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		Lang.setLanguage (Lang.SPANISH_VALUE);
+		//Lang.setLanguage (Lang.SPANISH_VALUE);
 
 		fogUp = GameObject.Find ("Capa1/Screen3/FogUp");
 		fogDown = GameObject.Find ("Capa1/Screen3/FogDown");
@@ -56,7 +56,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 		epic_ching = gameObject.AddComponent<AudioSource>();
 		epic_ching.clip = Resources.Load ("Audio/epic_ching") as AudioClip;
-		epic_ching.volume = 1f;
+		epic_ching.volume = 0.9f;
 		epic_ching.playOnAwake = false;
 
 		tap = gameObject.AddComponent<AudioSource>();
@@ -91,7 +91,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 					
 					selectedStatus = 2f; 
 					previousPosition = producerSelected.root.transform.localPosition;
-					producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
+					producerSelected.board.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
 					producerSelected.info.SetActive(true);
 					producerSelected.info.GetComponent<TextMesh>().color = new Color(producerSelected.info.GetComponent<TextMesh>().color.r, producerSelected.info.GetComponent<TextMesh>().color.g, producerSelected.info.GetComponent<TextMesh>().color.b, 0f);
 					
@@ -159,7 +159,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 				}
 			} else {
 				if (ClickedOn (producerSelected.hb_head) && producer == producerSelected && selectedStatus == 2.5f) {
-					producerSelected.root.GetComponent<Animator> ().CrossFade ("Opening2", 0f, 0, 0f);
+					producerSelected.board.GetComponent<Animator> ().CrossFade ("Opening2", 0f, 0, 0f);
 					producerSelected = null;
 					tap.Play();
 				}
@@ -196,6 +196,13 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 		// ANIMATIONS: LOCKED TO UNLOCKING
 		if (!producer.number.activeInHierarchy && (producer.status != "unexistant" && producer.status != "undiscovered")) {
+
+			producer.staticClosedL.SetActive(false);
+
+			producer.board.SetActive(true);
+			producer.buyButton.SetActive(true);
+			producer.icon.SetActive(true);
+			producer.screen.SetActive(true);
 
 			producer.number.SetActive(true);
 			producer.cost.SetActive(true);
@@ -439,41 +446,21 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject number;
 		public GameObject loveIcon;
 		public GameObject cost;
+
+		public GameObject board;
 		public GameObject buyButton;
 		public GameObject icon;
 		public GameObject screen;
 
 		public GameObject hb_head;
-		public GameObject hb_botcorner_right;
-		public GameObject hb_botcorner_left;
-		public GameObject hb_pix_foot;
-		public GameObject hb_topcorner_right;
-		public GameObject hb_topcorner_left;
-		public GameObject hb_pix_section;
-		public GameObject hb_pix_panel;
 
-		public GameObject icon_shine;
-		public GameObject icon_heart;
-		public GameObject icon_heartside;
-		public GameObject icon_cover;
-		public GameObject icon_base;
-		public GameObject icon_side;
 		public GameObject icon_producer;
 
-		public GameObject icon_cover_s;
-		public GameObject sc_side;
-		public GameObject sc_on;
-		public GameObject sc_off;
-
-		public GameObject bb_plus;
-		public GameObject bb_plus_side;
-		public GameObject bb_cross;
-		public GameObject icon_cover_b;
-		public GameObject bb_lock;
-		public GameObject bb_square;
-		public GameObject bb_square_side;
-
 		public GameObject info;
+
+		public GameObject staticClosedL;
+		public GameObject staticClosedU;
+		public GameObject staticClosedA;
 
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
@@ -490,72 +477,68 @@ public class Capa1Screen3Script : MonoBehaviour {
 			number.SetActive(false);
 			cost = root.gameObject.transform.FindChild("Cost").gameObject;
 			cost.SetActive(false);
+
+			board = root.gameObject.transform.FindChild("Pro_Board").gameObject;
+			board.SetActive(false);
 			buyButton = root.gameObject.transform.FindChild("Pro_Button").gameObject;
+			buyButton.SetActive(false);
 			screen = root.gameObject.transform.FindChild("Screen").gameObject;
+			screen.SetActive(false);
 			icon = root.gameObject.transform.FindChild("Pro_Icon").gameObject;
+			icon.SetActive(false);
 
 			loveIcon = root.gameObject.transform.FindChild("LoveIcon").gameObject;
 			Material mat = Instantiate(loveIcon.GetComponent<SpriteRenderer>().material) as Material;
 			loveIcon.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			loveIcon.SetActive(false);
 
-			hb_head = root.gameObject.transform.FindChild("hb_pix_board").gameObject;
+			hb_head = root.gameObject.transform.FindChild("Pro_Board/hb_pix_board").gameObject;
 			hb_head.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			hb_botcorner_right = root.gameObject.transform.FindChild("hb_botcorner_right").gameObject;
-			hb_botcorner_right.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			hb_botcorner_left = root.gameObject.transform.FindChild("hb_botcorner_left").gameObject;
-			hb_botcorner_left.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			hb_pix_foot = root.gameObject.transform.FindChild("hb_pix_foot").gameObject;
-			hb_pix_foot.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			hb_topcorner_right = root.gameObject.transform.FindChild("hb_topcorner_right").gameObject;
-			hb_topcorner_right.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			hb_topcorner_left = root.gameObject.transform.FindChild("hb_topcorner_left").gameObject;
-			hb_topcorner_left.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			hb_pix_section = root.gameObject.transform.FindChild("hb_pix_section").gameObject;
-			hb_pix_section.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			hb_pix_panel = root.gameObject.transform.FindChild("hb_pix_panel").gameObject;
-			hb_pix_panel.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Board/hb_botcorner_right").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Board/hb_botcorner_left").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Board/hb_pix_foot").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Board/hb_topcorner_right").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Board/hb_topcorner_left").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Board/hb_pix_section").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Board/hb_pix_panel").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
-			icon_shine = root.gameObject.transform.FindChild("Pro_Icon/icon_shine").gameObject;
-			icon_shine.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			icon_heart = root.gameObject.transform.FindChild("Pro_Icon/icon_heart").gameObject;
-			icon_heart.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			icon_heartside = root.gameObject.transform.FindChild("Pro_Icon/icon_heartside").gameObject;
-			icon_heartside.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			icon_cover = root.gameObject.transform.FindChild("Pro_Icon/icon_cover").gameObject;
-			icon_cover.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			icon_base = root.gameObject.transform.FindChild("Pro_Icon/icon_base").gameObject;
-			icon_base.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			icon_side = root.gameObject.transform.FindChild("Pro_Icon/icon_side").gameObject;
-			icon_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Icon/icon_shine").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Icon/icon_heart").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Icon/icon_heartside").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Icon/icon_cover").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Icon/icon_base").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Icon/icon_side").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			icon_producer = root.gameObject.transform.FindChild("Pro_Icon/icon_base/icon_producer").gameObject;
 			icon_producer.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
-			icon_cover_s = root.gameObject.transform.FindChild("Screen/icon_cover").gameObject;
-			icon_cover_s.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			sc_side = root.gameObject.transform.FindChild("Screen/sc_side").gameObject;
-			sc_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			sc_on = root.gameObject.transform.FindChild("Screen/sc_on").gameObject;
-			sc_on.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			sc_off = root.gameObject.transform.FindChild("Screen/sc_off").gameObject;
-			sc_off.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Screen/icon_cover").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Screen/sc_side").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Screen/sc_on").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Screen/sc_off").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
-			bb_plus = root.gameObject.transform.FindChild("Pro_Button/bb_plus").gameObject;
-			bb_plus.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			bb_plus_side = root.gameObject.transform.FindChild("Pro_Button/bb_plus_side").gameObject;
-			bb_plus_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			bb_cross = root.gameObject.transform.FindChild("Pro_Button/bb_cross").gameObject;
-			bb_cross.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			icon_cover_b = root.gameObject.transform.FindChild("Pro_Button/icon_cover").gameObject;
-			icon_cover_b.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			bb_lock = root.gameObject.transform.FindChild("Pro_Button/bb_lock").gameObject;
-			bb_lock.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			bb_square = root.gameObject.transform.FindChild("Pro_Button/bb_square").gameObject;
-			bb_square.GetComponent<SpriteRenderer>().sharedMaterial = mat;
-			bb_square_side = root.gameObject.transform.FindChild("Pro_Button/bb_square_side").gameObject;
-			bb_square_side.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Button/bb_plus").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Button/bb_plus_side").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Button/bb_cross").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Button/icon_cover").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Button/bb_lock").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Button/bb_square").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Pro_Button/bb_square_side").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
 			info = root.gameObject.transform.FindChild("Info").gameObject;
+
+			staticClosedL = root.gameObject.transform.FindChild("Closed_Lock").gameObject;
+			staticClosedL.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			//staticClosedL.SetActive(false);
+
+			staticClosedA = root.gameObject.transform.FindChild("Closed_Available").gameObject;
+			staticClosedA.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Closed_Available/icon_producer").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			staticClosedA.SetActive(false);
+
+			staticClosedU = root.gameObject.transform.FindChild("Closed_Unavailable").gameObject;
+			staticClosedU.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			root.gameObject.transform.FindChild("Closed_Unavailable/icon_producer").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
+			staticClosedU.SetActive(false);
 
 			if (langAux == Lang.SERVANT_NAME) { 
 				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); 
@@ -593,6 +576,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
 				description = Lang.SPACESHIP_DESCRIPTION;
 			}
+
+			root.gameObject.transform.FindChild("Closed_Available/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = icon_producer.GetComponent<SpriteRenderer> ().sprite; 
+			root.gameObject.transform.FindChild("Closed_Unavailable/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = icon_producer.GetComponent<SpriteRenderer> ().sprite; 
+
 
 			icon_producer.SetActive(false);
 			info.SetActive(false);

@@ -46,8 +46,8 @@ public class MainScript : MonoBehaviour {
 	private AudioSource rise3;
 	private AudioSource tap;
 
-	private AudioSource daySong;
-	private AudioSource nightSong;
+	//private AudioSource daySong;
+	//private AudioSource nightSong;
 
 	// Use this for initialization
 	void Start () 
@@ -71,10 +71,11 @@ public class MainScript : MonoBehaviour {
 		tap.volume = 1f;
 		tap.playOnAwake = false;
 
+		/*
 		daySong = gameObject.AddComponent<AudioSource>();
 		daySong.clip = Resources.Load ("Audio/day") as AudioClip;
 		daySong.loop = true;
-		daySong.volume = 0.5f;
+		daySong.volume = 0f;
 		daySong.Play ();
 
 		nightSong = gameObject.AddComponent<AudioSource>();
@@ -82,6 +83,7 @@ public class MainScript : MonoBehaviour {
 		nightSong.loop = true;
 		nightSong.volume = 0f;
 		nightSong.Play ();
+		*/
 
 		capa0 = GameObject.Find ("Capa0");
 		capa1 = GameObject.Find ("Capa1");
@@ -160,9 +162,10 @@ public class MainScript : MonoBehaviour {
 
 		GlobalData.Update ();
 
+		/*
 		if (GlobalData.thisState.timeOfDay < 0.5f) {
 
-			daySong.volume = Mathf.Lerp(daySong.volume, 0.5f, Time.deltaTime*10f);
+			daySong.volume = Mathf.Lerp(daySong.volume, 0.3f, Time.deltaTime*10f);
 			nightSong.volume = Mathf.Lerp(nightSong.volume, 0f, Time.deltaTime*10f);
 
 		} else {
@@ -171,6 +174,7 @@ public class MainScript : MonoBehaviour {
 			nightSong.volume = Mathf.Lerp(nightSong.volume, 0.5f, Time.deltaTime*10f);
 
 		}
+		*/
 
 		string original = GlobalData.FormattedNumber(GlobalData.thisState.love);
 		string[] parts = original.Split(' ');
