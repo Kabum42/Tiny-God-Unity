@@ -534,12 +534,13 @@ public class Capa1Screen1Script : MonoBehaviour {
 			icon.SetActive(false);
 
 			staticClosedU = root.gameObject.transform.FindChild("Closed_Unavailable").gameObject;
-			root.gameObject.transform.FindChild("Shrinked/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+			root.gameObject.transform.FindChild("Closed_Unavailable/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 			staticClosedU.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			root.gameObject.transform.FindChild("Closed_Unavailable/icon_producer").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			//staticClosedU.SetActive(false);
 
 			staticClosedA = root.gameObject.transform.FindChild("Closed_Available").gameObject;
+			root.gameObject.transform.FindChild("Closed_Available/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 			staticClosedA.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			root.gameObject.transform.FindChild("Closed_Available/icon_producer").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 			staticClosedA.SetActive(false);
