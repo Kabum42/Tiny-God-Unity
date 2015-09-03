@@ -198,7 +198,6 @@ public class Capa1Screen3Script : MonoBehaviour {
 						producerSelected = producer;
 						lastProducerSelected = producer;
 						tap.Play();
-						Debug.Log ("LOLASO");
 					}
 				}
 			} else {
@@ -308,6 +307,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 			producer.buyButton.GetComponent<Animator> ().Play ("Changing", 0, 0f);
 			producer.screen.GetComponent<Animator> ().Play ("Changing", 0, 0f);
+			producer.icon.GetComponent<Animator> ().Play ("Available", 0, 0f);
 
 		}
 
@@ -345,6 +345,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 			producer.buyButton.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
 			producer.screen.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
+			producer.icon.GetComponent<Animator> ().Play ("Available", 0, 0f);
 
 		}
 
@@ -454,9 +455,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 		producer.icon.SetActive (true);
 		producer.screen.SetActive (true);
 
+
 		producer.buyButton.GetComponent<Animator> ().Play ("Buying", 0, 0f);
 		producer.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
-		//producer.icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+		producer.icon.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
 
 		float aux = Random.Range(0f, 1f);
 
@@ -493,8 +495,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 					RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 					
 					for (int j = 0; j < hits2.Length; j++) {
-						
-						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+
+						if (j < hits.Length) {
+							if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						}
 						
 					}
 					
@@ -512,7 +516,9 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 					for (int j = 0; j < hits2.Length; j++) {
 
-						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						if (j < hits.Length) {
+							if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						}
 
 					}
 

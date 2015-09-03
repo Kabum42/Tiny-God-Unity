@@ -49,6 +49,8 @@ public class MainScript : MonoBehaviour {
 	//private AudioSource daySong;
 	//private AudioSource nightSong;
 
+	private Vector2 inertia = new Vector2(0f, 0f);
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -251,6 +253,8 @@ public class MainScript : MonoBehaviour {
 							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen3.transform.position.z);
 						}
 
+						inertia += deltaPercentage*20f;
+
 						float max_y = 0f;
 
 						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.TEMPLE_NAME)) {
@@ -283,7 +287,7 @@ public class MainScript : MonoBehaviour {
 							capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, capa1Screen1.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen1.transform.position.z);
 						}
 						
-
+						inertia += deltaPercentage*20f;
 						
 						if (capa1Screen1.transform.position.y < 0f) {
 							capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, 0f, capa1Screen1.transform.position.z);
@@ -352,7 +356,54 @@ public class MainScript : MonoBehaviour {
 		else {
 			// PUNTERO NO ESTA INTERACTUANDO
 			capa1.transform.position = Vector3.Lerp(capa1.transform.position, new Vector3(GlobalData.currentScreen*-GlobalData.CAPA1_WIDTH_SCREEN, 0, 0), Time.deltaTime*10f);
+		
+			if (capa1.transform.position.x >= GlobalData.CAPA1_WIDTH_SCREEN*-1.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*-0.5f) {
+
+				if (capa1Screen3.GetComponent<Capa1Screen3Script>().producerSelected == null) {
+					capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + inertia.y * Time.deltaTime * GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen3.transform.position.z);
+				}
+			
+				float max_y = 0f;
+				
+				if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.TEMPLE_NAME)) {
+					max_y += 2.5f;
+				}
+				if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHIP_NAME)) {
+					max_y += 2.5f;
+				}
+				if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.FACTORY_NAME)) {
+					max_y += 2.5f;
+				}
+				if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.LABORATORY_NAME)) {
+					max_y += 2.5f;
+				}
+				if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHOP_NAME)) {
+					max_y += 2.5f;
+				}
+				
+				if (capa1Screen3.transform.position.y < 0f) {
+					capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 0f, capa1Screen3.transform.position.z);
+				}
+				else if (capa1Screen3.transform.position.y > max_y) {
+					capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, max_y, capa1Screen3.transform.position.z);
+				}
+
+			}
+			else if (capa1.transform.position.x >= GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*1.5f) {
+				
+				if (capa1Screen1.GetComponent<Capa1Screen1Script>().upgradeSelected == null) {
+					capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, capa1Screen1.transform.position.y + inertia.y * Time.deltaTime * GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen1.transform.position.z);
+				}
+				
+				if (capa1Screen1.transform.position.y < 0f) {
+					capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, 0f, capa1Screen1.transform.position.z);
+				}
+				
+			}
+		
 		}
+
+		inertia = new Vector2 (Mathf.Lerp(inertia.x, 0f, Time.deltaTime*5f), Mathf.Lerp(inertia.y, 0f, Time.deltaTime*5f));
 
 		if (capa1.transform.position.x > -18 && capa1.transform.position.x < -2) {
 
@@ -516,8 +567,10 @@ public class MainScript : MonoBehaviour {
 					RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 					
 					for (int j = 0; j < hits2.Length; j++) {
-						
-						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+
+						if (j < hits.Length) {
+							if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						}
 						
 					}
 					
@@ -538,17 +591,19 @@ public class MainScript : MonoBehaviour {
 					Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 					
 					// BUY MASK
-					RaycastHit2D hit = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+					RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 					
-					if (hit.collider != null) {
+					for (int i = 0; i < hits.Length; i++) {
 						
 						Ray ray2 = Camera.main.ScreenPointToRay (Input.mousePosition);
 						
-						RaycastHit2D hit2 = Physics2D.Raycast(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
+						RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 						
-						if (hit2.collider != null) {
+						for (int j = 0; j < hits2.Length; j++) {
 							
-							if (hit.collider.gameObject == hit2.collider.gameObject && hit.collider.gameObject == target) { return true; }
+							if (j < hits.Length) {
+								if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+							}
 							
 						}
 						
