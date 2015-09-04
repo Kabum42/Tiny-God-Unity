@@ -80,20 +80,51 @@ public class Capa1Screen3Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (GlobalData.currentScreen == 1) {
+		if (Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x < -8f && Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x > -32) {
+
+			if (!fogUp.activeInHierarchy) {
+				
+				fogUp.SetActive (true);
+				fogDown.SetActive (true);
+
+			}
 
 			fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
 			fogDown.transform.localPosition = new Vector3 (0, -7.76f - this.gameObject.transform.localPosition.y, -5);
 
-			if (producerSelected != null  && selectedStatus < 2.5f) {
-				selectedStatus += Time.deltaTime*8f;
+			if (producerSelected != null && selectedStatus < 2.5f) {
+				selectedStatus += Time.deltaTime * 8f;
 				if (selectedStatus > 1f && selectedStatus < 2f) { 
 					
 					selectedStatus = 2f; 
 					previousPosition = producerSelected.root.transform.localPosition;
+
+					producerSelected.board.SetActive (true);
+					producerSelected.buyButton.SetActive (true);
+					producerSelected.icon.SetActive (true);
+					producerSelected.screen.SetActive (true);
+
+					if (producerSelected.staticClosedU.activeInHierarchy) {
+
+						producerSelected.buyButton.GetComponent<Animator> ().Play ("Unavailable", 0, 0f);
+						//producerSelected.icon.GetComponent<Animator>().Play ("Unavailable", 0, 0f);
+						producerSelected.screen.GetComponent<Animator> ().Play ("Unavailable", 0, 0f);
+
+					} else if (producerSelected.staticClosedA.activeInHierarchy) {
+
+						producerSelected.buyButton.GetComponent<Animator> ().Play ("Available", 0, 0f);
+						producerSelected.icon.GetComponent<Animator> ().Play ("Available", 0, 0f);
+						producerSelected.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
+
+					}
+
+					producerSelected.staticClosedU.SetActive (false);
+					producerSelected.staticClosedA.SetActive (false);
+
+
 					producerSelected.board.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
-					producerSelected.info.SetActive(true);
-					producerSelected.info.GetComponent<TextMesh>().color = new Color(producerSelected.info.GetComponent<TextMesh>().color.r, producerSelected.info.GetComponent<TextMesh>().color.g, producerSelected.info.GetComponent<TextMesh>().color.b, 0f);
+					producerSelected.info.SetActive (true);
+					producerSelected.info.GetComponent<TextMesh> ().color = new Color (producerSelected.info.GetComponent<TextMesh> ().color.r, producerSelected.info.GetComponent<TextMesh> ().color.g, producerSelected.info.GetComponent<TextMesh> ().color.b, 0f);
 					
 				}
 				
@@ -102,17 +133,28 @@ public class Capa1Screen3Script : MonoBehaviour {
 				}
 			}
 			
-			if (producerSelected == null  && selectedStatus > 0f) {
-				selectedStatus -= Time.deltaTime*8f;
-				float x_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime*10f);
-				float y_value = Mathf.Lerp(lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime*10f);
-				lastProducerSelected.root.transform.localPosition = new Vector3(x_value, y_value, 0);
-				lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, Mathf.Lerp(lastProducerSelected.info.GetComponent<TextMesh>().color.a, 0f, Time.deltaTime*50f));
+			if (producerSelected == null && selectedStatus > 0f) {
+				selectedStatus -= Time.deltaTime * 8f;
+				float x_value = Mathf.Lerp (lastProducerSelected.root.transform.localPosition.x, previousPosition.x, Time.deltaTime * 10f);
+				float y_value = Mathf.Lerp (lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime * 10f);
+				lastProducerSelected.root.transform.localPosition = new Vector3 (x_value, y_value, 0);
+				lastProducerSelected.info.GetComponent<TextMesh> ().color = new Color (lastProducerSelected.info.GetComponent<TextMesh> ().color.r, lastProducerSelected.info.GetComponent<TextMesh> ().color.g, lastProducerSelected.info.GetComponent<TextMesh> ().color.b, Mathf.Lerp (lastProducerSelected.info.GetComponent<TextMesh> ().color.a, 0f, Time.deltaTime * 50f));
 				if (selectedStatus < 0f) { 
 					selectedStatus = 0f; 
-					lastProducerSelected.root.transform.localPosition = new Vector3(previousPosition.x, previousPosition.y, 0);
-					lastProducerSelected.info.GetComponent<TextMesh>().color = new Color(lastProducerSelected.info.GetComponent<TextMesh>().color.r, lastProducerSelected.info.GetComponent<TextMesh>().color.g, lastProducerSelected.info.GetComponent<TextMesh>().color.b, 0f);
+					lastProducerSelected.root.transform.localPosition = new Vector3 (previousPosition.x, previousPosition.y, 0);
+					lastProducerSelected.info.GetComponent<TextMesh> ().color = new Color (lastProducerSelected.info.GetComponent<TextMesh> ().color.r, lastProducerSelected.info.GetComponent<TextMesh> ().color.g, lastProducerSelected.info.GetComponent<TextMesh> ().color.b, 0f);
 				}
+			}
+
+		} else {
+
+			if (fogUp.activeInHierarchy) {
+
+				fogUp.SetActive (false);
+				fogDown.SetActive(false);
+
+				// AQUI SE PUEDEN DESACTIVAR TODOS LOS PRODUCERS, DE MOMENTO NO PARECE SER NECESARIO
+
 			}
 
 		}
@@ -130,7 +172,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation (laboratory.status, ref shop);
 		RegularComprobation (shop.status, ref spaceship);
 
-		if (GlobalData.currentScreen == 1) {
+		if (fogUp.activeInHierarchy) {
 			ClickingComprobation (ref servant);
 			ClickingComprobation (ref human);
 			ClickingComprobation (ref prophet);
@@ -146,24 +188,28 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 	private void ClickingComprobation(ref Producer producer) {
 
-		if (producer.status != "unexistant" && producer.status != "undiscovered" && ClickedOn (producer.buyButton) && (producerSelected == null || producerSelected == producer)) {	
+		if (producer.status != "unexistant" && producer.status != "undiscovered" && (ClickedOn (producer.staticClosedA) || ClickedOn (producer.staticClosedU) || ClickedOn(producer.buyButton)) && (producerSelected == null || producerSelected == producer)) {	
 			if (checkCanBuy(producer)) { buy (producer); }
 		} else {	
+
 			if (producerSelected == null) {
 				if (selectedStatus == 0f) {
-					if (producer.status != "unexistant" && producer.status != "undiscovered" && ClickedOn (producer.hb_head)) {
+					if (producer.status != "unexistant" && producer.status != "undiscovered" && ClickedOn (producer.root)) {
 						producerSelected = producer;
 						lastProducerSelected = producer;
 						tap.Play();
 					}
 				}
 			} else {
-				if (ClickedOn (producerSelected.hb_head) && producer == producerSelected && selectedStatus == 2.5f) {
+				if (ClickedOn (producerSelected.root) && producer == producerSelected && selectedStatus == 2.5f) {
+
 					producerSelected.board.GetComponent<Animator> ().CrossFade ("Opening2", 0f, 0, 0f);
 					producerSelected = null;
 					tap.Play();
+
 				}
 			}
+
 		}
 
 	}
@@ -219,39 +265,128 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 		// ANIMATIONS: UNLOCKING TO AVAILABLE
 		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking") && producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			producer.buyButton.GetComponent<Animator> ().Play ("Available", 0, 0f);
-			producer.icon.GetComponent<Animator> ().Play ("Available", 0, 0f);
-			producer.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
+
+			producer.board.SetActive(false);
+			producer.buyButton.SetActive(false);
+			producer.icon.SetActive(false);
+			producer.screen.SetActive(false);
+
+			producer.staticClosedA.SetActive(true);
+
 		}
 
 		// ANIMATIONS: BUYING TO AVAILABLE
 		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Buying") && producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			producer.buyButton.GetComponent<Animator> ().Play ("Available", 0, 0f);
-			producer.icon.GetComponent<Animator> ().Play ("Available", 0, 0f);
+
+			if (producerSelected == producer) {
+
+				producer.buyButton.GetComponent<Animator> ().Play("Available", 0, 0f);
+
+			} else {
+
+				producer.board.SetActive(false);
+				producer.buyButton.SetActive(false);
+				producer.icon.SetActive(false);
+				producer.screen.SetActive(false);
+				
+				producer.staticClosedA.SetActive(true);
+
+			}
+
 		}
 
 		// ANIMATIONS: AVAILABLE TO CHANGING (NOT AVAILABLE)
-		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Available") && !checkCanBuy(producer)) {
+		if ((producer.staticClosedA.activeInHierarchy || (producerSelected == producer && producerSelected.buyButton.GetComponent<Animator>().GetCurrentAnimatorStateInfo (0).IsName ("Available"))) && !checkCanBuy(producer)) {
+
+			producer.staticClosedA.SetActive(false);
+
+			producer.board.SetActive(true);
+			producer.buyButton.SetActive(true);
+			producer.icon.SetActive(true);
+			producer.screen.SetActive(true);
+
 			producer.buyButton.GetComponent<Animator> ().Play ("Changing", 0, 0f);
 			producer.screen.GetComponent<Animator> ().Play ("Changing", 0, 0f);
+			producer.icon.GetComponent<Animator> ().Play ("Available", 0, 0f);
+
 		}
 
 		// ANIMATIONS: CHANGING (NOT AVAILABLE) TO UNAVAILABLE
 		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Changing") && producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			producer.buyButton.GetComponent<Animator> ().Play ("Unavailable", 0, 0f);
-			producer.screen.GetComponent<Animator> ().Play ("Unavailable", 0, 0f);
+
+			if (producerSelected == producer) {
+
+				producer.buyButton.GetComponent<Animator> ().Play ("Unavailable", 0, 0f);
+				producer.screen.GetComponent<Animator> ().Play ("Unavailable", 0, 0f);
+
+			} else {
+
+				producer.staticClosedU.SetActive(true);
+
+				producer.board.SetActive(false);
+				producer.buyButton.SetActive(false);
+				producer.icon.SetActive(false);
+				producer.screen.SetActive(false);
+
+			}
+
+
 		}
 
 		// ANIMATIONS: UNAVAILABLE TO CHANGING2 (AVAILABLE)
-		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unavailable") && checkCanBuy(producer)) {
+		if ((producer.staticClosedU.activeInHierarchy || (producerSelected == producer && producerSelected.buyButton.GetComponent<Animator>().GetCurrentAnimatorStateInfo (0).IsName ("Unavailable"))) && checkCanBuy(producer)) {
+
+			producer.staticClosedU.SetActive(false);
+			
+			producer.board.SetActive(true);
+			producer.buyButton.SetActive(true);
+			producer.icon.SetActive(true);
+			producer.screen.SetActive(true);
+
 			producer.buyButton.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
 			producer.screen.GetComponent<Animator> ().Play ("Changing2", 0, 0f);
+			producer.icon.GetComponent<Animator> ().Play ("Available", 0, 0f);
+
 		}
 
 		// ANIMATIONS: CHANGING2 (AVAILABLE) TO AVAILABLE
 		if (producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Changing2") && producer.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			producer.buyButton.GetComponent<Animator> ().Play ("Available", 0, 0f);
-			producer.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
+
+			if (producerSelected == producer) {
+
+				producer.buyButton.GetComponent<Animator> ().Play ("Available", 0, 0f);
+				producer.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
+
+			} 
+			else {
+
+				producer.board.SetActive(false);
+				producer.buyButton.SetActive(false);
+				producer.icon.SetActive(false);
+				producer.screen.SetActive(false);
+				
+				producer.staticClosedA.SetActive(true);
+
+			}
+
+
+		}
+
+		// ANIMATIONS OPENING2
+		if (producer.board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Opening2") && producer.board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+
+			if (checkCanBuy(producer)) {
+				producer.staticClosedA.SetActive(true);
+			}
+			else {
+				producer.staticClosedU.SetActive(true);
+			}
+
+			producer.board.SetActive(false);
+			producer.buyButton.SetActive(false);
+			producer.icon.SetActive(false);
+			producer.screen.SetActive(false);
+			
 		}
 
 		producer.text.GetComponent<TextMesh> ().fontSize = 75;
@@ -313,8 +448,17 @@ public class Capa1Screen3Script : MonoBehaviour {
 		GlobalData.thisState.love -= Mathf.Floor (GlobalData.getBaseCost(producer.langCode)*Mathf.Pow(1.1f, GlobalData.thisState.values[producer.langCode]));
 		GlobalData.thisState.values[producer.langCode]++;
 
+		producer.staticClosedA.SetActive (false);
+
+		producer.board.SetActive (true);
+		producer.buyButton.SetActive (true);
+		producer.icon.SetActive (true);
+		producer.screen.SetActive (true);
+
+
 		producer.buyButton.GetComponent<Animator> ().Play ("Buying", 0, 0f);
-		//producer.icon.GetComponent<Animator> ().Play ("Buying", 0, 0f);
+		producer.screen.GetComponent<Animator> ().Play ("Available", 0, 0f);
+		producer.icon.GetComponent<Animator> ().Play ("Unlocking", 0, 0f);
 
 		float aux = Random.Range(0f, 1f);
 
@@ -351,8 +495,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 					RaycastHit2D[] hits2 = Physics2D.RaycastAll(new Vector2(ray2.origin.x, ray2.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("BuyMask"));
 					
 					for (int j = 0; j < hits2.Length; j++) {
-						
-						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+
+						if (j < hits.Length) {
+							if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						}
 						
 					}
 					
@@ -370,7 +516,9 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 					for (int j = 0; j < hits2.Length; j++) {
 
-						if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						if (j < hits.Length) {
+							if (hits[j].collider.gameObject == hits2[j].collider.gameObject && hits[j].collider.gameObject == target) { return true; }
+						}
 
 					}
 
@@ -541,15 +689,15 @@ public class Capa1Screen3Script : MonoBehaviour {
 			staticClosedU.SetActive(false);
 
 			if (langAux == Lang.SERVANT_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/servant"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 				description = Lang.SERVANT_DESCRIPTION;
 			}
 			if (langAux == Lang.HUMAN_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/human"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 				description = Lang.HUMAN_DESCRIPTION;
 			}
 			if (langAux == Lang.PROPHET_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/prophet"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 				description = Lang.PROPHET_DESCRIPTION;
 			}
 			if (langAux == Lang.TEMPLE_NAME) { 
@@ -569,11 +717,11 @@ public class Capa1Screen3Script : MonoBehaviour {
 				description = Lang.LABORATORY_DESCRIPTION;
 			}
 			if (langAux == Lang.SHOP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
 				description = Lang.SHOP_DESCRIPTION;
 			}
 			if (langAux == Lang.SPACESHIP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/grandma");
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001");
 				description = Lang.SPACESHIP_DESCRIPTION;
 			}
 
