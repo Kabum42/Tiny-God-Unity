@@ -18,17 +18,7 @@ public class MainScript : MonoBehaviour {
 	public GameObject capa1Screen2Yahvy;
 	public GameObject capa1Screen3;
 	public GameObject capa2;
-	public GameObject capa2Top;
-	public GameObject capa2TopText;
-	public GameObject capa2TopText2;
-	public GameObject capa2Dots;
 	public GameObject capa2Heart;
-	public GameObject capa2Miracle1;
-	public GameObject capa2MiracleHeader;
-	public GameObject capa2MiracleBar;
-	public GameObject capa2Miracle2;
-	public GameObject capa2MiracleButtonBase;
-	public GameObject capa2MiracleButton;
 
 	public GameObject sceneReward;
 
@@ -42,9 +32,6 @@ public class MainScript : MonoBehaviour {
 
 	private float slideToLeft = 0f;
 	private float slideToRight = 0f;
-
-	private AudioSource rise3;
-	private AudioSource tap;
 
 	//private AudioSource daySong;
 	//private AudioSource nightSong;
@@ -63,15 +50,7 @@ public class MainScript : MonoBehaviour {
 		slide.playOnAwake = false;
 		slide.volume = 1f;
 
-		rise3 = gameObject.AddComponent<AudioSource>();
-		rise3.clip = Resources.Load ("Audio/rise3") as AudioClip;
-		rise3.volume = 1f;
-		rise3.playOnAwake = false;
-
-		tap = gameObject.AddComponent<AudioSource>();
-		tap.clip = Resources.Load ("Audio/tap") as AudioClip;
-		tap.volume = 1f;
-		tap.playOnAwake = false;
+		capa2Heart = GameObject.Find ("Capa2/Heart");
 
 		/*
 		daySong = gameObject.AddComponent<AudioSource>();
@@ -96,19 +75,7 @@ public class MainScript : MonoBehaviour {
 		capa1Screen1 = GameObject.Find ("Capa1/Screen1");
 		capa1Screen3 = GameObject.Find ("Capa1/Screen3");
 		capa2 = GameObject.Find ("Capa2");
-		capa2Top = GameObject.Find ("Capa2/Top");
-		capa2TopText = GameObject.Find ("Capa2/Top/TopText");
-		capa2TopText2 = GameObject.Find ("Capa2/Top/TopText2");
-		capa2Dots = GameObject.Find ("Capa2/Dots");
-		capa2Heart = GameObject.Find ("Capa2/Heart");
-		capa2Miracle1 = GameObject.Find ("Capa2/Miracle1");
-		capa2MiracleHeader = GameObject.Find ("Capa2/Miracle1/MiracleHeader");
-		capa2MiracleBar = GameObject.Find ("Capa2/Miracle1/MiracleBar");
-		capa2Miracle2 = GameObject.Find ("Capa2/Miracle2");
-		capa2MiracleButtonBase = GameObject.Find ("Capa2/Miracle2/ButtonBase");
-		capa2MiracleButton = GameObject.Find ("Capa2/Miracle2/MiracleButton");
 
-		capa2Miracle2.SetActive (false);
 
 		sceneReward = GameObject.Find ("SceneReward");
 		sceneReward.transform.FindChild("Second Camera").gameObject.GetComponent<RewardScript>().scene1 = GameObject.Find ("Scene1");
@@ -178,20 +145,7 @@ public class MainScript : MonoBehaviour {
 		}
 		*/
 
-		string original = GlobalData.FormattedNumber(GlobalData.thisState.love);
-		string[] parts = original.Split(' ');
-		capa2TopText.GetComponent<TextMesh> ().text = parts[0];
-		if (parts [1] != null) {
-			capa2TopText2.GetComponent<TextMesh> ().text = parts [1];
-		} else {
-			capa2TopText2.GetComponent<TextMesh> ().text = "";
-		}
 
-		capa2TopText2.GetComponent<TextMesh> ().fontSize = 40;
-		
-		while (capa2TopText2.GetComponent<MeshRenderer> ().bounds.size.x > 1.5f) {
-			capa2TopText2.GetComponent<TextMesh> ().fontSize -= 1;
-		}
 
 		UpdateLastSlides ();
 
@@ -253,32 +207,6 @@ public class MainScript : MonoBehaviour {
 							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, capa1Screen3.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen3.transform.position.z);
 						}
 
-						inertia += deltaPercentage*20f;
-
-						float max_y = 0f;
-
-						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.TEMPLE_NAME)) {
-							max_y += 2.5f;
-						}
-						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHIP_NAME)) {
-							max_y += 2.5f;
-						}
-						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.FACTORY_NAME)) {
-							max_y += 2.5f;
-						}
-						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.LABORATORY_NAME)) {
-							max_y += 2.5f;
-						}
-						if (GlobalData.thisState.totalLove >= GlobalData.getBaseCost(Lang.SHOP_NAME)) {
-							max_y += 2.5f;
-						}
-
-						if (capa1Screen3.transform.position.y < 0f) {
-							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 0f, capa1Screen3.transform.position.z);
-						}
-						else if (capa1Screen3.transform.position.y > max_y) {
-							capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, max_y, capa1Screen3.transform.position.z);
-						}
 						
 					}
 					else if (capa1.transform.position.x >= GlobalData.CAPA1_WIDTH_SCREEN*0.5f && capa1.transform.position.x <= GlobalData.CAPA1_WIDTH_SCREEN*1.5f) {
@@ -286,14 +214,11 @@ public class MainScript : MonoBehaviour {
 						if (capa1Screen1.GetComponent<Capa1Screen1Script>().upgradeSelected == null) {
 							capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, capa1Screen1.transform.position.y + deltaPercentage.y*GlobalData.CAPA1_WIDTH_SCREEN, capa1Screen1.transform.position.z);
 						}
-						
-						inertia += deltaPercentage*20f;
-						
-						if (capa1Screen1.transform.position.y < 0f) {
-							capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, 0f, capa1Screen1.transform.position.z);
-						}
+
 						
 					}
+
+					inertia += deltaPercentage*20f;
 
 				}
 
@@ -382,10 +307,10 @@ public class MainScript : MonoBehaviour {
 				}
 				
 				if (capa1Screen3.transform.position.y < 0f) {
-					capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, 0f, capa1Screen3.transform.position.z);
+					capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, Mathf.Lerp (capa1Screen3.transform.position.y, 0f, Time.deltaTime*20f), capa1Screen3.transform.position.z);
 				}
 				else if (capa1Screen3.transform.position.y > max_y) {
-					capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, max_y, capa1Screen3.transform.position.z);
+					capa1Screen3.transform.position = new Vector3(capa1Screen3.transform.position.x, Mathf.Lerp (capa1Screen3.transform.position.y, max_y, Time.deltaTime*20f), capa1Screen3.transform.position.z);
 				}
 
 			}
@@ -396,7 +321,14 @@ public class MainScript : MonoBehaviour {
 				}
 				
 				if (capa1Screen1.transform.position.y < 0f) {
-					capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, 0f, capa1Screen1.transform.position.z);
+					capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, Mathf.Lerp (capa1Screen1.transform.position.y, 0f, Time.deltaTime*20f), capa1Screen1.transform.position.z);
+				}
+
+				float max_y2 = capa1Screen1.GetComponent<Capa1Screen1Script>().current_maxY -7f;
+				if (max_y2 < 0f) { max_y2 = 0f; }
+				
+				if (capa1Screen1.transform.position.y > max_y2) {
+					capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, Mathf.Lerp (capa1Screen1.transform.position.y, max_y2, Time.deltaTime*20f), capa1Screen1.transform.position.z);
 				}
 				
 			}
@@ -435,64 +367,18 @@ public class MainScript : MonoBehaviour {
 
 		} else {
 
+			if (capa1.transform.position.x < 0) {
+				capa1Cloud.transform.localPosition = new Vector3 (10 - capa1.transform.position.x / 1.5f, 0, -4);
+			}
+			else {
+				capa1Cloud.transform.localPosition = new Vector3 (-10 - capa1.transform.position.x / 1.5f, 0, -4);
+			}
+
 			capa1AnimatedCloud.SetActive(false);
 
 		}
 
-		float anim_dots = 0.5f - (float)capa1.transform.position.x / 80f;
-		if (anim_dots >= 0.49f && anim_dots <= 0.51f) { anim_dots = 0.49f; }
-		if (anim_dots >= 0.74f && anim_dots <= 0.76f) { anim_dots = 0.74f; }
-		if (anim_dots > 0.99f) { anim_dots = 0.99f; }
-		capa2Dots.GetComponent<Animator> ().Play ("Slide", 0, anim_dots);
 
-		anim_dots += 0.060f;
-		capa2Top.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
-		capa2MiracleHeader.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
-		capa2MiracleButtonBase.GetComponent<Animator> ().Play ("Transition", 0, anim_dots);
-
-		capa2MiracleBar.GetComponent<Animator> ().Play ("Grow", 0, (float) GlobalData.thisState.minigame_timer);
-
-		if (GlobalData.thisState.minigame_timer == 1f) {
-			if (capa2Miracle1.transform.localPosition.y > -11.5f) {
-				if (capa2Miracle1.transform.localPosition.y == -10f) {
-					rise3.Play();
-				}
-				float aux_y = Mathf.Lerp (capa2Miracle1.transform.localPosition.y, -11.51f, Time.deltaTime*10f);
-				capa2Miracle1.transform.localPosition = new Vector3(0, aux_y, -17.7f);
-				if (aux_y <= -11.5f) { 
-					capa2Miracle1.SetActive(false); 
-					capa2Miracle2.SetActive(true);
-				}
-			} else {
-
-				if (capa2Miracle2.transform.localPosition.y < -10.1f) {
-					float aux_y = Mathf.Lerp (capa2Miracle2.transform.localPosition.y, -10f, Time.deltaTime*10f);
-					capa2Miracle2.transform.localPosition = new Vector3(0, aux_y, -17.7f);
-					if (aux_y >= -10.1f) { 
-						capa2Miracle2.transform.localPosition = new Vector3(0, -10f, -17.7f);
-					}
-				}
-
-				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Idle") && capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-					capa2MiracleButton.GetComponent<Animator> ().Play ("Idle", 0, 0f);
-				}
-
-				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Idle") && ClickedOn(capa2MiracleButton)) {
-					tap.Play();
-					capa2MiracleButton.GetComponent<Animator> ().Play ("Pressing", 0, 0f);
-				}
-
-				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Pressing") && capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-					Application.LoadLevelAdditive("MiniGame");
-				}
-
-			}
-
-		}
-
-		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 0.99f) {
-			capa2Heart.GetComponent<Animator>().Play("Idle", 0, 0);
-		}
 
 		UpdateMousePosition ();
 
@@ -506,12 +392,7 @@ public class MainScript : MonoBehaviour {
 		}
 		*/
 
-		float max_y2 = capa1Screen1.GetComponent<Capa1Screen1Script>().current_maxY -7f;
-		if (max_y2 < 0f) { max_y2 = 0f; }
-		
-		if (capa1Screen1.transform.position.y > max_y2) {
-			capa1Screen1.transform.position = new Vector3(capa1Screen1.transform.position.x, Mathf.Lerp (capa1Screen1.transform.position.y, max_y2, Time.deltaTime*10f), capa1Screen1.transform.position.z);
-		}
+
 
 	}
 
