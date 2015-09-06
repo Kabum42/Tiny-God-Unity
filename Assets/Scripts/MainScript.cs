@@ -367,11 +367,15 @@ public class MainScript : MonoBehaviour {
 
 		} else {
 
-			if (capa1.transform.position.x < 0) {
+			if (capa1.transform.position.x < -18) {
+				capa1Cloud.transform.localScale = new Vector3 (-1, 1.05f, 1);
 				capa1Cloud.transform.localPosition = new Vector3 (10 - capa1.transform.position.x / 1.5f, 0, -4);
+				capa1BackgroundCloud.transform.localPosition = new Vector3(-17f, 0, 4);
 			}
-			else {
+			else if (capa1.transform.position.x > 18) {
+				capa1Cloud.transform.localScale = new Vector3 (1, 1.05f, 1);
 				capa1Cloud.transform.localPosition = new Vector3 (-10 - capa1.transform.position.x / 1.5f, 0, -4);
+				capa1BackgroundCloud.transform.localPosition = new Vector3(-17f, 0, 4);
 			}
 
 			capa1AnimatedCloud.SetActive(false);
