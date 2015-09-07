@@ -87,6 +87,42 @@ public class Capa1Screen3Script : MonoBehaviour {
 				fogUp.SetActive (true);
 				fogDown.SetActive (true);
 
+				if (!servant.root.activeInHierarchy || !servant.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(servant);
+				}
+
+				if (!human.root.activeInHierarchy || !human.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(human);
+				}
+
+				if (!prophet.root.activeInHierarchy || !prophet.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(prophet);
+				}
+
+				if (!temple.root.activeInHierarchy || !temple.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(temple);
+				}
+
+				if (!ship.root.activeInHierarchy || !ship.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(ship);
+				}
+
+				if (!factory.root.activeInHierarchy || !factory.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(factory);
+				}
+
+				if (!laboratory.root.activeInHierarchy || !laboratory.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(laboratory);
+				}
+
+				if (!shop.root.activeInHierarchy || !shop.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(shop);
+				}
+
+				if (!spaceship.root.activeInHierarchy || !spaceship.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("Unlocking")) {
+					applyAnimations(spaceship);
+				}
+
 			}
 
 			fogUp.transform.localPosition = new Vector3 (0, 6.5f - this.gameObject.transform.localPosition.y, -5);
@@ -154,6 +190,41 @@ public class Capa1Screen3Script : MonoBehaviour {
 				fogDown.SetActive(false);
 
 				// AQUI SE PUEDEN DESACTIVAR TODOS LOS PRODUCERS, DE MOMENTO NO PARECE SER NECESARIO
+				if (servant.status != "undiscovered") {
+					storeAnimations(servant);
+				}
+
+				if (human.status != "undiscovered") {
+					storeAnimations(human);
+				}
+
+				if (prophet.status != "undiscovered") {
+					storeAnimations(prophet);
+				}
+
+				if (temple.status != "undiscovered") {
+					storeAnimations(temple);
+				}
+
+				if (ship.status != "undiscovered") {
+					storeAnimations(ship);
+				}
+
+				if (factory.status != "undiscovered") {
+					storeAnimations(factory);
+				}
+
+				if (laboratory.status != "undiscovered") {
+					storeAnimations(laboratory);
+				}
+
+				if (shop.status != "undiscovered") {
+					storeAnimations(shop);
+				}
+
+				if (spaceship.status != "undiscovered") {
+					storeAnimations(spaceship);
+				}
 
 			}
 
@@ -173,6 +244,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 		RegularComprobation (shop.status, ref spaceship);
 
 		if (fogUp.activeInHierarchy) {
+
 			ClickingComprobation (ref servant);
 			ClickingComprobation (ref human);
 			ClickingComprobation (ref prophet);
@@ -182,7 +254,97 @@ public class Capa1Screen3Script : MonoBehaviour {
 			ClickingComprobation (ref laboratory);
 			ClickingComprobation (ref shop);
 			ClickingComprobation (ref spaceship);
+
 		}
+
+	}
+
+	private void storeAnimations (Producer p) {
+
+		p.isRootActive = p.root.activeInHierarchy;
+
+		// BOARD
+		if (p.board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Closed")) {
+			p.boardAnimation = "Closed";
+		}
+		else if (p.board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Opening")) {
+			p.boardAnimation = "Opening";
+		}
+		else if (p.board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Opening2")) {
+			p.boardAnimation = "Opening2";
+		}
+		else if (p.board.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Opened")) {
+			p.boardAnimation = "Opened";
+		}
+
+		// BUY BUTTON
+		if (p.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Locked")) {
+			p.buttonAnimation = "Locked";
+		}
+		else if (p.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Unlocking")) {
+			p.buttonAnimation = "Unlocking";
+		}
+		else if (p.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Available")) {
+			p.buttonAnimation = "Available";
+		}
+		else if (p.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Buying")) {
+			p.buttonAnimation = "Buying";
+		}
+		else if (p.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Unavailable")) {
+			p.buttonAnimation = "Unavailable";
+		}
+		else if (p.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Changing")) {
+			p.buttonAnimation = "Changing";
+		}
+		else if (p.buyButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Changing2")) {
+			p.buttonAnimation = "Changing2";
+		}
+
+		// ICON
+		if (p.icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Locked")) {
+			p.iconAnimation = "Locked";
+		}
+		else if (p.icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Unlocking")) {
+			p.iconAnimation = "Unlocking";
+		}
+		else if (p.icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Available")) {
+			p.iconAnimation = "Available";
+		}
+		else if (p.icon.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Buying")) {
+			p.iconAnimation = "Buying";
+		}
+
+		// SCREEN
+		if (p.screen.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Locked")) {
+			p.screenAnimation = "Locked";
+		}
+		else if (p.screen.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Unlocking")) {
+			p.screenAnimation = "Unlocking";
+		}
+		else if (p.screen.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Available")) {
+			p.screenAnimation = "Available";
+		}
+		else if (p.screen.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Unavailable")) {
+			p.screenAnimation = "Unavailable";
+		}
+		else if (p.screen.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Unavailable")) {
+			p.screenAnimation = "Unavailable";
+		}
+		else if (p.screen.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Changing")) {
+			p.screenAnimation = "Changing2";
+		}
+
+		p.root.SetActive(false);
+
+	}
+
+	private void applyAnimations (Producer p) {
+
+		p.root.SetActive(p.isRootActive);
+		p.board.GetComponent<Animator>().Play(p.boardAnimation, 0, p.timeAnimation);
+		p.buyButton.GetComponent<Animator>().Play(p.buttonAnimation, 0, p.timeAnimation);
+		p.icon.GetComponent<Animator>().Play(p.iconAnimation, 0, p.timeAnimation);
+		p.screen.GetComponent<Animator>().Play(p.screenAnimation, 0, p.timeAnimation);
 
 	}
 
@@ -220,8 +382,15 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 		// UNEXISTANT TO UNDISCOVERED
 		if (producer.status == "unexistant" && (previousStatus != "undiscovered" && previousStatus != "unexistant")) {
-			producer.root.SetActive(true);
+
 			producer.status = "undiscovered";
+
+			producer.root.SetActive(true);
+			producer.isRootActive = true;
+			//storeAnimations(producer);
+			//producer.root.SetActive(true);
+			//producer.isRootActive = true;
+
 		} 
 		// UNDISCOVERED/BUYABLE TO DISCOVERED
 		else if ((producer.status == "undiscovered" && GlobalData.thisState.totalLove >= GlobalData.getBaseCost (producer.langCode)) ||
@@ -241,7 +410,9 @@ public class Capa1Screen3Script : MonoBehaviour {
 		}
 
 		// ANIMATIONS: LOCKED TO UNLOCKING
-		if (!producer.number.activeInHierarchy && (producer.status != "unexistant" && producer.status != "undiscovered")) {
+		if (!producer.isNumberActive && (producer.status != "unexistant" && producer.status != "undiscovered")) {
+
+			producer.isNumberActive = true;
 
 			producer.staticClosedL.SetActive(false);
 
@@ -272,6 +443,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 			producer.screen.SetActive(false);
 
 			producer.staticClosedA.SetActive(true);
+
+			if (!fogUp.activeInHierarchy) {
+				storeAnimations(producer);
+			}
 
 		}
 
@@ -609,6 +784,15 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject staticClosedL;
 		public GameObject staticClosedU;
 		public GameObject staticClosedA;
+
+		public bool isNumberActive = false;
+
+		public bool isRootActive = false;
+		public float timeAnimation = 0f;
+		public string boardAnimation = "Closed";
+		public string buttonAnimation = "Locked";
+		public string iconAnimation = "Locked";
+		public string screenAnimation = "Locked";
 
 
 		public Producer(GameObject parent, int position, string name, int langAux) {
