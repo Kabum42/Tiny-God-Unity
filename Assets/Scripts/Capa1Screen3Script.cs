@@ -873,39 +873,39 @@ public class Capa1Screen3Script : MonoBehaviour {
 			staticClosedU.SetActive(false);
 
 			if (langAux == Lang.SERVANT_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Servant"); 
 				description = Lang.SERVANT_DESCRIPTION;
 			}
 			if (langAux == Lang.HUMAN_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Human"); 
 				description = Lang.HUMAN_DESCRIPTION;
 			}
 			if (langAux == Lang.PROPHET_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Prophet"); 
 				description = Lang.PROPHET_DESCRIPTION;
 			}
 			if (langAux == Lang.TEMPLE_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/temple"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Temple"); 
 				description = Lang.TEMPLE_DESCRIPTION;
 			}
 			if (langAux == Lang.SHIP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/ship");
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Ship");
 				description = Lang.SHIP_DESCRIPTION;
 			}
 			if (langAux == Lang.FACTORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/factory"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Factory"); 
 				description = Lang.FACTORY_DESCRIPTION;
 			}
 			if (langAux == Lang.LABORATORY_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/laboratory"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Laboratory"); 
 				description = Lang.LABORATORY_DESCRIPTION;
 			}
 			if (langAux == Lang.SHOP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001"); 
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/Shop"); 
 				description = Lang.SHOP_DESCRIPTION;
 			}
 			if (langAux == Lang.SPACESHIP_NAME) { 
-				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Upgrades/upgrade_0001");
+				icon_producer.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite>("Producers/SpaceShip");
 				description = Lang.SPACESHIP_DESCRIPTION;
 			}
 

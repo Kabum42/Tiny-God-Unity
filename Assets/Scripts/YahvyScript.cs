@@ -86,6 +86,10 @@ public class YahvyScript : MonoBehaviour {
 	private GameObject yahvyFrontShadeDetailDown;
 	private Sprite currentFrontShadeDetailDown;
 
+	private string backAnimation = "IdleLoop";
+	private string bodyAnimation = "IdleLoop";
+	private string frontAnimation = "IdleBlink";
+
 	// Use this for initialization
 	void Start () {
 
@@ -121,11 +125,51 @@ public class YahvyScript : MonoBehaviour {
 		PlayAnimation ("IdleLoop");
 		ChangeSkin ("Standard");
 		//ChangeSkin ("Rainbow");
+
+
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x > -18f && Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x < 18) {
+			// ESTAS EN LA PANTALLA DE YAHVY
+			if (!yahvyBack.activeInHierarchy) {
+
+				yahvyBack.SetActive(true);
+				yahvyBody.SetActive(true);
+				yahvyFront.SetActive(true);
+
+				if (state == "TapScreen" || state == "TapBody" || state == "TapEye") {
+					state = "IdleLoop";
+				}
+				if (lastInteraction > sleepyThreshold) {
+					state = "SleepyLoop";
+				}
+				if (lastInteraction > sleepThreshold) {
+					state = "SleepLoop";
+				}
+
+				yahvyBack.GetComponent<Animator> ().Play(state, 0, 0f);
+				yahvyBody.GetComponent<Animator> ().Play(state, 0, 0f);
+				yahvyFront.GetComponent<Animator> ().Play(state, 0, 0f);
+
+			}
+
+		} else {
+			// NO ESTAS EN LA PANTALLA DE YAHVY
+			if (yahvyBack.activeInHierarchy) {
+
+				lastAngleTapScreen = 90f;
+
+				yahvyBack.SetActive(false);
+				yahvyBody.SetActive(false);
+				yahvyFront.SetActive(false);
+
+			}
+
+		}
 
 		lastInteraction += Time.deltaTime;
 
@@ -180,6 +224,9 @@ public class YahvyScript : MonoBehaviour {
 
 			if (lastInteraction >= sleepThreshold) {
 				CrossFadeAnimation("EnterToSleep");
+				backAnimation = "EnterToSleep";
+				bodyAnimation = "EnterToSleep";
+				frontAnimation = "EnterToSleep";
 			}
 
 			

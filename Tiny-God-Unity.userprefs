@@ -1,9 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Capa1Screen3Script.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\YahvyScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\Capa1Screen3Script.cs" Line="449" Column="5" />
-      <File FileName="Assets\Scripts\Capa1Screen1Script.cs" Line="412" Column="6" />
+      <File FileName="Assets\Scripts\Capa1Screen3Script.cs" Line="908" Column="93" />
+      <File FileName="Assets\Scripts\Capa1Screen1Script.cs" Line="103" Column="166" />
+      <File FileName="Assets\Scripts\GlobalData.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Lang.cs" Line="57" Column="46" />
+      <File FileName="Assets\Scripts\Capa1Screen2Script.cs" Line="32" Column="5" />
+      <File FileName="Assets\Scripts\YahvyScript.cs" Line="165" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

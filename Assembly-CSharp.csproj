@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Capa2Script.cs" />
      <Compile Include="Assets\GoogleMobileAds\Api\AdFailedToLoadEventArgs.cs" />
      <Compile Include="Assets\GoogleMobileAds\Api\AdPosition.cs" />
      <Compile Include="Assets\GoogleMobileAds\Api\AdRequest.cs" />
@@ -177,6 +176,7 @@
      <Compile Include="Assets\Scripts\Capa1Screen1Script.cs" />
      <Compile Include="Assets\Scripts\Capa1Screen2Script.cs" />
      <Compile Include="Assets\Scripts\Capa1Screen3Script.cs" />
+     <Compile Include="Assets\Scripts\Capa2Script.cs" />
      <Compile Include="Assets\Scripts\FpsScript.cs" />
      <Compile Include="Assets\Scripts\GlobalData.cs" />
      <Compile Include="Assets\Scripts\Lang.cs" />

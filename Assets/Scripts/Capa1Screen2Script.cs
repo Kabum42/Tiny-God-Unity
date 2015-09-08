@@ -9,6 +9,13 @@ public class Capa1Screen2Script : MonoBehaviour {
 	private float defaultRandomCooldown = 0.1f;
 	private float windDirection = 0f;
 
+	private bool leftActive = false;
+	private bool rightActive = false;
+	private float leftTime = 0f;
+	private float rightTime = 0f;
+	private string leftAnimation = "Transformation";
+	private string rightAnimation = "Transformation";
+
 	// Use this for initialization
 	void Start () {
 
@@ -22,13 +29,58 @@ public class Capa1Screen2Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if (Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x > -18f && Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x < 18) {
+
+			if (rightActive || leftActive) {
+
+				if (leftActive && !miniLeft.activeInHierarchy) {
+					miniLeft.SetActive (true);
+					miniLeft.GetComponent<Animator> ().Play (leftAnimation, 0, leftTime);
+				}
+
+				if (rightActive && !miniRight.activeInHierarchy) {
+					miniRight.SetActive (true);
+					miniRight.GetComponent<Animator> ().Play (rightAnimation, 0, rightTime);
+				}
+
+			}
+
+		} else {
+
+			if (miniLeft.activeInHierarchy || miniRight.activeInHierarchy) {
+
+				leftTime = miniLeft.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+				rightTime = miniRight.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+				if (miniLeft.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Transformation")) {
+					leftAnimation = "Transformation";
+				}
+				else if (miniLeft.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Transformation2")) {
+					leftAnimation = "Transformation2";
+				}
+
+				if (miniRight.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Transformation")) {
+					rightAnimation = "Transformation";
+				}
+				else if (miniRight.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Transformation2")) {
+					rightAnimation = "Transformation2";
+				}
+
+				miniLeft.SetActive (false);
+				miniRight.SetActive (false);
+				
+			}
+
+		}
+
 		randomCooldown -= Time.deltaTime;
 		windDirection = Random.Range(-0.75f, 0.75f);
 
 		if (randomCooldown <= 0f) {
 
-			if (!miniLeft.activeInHierarchy && Random.Range(0f, 100f) > 95f) {
-				miniLeft.SetActive(true);
+			if (!leftActive && Random.Range(0f, 100f) > 95f) {
+
+				leftActive = true;
 				miniLeft.transform.localPosition = new Vector3(15f, Random.Range (-7.5f, 6f), 0.1f);
 
 				float size = Random.Range(0.75f, 1.25f);
@@ -58,8 +110,9 @@ public class Capa1Screen2Script : MonoBehaviour {
 
 			}
 
-			if (!miniRight.activeInHierarchy && Random.Range(0f, 100f) > 95f) {
-				miniRight.SetActive(true);
+			if (!rightActive && Random.Range(0f, 100f) > 95f) {
+
+				rightActive = true;
 				miniRight.transform.localPosition = new Vector3(-15f, Random.Range (-7.5f, 6f), 0.1f);
 
 				float size = Random.Range(0.75f, 1.25f);
@@ -106,12 +159,6 @@ public class Capa1Screen2Script : MonoBehaviour {
 
 			}
 
-			miniLeft.transform.localPosition = new Vector3(miniLeft.transform.localPosition.x - Time.deltaTime*(1f - windDirection), miniLeft.transform.localPosition.y, 0.1f);
-
-			if (miniLeft.transform.localPosition.x <= -15f) {
-				miniLeft.SetActive(false);
-			}
-
 		}
 
 		if (miniRight.activeInHierarchy) {
@@ -127,12 +174,22 @@ public class Capa1Screen2Script : MonoBehaviour {
 
 			}
 
-			miniRight.transform.localPosition = new Vector3(miniRight.transform.localPosition.x + Time.deltaTime*(1f + windDirection), miniRight.transform.localPosition.y, 0.1f);
+		}
 
-			if (miniRight.transform.localPosition.x >= 15f) {
-				miniRight.SetActive(false);
-			}
 
+		miniLeft.transform.localPosition = new Vector3(miniLeft.transform.localPosition.x - Time.deltaTime*(1f - windDirection), miniLeft.transform.localPosition.y, 0.1f);
+		
+		if (miniLeft.transform.localPosition.x <= -15f) {
+			leftActive = false;
+			miniLeft.SetActive(false);
+		}
+
+
+		miniRight.transform.localPosition = new Vector3(miniRight.transform.localPosition.x + Time.deltaTime*(1f + windDirection), miniRight.transform.localPosition.y, 0.1f);
+
+		if (miniRight.transform.localPosition.x >= 15f) {
+			rightActive = false;
+			miniRight.SetActive(false);
 		}
 
 
