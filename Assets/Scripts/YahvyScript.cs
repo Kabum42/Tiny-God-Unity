@@ -157,6 +157,197 @@ public class YahvyScript : MonoBehaviour {
 
 			}
 
+			if (state == "IdleLoop") {
+				
+				if (yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
+					PlayAnimation("IdleLoop");
+				}
+				
+				if (probBlinkCooldown > 0f) {
+					probBlinkCooldown -= Time.deltaTime;
+					if (probBlinkCooldown <= 0f) {
+						if (Random.Range(0f, 1f) > (1f - probBlinkDecSecond)) {
+							CrossFadeAnimation("IdleBlink");
+						}
+						probBlinkCooldown = 0.1f;
+					}
+				}
+				
+				if (lastInteraction >= sleepyThreshold) {
+					CrossFadeAnimation("SleepyLoop");
+				}
+				
+				
+			} else if (state == "IdleBlink" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				CrossFadeAnimation("IdleLoop");
+				
+			} else if (state == "SleepyLoop") {
+				
+				if (yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
+					PlayAnimation("SleepyLoop");
+				}
+				
+				if (probBlinkCooldown > 0f) {
+					probBlinkCooldown -= Time.deltaTime;
+					if (probBlinkCooldown <= 0f) {
+						if (Random.Range(0f, 1f) > (1f - probBlinkDecSecond)) {
+							CrossFadeAnimation("SleepyBlink");
+						}
+						probBlinkCooldown = 0.1f;
+					}
+				}
+				
+				
+				if (lastInteraction >= sleepThreshold) {
+					CrossFadeAnimation("EnterToSleep");
+					backAnimation = "EnterToSleep";
+					bodyAnimation = "EnterToSleep";
+					frontAnimation = "EnterToSleep";
+				}
+				
+				
+			} else if (state == "SleepyBlink" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				CrossFadeAnimation("SleepyLoop");
+				
+			} else if (state == "SleepyLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				PlayAnimation("SleepyLoop");
+				
+			} else if (state == "EnterToSleep" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("EnterToSleep") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				CrossFadeAnimation("SleepLoop");
+				
+			} else if (state == "SleepLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				PlayAnimation("SleepLoop");
+				
+			} else if (state == "SleepLoop" && !yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop")) {
+				
+				PlayAnimation("SleepLoop");
+				
+			} else if (state == "TapEye" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapEye") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				CrossFadeAnimation("IdleLoop");
+				
+			} else if (state == "TapBody" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapBody") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				PlayAnimation("IdleLoop");
+				
+			} else if (state == "TapScreen" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapScreen") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				PlayAnimation("IdleLoop");
+				//tapScreenCoolingDown = 0.05f;
+				
+			} else if (state == "TapCritical" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapCritical") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				CrossFadeAnimation("IdleLoop");
+				
+			} else if (state == "Annoyed" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Annoyed") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				PlayAnimation("Annoyed");
+				
+			} else if (state == "SadLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SadLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+				
+				PlayAnimation("SadLoop");
+				
+			}
+			
+			
+			bool touched = false;
+			
+			if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
+				
+				if (Input.GetMouseButtonDown(0)) { 
+					touched = true; 
+					lastMousePosition = Input.mousePosition;
+				}
+				
+			} else {
+				
+				if (Input.touchCount > 0) { 
+					if (Input.GetTouch(0).phase == TouchPhase.Began) {
+						touched = true; 
+						lastMousePosition = Input.GetTouch(0).position;
+					}
+				}
+				
+			}
+			
+			if (touched && GlobalData.currentScreen == 0) {
+				
+				lastInteraction = 0f;
+				
+				if (GlobalData.thisState.getCriticalChance() >= Random.Range(0f, 1f)) {
+					
+					// CLICK CRITICO
+					//GlobalData.thisState.love += GlobalData.thisState.getCriticalClickValue();
+					//GlobalData.thisState.totalLove += GlobalData.thisState.getCriticalClickValue();
+					GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
+					GlobalData.thisState.love += GlobalData.thisState.love +1;
+					
+					CrossFadeAnimation("TapCritical");
+					
+					Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
+					
+				} else {
+					
+					// CLICK NORMAL
+					//GlobalData.thisState.love += GlobalData.thisState.getClickValue();
+					//GlobalData.thisState.totalLove += GlobalData.thisState.getClickValue();
+					GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
+					GlobalData.thisState.love += GlobalData.thisState.love +1;
+					
+					
+					Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
+					
+					if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyEye"))) {
+						
+						if (state == "SleepLoop") {
+							PlayAnimation("TapCritical");
+							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
+						} else {
+							CrossFadeAnimation("TapEye");
+							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
+							//Application.LoadLevelAdditive("MiniGame");
+						}
+						
+					} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyBody"))) {
+						
+						if (state == "SleepLoop") {
+							PlayAnimation("TapCritical");
+							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
+						} else {
+							CrossFadeAnimation("TapBody");
+							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
+						}
+						
+					} else {
+						
+						Vector2 aux = new Vector2(ray.origin.x, ray.origin.y);
+						
+						float angle = Vector3.Angle(new Vector3(yahvyBack.transform.position.x, yahvyBack.transform.position.y - 0.64f, 0),  new Vector3(aux.x, aux.y, 0));
+						if (aux.x < 0f) { angle = 360f - angle; }
+						
+						lastAngleTapScreen = angle;
+						
+						if (state == "SleepLoop") {
+							PlayAnimation("TapCritical");
+							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
+						} else {
+							CrossFadeAnimation("TapScreen");
+							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
+						}
+						
+					}
+					
+				}
+				
+				
+				
+			}
+
 		} else {
 			// NO ESTAS EN LA PANTALLA DE YAHVY
 			if (yahvyBack.activeInHierarchy) {
@@ -180,196 +371,7 @@ public class YahvyScript : MonoBehaviour {
 			}
 		}
 
-		if (state == "IdleLoop") {
 
-			if (yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
-				PlayAnimation("IdleLoop");
-			}
-
-			if (probBlinkCooldown > 0f) {
-				probBlinkCooldown -= Time.deltaTime;
-				if (probBlinkCooldown <= 0f) {
-					if (Random.Range(0f, 1f) > (1f - probBlinkDecSecond)) {
-						CrossFadeAnimation("IdleBlink");
-					}
-					probBlinkCooldown = 0.1f;
-				}
-			}
-
-			if (lastInteraction >= sleepyThreshold) {
-				CrossFadeAnimation("SleepyLoop");
-			}
-
-
-		} else if (state == "IdleBlink" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("IdleBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-
-			CrossFadeAnimation("IdleLoop");
-
-		} else if (state == "SleepyLoop") {
-
-			if (yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {	
-				PlayAnimation("SleepyLoop");
-			}
-			
-			if (probBlinkCooldown > 0f) {
-				probBlinkCooldown -= Time.deltaTime;
-				if (probBlinkCooldown <= 0f) {
-					if (Random.Range(0f, 1f) > (1f - probBlinkDecSecond)) {
-						CrossFadeAnimation("SleepyBlink");
-					}
-					probBlinkCooldown = 0.1f;
-				}
-			}
-
-
-			if (lastInteraction >= sleepThreshold) {
-				CrossFadeAnimation("EnterToSleep");
-				backAnimation = "EnterToSleep";
-				bodyAnimation = "EnterToSleep";
-				frontAnimation = "EnterToSleep";
-			}
-
-			
-		} else if (state == "SleepyBlink" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyBlink") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			CrossFadeAnimation("SleepyLoop");
-			
-		} else if (state == "SleepyLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepyLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			PlayAnimation("SleepyLoop");
-			
-		} else if (state == "EnterToSleep" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("EnterToSleep") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			CrossFadeAnimation("SleepLoop");
-			
-		} else if (state == "SleepLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			PlayAnimation("SleepLoop");
-			
-		} else if (state == "SleepLoop" && !yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SleepLoop")) {
-			
-			PlayAnimation("SleepLoop");
-			
-		} else if (state == "TapEye" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapEye") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-
-			CrossFadeAnimation("IdleLoop");
-			
-		} else if (state == "TapBody" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapBody") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			PlayAnimation("IdleLoop");
-			
-		} else if (state == "TapScreen" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapScreen") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			PlayAnimation("IdleLoop");
-			//tapScreenCoolingDown = 0.05f;
-			
-		} else if (state == "TapCritical" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("TapCritical") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			CrossFadeAnimation("IdleLoop");
-			
-		} else if (state == "Annoyed" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Annoyed") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			PlayAnimation("Annoyed");
-			
-		} else if (state == "SadLoop" && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("SadLoop") && yahvyBody.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
-			
-			PlayAnimation("SadLoop");
-			
-		}
-
-
-		bool touched = false;
-
-		if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.OSXDashboardPlayer) {
-
-			if (Input.GetMouseButtonDown(0)) { 
-				touched = true; 
-				lastMousePosition = Input.mousePosition;
-			}
-
-		} else {
-
-			if (Input.touchCount > 0) { 
-				if (Input.GetTouch(0).phase == TouchPhase.Began) {
-					touched = true; 
-					lastMousePosition = Input.GetTouch(0).position;
-				}
-			}
-
-		}
-
-		if (touched && GlobalData.currentScreen == 0) {
-
-			lastInteraction = 0f;
-
-			if (GlobalData.thisState.getCriticalChance() >= Random.Range(0f, 1f)) {
-
-				// CLICK CRITICO
-				//GlobalData.thisState.love += GlobalData.thisState.getCriticalClickValue();
-				//GlobalData.thisState.totalLove += GlobalData.thisState.getCriticalClickValue();
-				GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
-				GlobalData.thisState.love += GlobalData.thisState.love +1;
-
-				CrossFadeAnimation("TapCritical");
-
-				Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
-
-			} else {
-
-				// CLICK NORMAL
-				//GlobalData.thisState.love += GlobalData.thisState.getClickValue();
-				//GlobalData.thisState.totalLove += GlobalData.thisState.getClickValue();
-				GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
-				GlobalData.thisState.love += GlobalData.thisState.love +1;
-
-
-				Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
-				
-				if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyEye"))) {
-					
-					if (state == "SleepLoop") {
-						PlayAnimation("TapCritical");
-						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
-					} else {
-						CrossFadeAnimation("TapEye");
-						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
-						//Application.LoadLevelAdditive("MiniGame");
-					}
-					
-				} else if (Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 0f, LayerMask.GetMask ("YahvyBody"))) {
-					
-					if (state == "SleepLoop") {
-						PlayAnimation("TapCritical");
-						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
-					} else {
-						CrossFadeAnimation("TapBody");
-						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
-					}
-					
-				} else {
-					
-					Vector2 aux = new Vector2(ray.origin.x, ray.origin.y);
-					
-					float angle = Vector3.Angle(new Vector3(yahvyBack.transform.position.x, yahvyBack.transform.position.y - 0.64f, 0),  new Vector3(aux.x, aux.y, 0));
-					if (aux.x < 0f) { angle = 360f - angle; }
-					
-					lastAngleTapScreen = angle;
-					
-					if (state == "SleepLoop") {
-						PlayAnimation("TapCritical");
-						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
-					} else {
-						CrossFadeAnimation("TapScreen");
-						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
-					}
-					
-				}
-
-			}
-
-
-
-		}
 
 
 	}
