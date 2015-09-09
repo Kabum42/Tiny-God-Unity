@@ -4,7 +4,7 @@ using System.Collections;
 public class Capa1Screen1Script : MonoBehaviour {
 
 	private Vector3 lastMousePosition;
-	private Upgrade[] upgrades = new Upgrade[96];
+	private Upgrade[] upgrades = new Upgrade[69];
 
 	public Upgrade upgradeSelected = null;
 	private Upgrade lastUpgradeSelected = null;
@@ -49,34 +49,37 @@ public class Capa1Screen1Script : MonoBehaviour {
 
 		int current_upgrade = 22;
 
-		for (int i = 0; i < 96; i++) {
+		for (int i = 0; i < 69; i++) {
 
 			Upgrade upgrade = new Upgrade(this.gameObject, "Upgrade_"+i, current_upgrade);
 
 			current_upgrade+= 2;
 
-			if (current_upgrade == 42) {
+			if (current_upgrade == 36) {
 				// THIS IS THE MOTHERFLIPPING HUMAN!!!
 				current_upgrade = 44;
+			} else if (current_upgrade == 58) {
+				// THIS HUMAN DOESN'T EXIST
+				current_upgrade = 64;
 			} else if (current_upgrade == 78) {
 				// THIS SPECIAL HUMAN DOESN'T EXIST
 				current_upgrade = 86;
-			} else if (current_upgrade == 106) {
+			} else if (current_upgrade == 100) {
 				// THIS IS THE MOTHERFLIPPING TEMPLE!!!
 				current_upgrade = 108;
-			} else if (current_upgrade == 128) {
+			} else if (current_upgrade == 122) {
 				// THIS IS THE MOTHERFLIPPING SHIP!!!
 				current_upgrade = 130;
-			} else if (current_upgrade == 150) {
+			} else if (current_upgrade == 144) {
 				// THIS IS THE MOTHERFLIPPING FACTORY!!!
 				current_upgrade = 152;
-			} else if (current_upgrade == 172) {
+			} else if (current_upgrade == 166) {
 				// THIS IS THE MOTHERFLIPPING LABORATORY!!!
 				current_upgrade = 174;
-			} else if (current_upgrade == 194) {
+			} else if (current_upgrade == 188) {
 				// THIS IS THE MOTHERFLIPPING SHOP!!!
 				current_upgrade = 196;
-			} else if (current_upgrade == 216) {
+			} else if (current_upgrade == 210) {
 				// THIS IS THE MOTHERFLIPPING SPACESHIP!!!
 				current_upgrade = 218;
 			}
@@ -561,7 +564,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SERVANT_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.HUMAN_UPGRADE_10) { 
 				typeRequired = Lang.HUMAN_NAME;
@@ -569,7 +573,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.HUMAN_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.SPECIAL_HUMAN_10) {
 				int aux_position = (langAux - Lang.SPECIAL_HUMAN_1)/2;
@@ -609,7 +614,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.PROPHET_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.TEMPLE_UPGRADE_10) { 
 				typeRequired = Lang.TEMPLE_NAME;
@@ -617,7 +623,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.TEMPLE_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.SHIP_UPGRADE_10) { 
 				typeRequired = Lang.SHIP_NAME;
@@ -625,7 +632,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SHIP_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.FACTORY_UPGRADE_10) { 
 				typeRequired = Lang.FACTORY_NAME;
@@ -633,7 +641,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.FACTORY_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.LABORATORY_UPGRADE_10) { 
 				typeRequired = Lang.LABORATORY_NAME;
@@ -641,7 +650,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.LABORATORY_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.SHOP_UPGRADE_10) { 
 				typeRequired = Lang.SHOP_NAME;
@@ -649,7 +659,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SHOP_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 			else if (langAux <= Lang.SPACESHIP_UPGRADE_10) { 
 				typeRequired = Lang.SPACESHIP_NAME;
@@ -657,7 +668,8 @@ public class Capa1Screen1Script : MonoBehaviour {
 				price = Mathf.Floor(GlobalData.getBaseCost(Lang.SPACESHIP_NAME)*Mathf.Pow(10f, aux_position));
 				if (aux_position == 0) { amountRequired = 1; }
 				else if (aux_position == 1) { amountRequired = 10; }
-				else { amountRequired = (aux_position-1)*25; }
+				else if (aux_position == 2) { amountRequired = 25; }
+				else { amountRequired = (aux_position-2)*50; }
 			}
 
 			cost.gameObject.GetComponent<TextMesh>().text = GlobalData.FormattedNumber(price);
