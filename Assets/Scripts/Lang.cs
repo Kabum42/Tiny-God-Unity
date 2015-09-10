@@ -429,18 +429,18 @@ public static class Lang {
 		ENGLISH_WORDS[HUMAN_UPGRADE_3_JOKE] = "Sexy and ecological";
 		ENGLISH_WORDS[HUMAN_UPGRADE_4] = "Knowledge apple";
 		ENGLISH_WORDS[HUMAN_UPGRADE_4_JOKE] = "Now I know your fantasies";
-		ENGLISH_WORDS[HUMAN_UPGRADE_5] = "Aphrodisiac plants";
-		ENGLISH_WORDS[HUMAN_UPGRADE_5_JOKE] = "Where physique isn’t enough, leave it to the chemistry";
-		ENGLISH_WORDS[HUMAN_UPGRADE_6] = "Eternal life tree";
-		ENGLISH_WORDS[HUMAN_UPGRADE_6_JOKE] = "Who wants to live forever?";
-		ENGLISH_WORDS[HUMAN_UPGRADE_7] = "Pro-life fanatics";
-		ENGLISH_WORDS[HUMAN_UPGRADE_7_JOKE] = "Every sperm is sacred";
-		ENGLISH_WORDS[HUMAN_UPGRADE_8] = "Storks union";
-		ENGLISH_WORDS[HUMAN_UPGRADE_8_JOKE] = "It was necessary at this time";
-		ENGLISH_WORDS[HUMAN_UPGRADE_9] = "Arrogant apes";
-		ENGLISH_WORDS[HUMAN_UPGRADE_9_JOKE] = "No gods or kings, only man";
-		ENGLISH_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
-		ENGLISH_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% recycled";
+		ENGLISH_WORDS[HUMAN_UPGRADE_5] = "Pro-life fanatics";
+		ENGLISH_WORDS[HUMAN_UPGRADE_5_JOKE] = "Every sperm is sacred";
+		ENGLISH_WORDS[HUMAN_UPGRADE_6] = "Arrogant apes";
+		ENGLISH_WORDS[HUMAN_UPGRADE_6_JOKE] = "No gods or kings, only man";
+		ENGLISH_WORDS[HUMAN_UPGRADE_7] = "Soylent Green";
+		ENGLISH_WORDS[HUMAN_UPGRADE_7_JOKE] = "100% recycled";
+		//ENGLISH_WORDS[HUMAN_UPGRADE_8] = "Storks union";
+		//ENGLISH_WORDS[HUMAN_UPGRADE_8_JOKE] = "It was necessary at this time";
+		//ENGLISH_WORDS[HUMAN_UPGRADE_9] = "Arrogant apes";
+		//ENGLISH_WORDS[HUMAN_UPGRADE_9_JOKE] = "No gods or kings, only man";
+		//ENGLISH_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
+		//ENGLISH_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% recycled";
 		
 		// SPECIAL HUMANS
 		ENGLISH_WORDS[SPECIAL_HUMAN_1] = "Zealot";
@@ -728,18 +728,18 @@ public static class Lang {
 		SPANISH_WORDS[HUMAN_UPGRADE_3_JOKE] = "Sexy y ecológica";
 		SPANISH_WORDS[HUMAN_UPGRADE_4] = "Manzana del conocimiento";
 		SPANISH_WORDS[HUMAN_UPGRADE_4_JOKE] = "Ahora conozco tus fantasías";
-		SPANISH_WORDS[HUMAN_UPGRADE_5] = "Plantas afrodisíacas";
-		SPANISH_WORDS[HUMAN_UPGRADE_5_JOKE] = "Donde el físico no es suficiente, déjaselo a la química";
-		SPANISH_WORDS[HUMAN_UPGRADE_6] = "Árbol de la vida eterna";
-		SPANISH_WORDS[HUMAN_UPGRADE_6_JOKE] = "¿Quién quiere vivir para siempre?";
-		SPANISH_WORDS[HUMAN_UPGRADE_7] = "Fanáticos pro-vida";
-		SPANISH_WORDS[HUMAN_UPGRADE_7_JOKE] = "Todo el esperma es sagrado";
-		SPANISH_WORDS[HUMAN_UPGRADE_8] = "Sindicato de cigüeñas";
-		SPANISH_WORDS[HUMAN_UPGRADE_8_JOKE] = "Era necesario a estas alturas";
-		SPANISH_WORDS[HUMAN_UPGRADE_9] = "Simios arrogantes";
-		SPANISH_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ni dioses ni reyes, solo el hombre";
-		SPANISH_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
-		SPANISH_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% reciclado";
+		SPANISH_WORDS[HUMAN_UPGRADE_5] = "Fanáticos pro-vida";
+		SPANISH_WORDS[HUMAN_UPGRADE_5_JOKE] = "Todo el esperma es sagrado";
+		SPANISH_WORDS[HUMAN_UPGRADE_6] = "Simios arrogantes";
+		SPANISH_WORDS[HUMAN_UPGRADE_6_JOKE] = "Ni dioses ni reyes, solo el hombre";
+		SPANISH_WORDS[HUMAN_UPGRADE_7] = "Soylent Green";
+		SPANISH_WORDS[HUMAN_UPGRADE_7_JOKE] = "100% reciclado";
+		//SPANISH_WORDS[HUMAN_UPGRADE_8] = "Sindicato de cigüeñas";
+		//SPANISH_WORDS[HUMAN_UPGRADE_8_JOKE] = "Era necesario a estas alturas";
+		//SPANISH_WORDS[HUMAN_UPGRADE_9] = "Simios arrogantes";
+		//SPANISH_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ni dioses ni reyes, solo el hombre";
+		//SPANISH_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
+		//SPANISH_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% reciclado";
 		
 		// SPECIAL HUMANS
 		SPANISH_WORDS[SPECIAL_HUMAN_1] = "Fanático";
@@ -1027,18 +1027,18 @@ public static class Lang {
 		CATALAN_WORDS[HUMAN_UPGRADE_3_JOKE] = "Verd i atractiva";
 		CATALAN_WORDS[HUMAN_UPGRADE_4] = "Poma del coneixement";
 		CATALAN_WORDS[HUMAN_UPGRADE_4_JOKE] = "Ara conec les teues fantasies";
-		CATALAN_WORDS[HUMAN_UPGRADE_5] = "Plantes afrodisíaques";
-		CATALAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "On el físic no és prou, deixa-li-ho a la química";
-		CATALAN_WORDS[HUMAN_UPGRADE_6] = "Arbre de la vida eterna";
-		CATALAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Qui vol viure per sempre?";
-		CATALAN_WORDS[HUMAN_UPGRADE_7] = "Fanàtics pro vida";
-		CATALAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "Tot l’esperma és sagrat";
-		CATALAN_WORDS[HUMAN_UPGRADE_8] = "Sindicat de cigonyes";
-		CATALAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Era necessari a aquestes alçades";
-		CATALAN_WORDS[HUMAN_UPGRADE_9] = "Simis arrogants";
-		CATALAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ni déus ni reis, només l’home";
-		CATALAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
-		CATALAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100 % reciclat";
+		CATALAN_WORDS[HUMAN_UPGRADE_5] = "Fanàtics pro vida";
+		CATALAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Tot l’esperma és sagrat";
+		CATALAN_WORDS[HUMAN_UPGRADE_6] = "Simis arrogants";
+		CATALAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Ni déus ni reis, només l’home";
+		CATALAN_WORDS[HUMAN_UPGRADE_7] = "Soylent Green";
+		CATALAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "100 % reciclat";
+		//CATALAN_WORDS[HUMAN_UPGRADE_8] = "Sindicat de cigonyes";
+		//CATALAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Era necessari a aquestes alçades";
+		//CATALAN_WORDS[HUMAN_UPGRADE_9] = "Simis arrogants";
+		//CATALAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ni déus ni reis, només l’home";
+		//CATALAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
+		//CATALAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100 % reciclat";
 		
 		// SPECIAL HUMANS
 		CATALAN_WORDS[SPECIAL_HUMAN_1] = "Fanàtic";
@@ -1326,18 +1326,18 @@ public static class Lang {
 		ITALIAN_WORDS[HUMAN_UPGRADE_3_JOKE] = "Sexy ed ecológica";
 		ITALIAN_WORDS[HUMAN_UPGRADE_4] = "Mela della conoscenza";
 		ITALIAN_WORDS[HUMAN_UPGRADE_4_JOKE] = "Ora conozco le tue fantasie";
-		ITALIAN_WORDS[HUMAN_UPGRADE_5] = "Piante afrodisiache";
-		ITALIAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Dove il físico non è suficiente, lascia fare alla chimica";
-		ITALIAN_WORDS[HUMAN_UPGRADE_6] = "Albero della vita eterna";
-		ITALIAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Chi vuole vivere per sempre?";
-		ITALIAN_WORDS[HUMAN_UPGRADE_7] = "Fanatico pro-vita";
-		ITALIAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "Tutto il sperma è sacro";
-		ITALIAN_WORDS[HUMAN_UPGRADE_8] = "Sindicato di cicogne";
-		ITALIAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "È stato necessario, a questo punto";
-		ITALIAN_WORDS[HUMAN_UPGRADE_9] = "Scimmione arroganti";
-		ITALIAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ne dei ne rei, soltanto il uomo";
-		ITALIAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
-		ITALIAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% riciclato";
+		ITALIAN_WORDS[HUMAN_UPGRADE_5] = "Fanatico pro-vita";
+		ITALIAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Tutto il sperma è sacro";
+		ITALIAN_WORDS[HUMAN_UPGRADE_6] = "Scimmione arroganti";
+		ITALIAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Ne dei ne rei, soltanto il uomo";
+		ITALIAN_WORDS[HUMAN_UPGRADE_7] = "Soylent Green";
+		ITALIAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "100% riciclato";
+		//ITALIAN_WORDS[HUMAN_UPGRADE_8] = "Sindicato di cicogne";
+		//ITALIAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "È stato necessario, a questo punto";
+		//ITALIAN_WORDS[HUMAN_UPGRADE_9] = "Scimmione arroganti";
+		//ITALIAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ne dei ne rei, soltanto il uomo";
+		//ITALIAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
+		//ITALIAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% riciclato";
 		
 		// SPECIAL HUMANS
 		ITALIAN_WORDS[SPECIAL_HUMAN_1] = "Fanatico";
@@ -1626,18 +1626,18 @@ public static class Lang {
 		FRENCH_WORDS[HUMAN_UPGRADE_3_JOKE] = "Sexy et écologique";
 		FRENCH_WORDS[HUMAN_UPGRADE_4] = "La pomme de la connaissance";
 		FRENCH_WORDS[HUMAN_UPGRADE_4_JOKE] = "Maintenant je connais tes fantasmes";
-		FRENCH_WORDS[HUMAN_UPGRADE_5] = "Les plantes aphrodisiaques";
-		FRENCH_WORDS[HUMAN_UPGRADE_5_JOKE] = "Là où la physique n'est pas suffisante, la chimie le sera";
-		FRENCH_WORDS[HUMAN_UPGRADE_6] = "L’arbre de la vie éternelle";
-		FRENCH_WORDS[HUMAN_UPGRADE_6_JOKE] = "Qui veut vivre pour toujours?";
-		FRENCH_WORDS[HUMAN_UPGRADE_7] = "Les fanatiques pro-vie";
-		FRENCH_WORDS[HUMAN_UPGRADE_7_JOKE] = "Chaque sperme est sacré";
-		FRENCH_WORDS[HUMAN_UPGRADE_8] = "Le syndicat des cigognes";
-		FRENCH_WORDS[HUMAN_UPGRADE_8_JOKE] = "En ces temps-là, c’était nécessaire";
-		FRENCH_WORDS[HUMAN_UPGRADE_9] = "Les singes arrogants";
-		FRENCH_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ni dieux ni rois, juste l’Homme";
-		FRENCH_WORDS[HUMAN_UPGRADE_10] = "Soleil Vert";
-		FRENCH_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% recyclé";
+		FRENCH_WORDS[HUMAN_UPGRADE_5] = "Les fanatiques pro-vie";
+		FRENCH_WORDS[HUMAN_UPGRADE_5_JOKE] = "Chaque sperme est sacré";
+		FRENCH_WORDS[HUMAN_UPGRADE_6] = "Les singes arrogants";
+		FRENCH_WORDS[HUMAN_UPGRADE_6_JOKE] = "Ni dieux ni rois, juste l’Homme";
+		FRENCH_WORDS[HUMAN_UPGRADE_7] = "Soleil Vert";
+		FRENCH_WORDS[HUMAN_UPGRADE_7_JOKE] = "100% recyclé";
+		//FRENCH_WORDS[HUMAN_UPGRADE_8] = "Le syndicat des cigognes";
+		//FRENCH_WORDS[HUMAN_UPGRADE_8_JOKE] = "En ces temps-là, c’était nécessaire";
+		//FRENCH_WORDS[HUMAN_UPGRADE_9] = "Les singes arrogants";
+		//FRENCH_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ni dieux ni rois, juste l’Homme";
+		//FRENCH_WORDS[HUMAN_UPGRADE_10] = "Soleil Vert";
+		//FRENCH_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% recyclé";
 		
 		// SPECIAL HUMANS
 		FRENCH_WORDS[SPECIAL_HUMAN_1] = "Le fanatique";
@@ -1908,8 +1908,6 @@ public static class Lang {
 		ROMANIAN_WORDS[SERVANT_UPGRADE_6_JOKE] = "Îmi vorbești mie?";
 		ROMANIAN_WORDS[SERVANT_UPGRADE_7] = "Trezirea";
 		ROMANIAN_WORDS[SERVANT_UPGRADE_7_JOKE] = "Treziţivă, fii mei'";
-		//ROMANIAN_WORDS[SERVANT_UPGRADE_7] = "Blestem babilonic";
-		//ROMANIAN_WORDS[SERVANT_UPGRADE_7_JOKE] = "I-am învățat limbi pe care nu ințeleg pentru ai putea ignora";
 		//ROMANIAN_WORDS[SERVANT_UPGRADE_8] = "Dragoste, Zeu şi Rock&Roll";
 		//ROMANIAN_WORDS[SERVANT_UPGRADE_8_JOKE] = "Sfânta trinitate'";
 		//ROMANIAN_WORDS[SERVANT_UPGRADE_9] = "Voci în cap";
@@ -1928,18 +1926,18 @@ public static class Lang {
 		ROMANIAN_WORDS[HUMAN_UPGRADE_3_JOKE] = "Sexy și ecologică";
 		ROMANIAN_WORDS[HUMAN_UPGRADE_4] = "Mărul cunoștinței";
 		ROMANIAN_WORDS[HUMAN_UPGRADE_4_JOKE] = "Acum cunosc fanteziile tale";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_5] = "Plante afrodisiace";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Unde fizicul nu e suficient, lăsații chimiei";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_6] = "Pomul vieții eterne";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Cine vrea să trăiască pentru totdeauna?";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_7] = "Fanatici pro-viață";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "Tot spermul este sacru";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_8] = "Sindicatul bărzilor";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Era necesar în acest moment";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_9] = "Maimuțe arogante";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Nici zei nici regi, doar omul";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
-		ROMANIAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% reciclat";
+		ROMANIAN_WORDS[HUMAN_UPGRADE_5] = "Fanatici pro-viață";
+		ROMANIAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Tot spermul este sacru";
+		ROMANIAN_WORDS[HUMAN_UPGRADE_6] = "Maimuțe arogante";
+		ROMANIAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Nici zei nici regi, doar omul";
+		ROMANIAN_WORDS[HUMAN_UPGRADE_7] = "Soylent Green";
+		ROMANIAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "100% reciclat";
+		//ROMANIAN_WORDS[HUMAN_UPGRADE_8] = "Sindicatul bărzilor";
+		//ROMANIAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Era necesar în acest moment";
+		//ROMANIAN_WORDS[HUMAN_UPGRADE_9] = "Maimuțe arogante";
+		//ROMANIAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Nici zei nici regi, doar omul";
+		//ROMANIAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
+		//ROMANIAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% reciclat";
 		
 		// SPECIAL HUMANS
 		ROMANIAN_WORDS[SPECIAL_HUMAN_1] = "Fanatic";
@@ -2227,18 +2225,18 @@ public static class Lang {
 		GERMAN_WORDS[HUMAN_UPGRADE_3_JOKE] = "Sexy und ökologisch";
 		GERMAN_WORDS[HUMAN_UPGRADE_4] = "Apfel des wissens";
 		GERMAN_WORDS[HUMAN_UPGRADE_4_JOKE] = "Jetzt kenne ich deine fantasien";
-		GERMAN_WORDS[HUMAN_UPGRADE_5] = "Aphrodisiakische pflanzen";
-		GERMAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Wo physik nicht genug ist, muss chemie aushelfen";
-		GERMAN_WORDS[HUMAN_UPGRADE_6] = "Baum des ewigen lebens";
-		GERMAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Wer möchte für immer leben?";
-		GERMAN_WORDS[HUMAN_UPGRADE_7] = "Pro-leben fanatiker";
-		GERMAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "Jedes sperma ist heilig";
-		GERMAN_WORDS[HUMAN_UPGRADE_8] = "Klapperstorchvereinigung";
-		GERMAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Es war nötig zu der zeit";
-		GERMAN_WORDS[HUMAN_UPGRADE_9] = "Arrogante affen";
-		GERMAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Keine götter oder könige, nur der mann";
-		GERMAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
-		GERMAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% recycled";
+		GERMAN_WORDS[HUMAN_UPGRADE_5] = "Pro-leben fanatiker";
+		GERMAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Jedes sperma ist heilig";
+		GERMAN_WORDS[HUMAN_UPGRADE_6] = "Arrogante affen";
+		GERMAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Keine götter oder könige, nur der mann";
+		GERMAN_WORDS[HUMAN_UPGRADE_7] = "Soylent Green";
+		GERMAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "100% recycled";
+		//GERMAN_WORDS[HUMAN_UPGRADE_8] = "Klapperstorchvereinigung";
+		//GERMAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Es war nötig zu der zeit";
+		//GERMAN_WORDS[HUMAN_UPGRADE_9] = "Arrogante affen";
+		//GERMAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Keine götter oder könige, nur der mann";
+		//GERMAN_WORDS[HUMAN_UPGRADE_10] = "Soylent Green";
+		//GERMAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% recycled";
 		
 		// SPECIAL HUMANS
 		GERMAN_WORDS[SPECIAL_HUMAN_1] = "Eiferer";
@@ -2526,18 +2524,18 @@ public static class Lang {
 		RUSSIAN_WORDS[HUMAN_UPGRADE_3_JOKE] = "Секси и экологическое";
 		RUSSIAN_WORDS[HUMAN_UPGRADE_4] = "Яблоко знаний";
 		RUSSIAN_WORDS[HUMAN_UPGRADE_4_JOKE] = "Сейчас я знаю ваши фантазии";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_5] = "Растения афродизиак";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Где физика недостаточно, остаб её на химиё";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_6] = "Дерево вечной жизни";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Кто хочет жить вечно?";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_7] = "Pro-Life фанатики";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "Все сперма святая";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_8] = "Аистов союз";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Это необходимо!";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_9] = "Высокомерный шимпанзе";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ни богов или королей, только человек";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_10] = "Зеленый сойлент";
-		RUSSIAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% рециркулируют";
+		RUSSIAN_WORDS[HUMAN_UPGRADE_5] = "Pro-Life фанатики";
+		RUSSIAN_WORDS[HUMAN_UPGRADE_5_JOKE] = "Все сперма святая";
+		RUSSIAN_WORDS[HUMAN_UPGRADE_6] = "Высокомерный шимпанзе";
+		RUSSIAN_WORDS[HUMAN_UPGRADE_6_JOKE] = "Ни богов или королей, только человек";
+		RUSSIAN_WORDS[HUMAN_UPGRADE_7] = "Зеленый сойлент";
+		RUSSIAN_WORDS[HUMAN_UPGRADE_7_JOKE] = "100% рециркулируют";
+		//RUSSIAN_WORDS[HUMAN_UPGRADE_8] = "Аистов союз";
+		//RUSSIAN_WORDS[HUMAN_UPGRADE_8_JOKE] = "Это необходимо!";
+		//RUSSIAN_WORDS[HUMAN_UPGRADE_9] = "Высокомерный шимпанзе";
+		//RUSSIAN_WORDS[HUMAN_UPGRADE_9_JOKE] = "Ни богов или королей, только человек";
+		//RUSSIAN_WORDS[HUMAN_UPGRADE_10] = "Зеленый сойлент";
+		//RUSSIAN_WORDS[HUMAN_UPGRADE_10_JOKE] = "100% рециркулируют";
 		
 		// SPECIAL HUMANS
 		RUSSIAN_WORDS[SPECIAL_HUMAN_1] = "Фанатик";
