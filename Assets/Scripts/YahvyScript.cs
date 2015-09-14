@@ -276,7 +276,21 @@ public class YahvyScript : MonoBehaviour {
 			}
 			
 			if (touched && GlobalData.currentScreen == 0) {
-				
+
+				Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.SetActive(true);
+				Ray rayAUX = Camera.main.ScreenPointToRay (lastMousePosition);
+				Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.transform.position = new Vector3(rayAUX.origin.x, rayAUX.origin.y, Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.transform.position.z);
+				Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color = new Color(Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color.r, Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color.g, Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color.b, 1f);
+
+				for (int i = 0; i < Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts.Length; i++) {
+					if (!Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts[i].activeInHierarchy) {
+						Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts[i].SetActive(true);
+						Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts[i].transform.position = Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.transform.position + new Vector3(-0.5f, 0f, 0f);
+						Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconCounters[i] = 0f;
+						break;
+					}
+				}
+
 				lastInteraction = 0f;
 				
 				if (GlobalData.thisState.getCriticalChance() >= Random.Range(0f, 1f)) {
@@ -286,6 +300,8 @@ public class YahvyScript : MonoBehaviour {
 					//GlobalData.thisState.totalLove += GlobalData.thisState.getCriticalClickValue();
 					GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
 					GlobalData.thisState.love += GlobalData.thisState.love +1;
+
+					Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().text = "+"+GlobalData.thisState.getCriticalClickValue();
 					
 					CrossFadeAnimation("TapCritical");
 					
@@ -298,7 +314,9 @@ public class YahvyScript : MonoBehaviour {
 					//GlobalData.thisState.totalLove += GlobalData.thisState.getClickValue();
 					GlobalData.thisState.totalLove += GlobalData.thisState.love +1;
 					GlobalData.thisState.love += GlobalData.thisState.love +1;
-					
+
+					Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().text = "+"+GlobalData.thisState.getClickValue();
+
 					
 					Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 					

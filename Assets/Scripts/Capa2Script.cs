@@ -14,6 +14,13 @@ public class Capa2Script : MonoBehaviour {
 	public GameObject capa2Miracle2;
 	public GameObject capa2MiracleButtonBase;
 	public GameObject capa2MiracleButton;
+	public GameObject capa2LoveGained;
+	public GameObject capa2LoveGainedIcon;
+
+	public GameObject[] iconHearts = new GameObject[10];
+	public float[] iconCounters = new float[10];
+
+	public float gainedIconCounter = 0f;
 
 	private AudioSource rise3;
 	private AudioSource tap;
@@ -34,8 +41,20 @@ public class Capa2Script : MonoBehaviour {
 		capa2Miracle2 = GameObject.Find ("Capa2/Miracle2");
 		capa2MiracleButtonBase = GameObject.Find ("Capa2/Miracle2/ButtonBase");
 		capa2MiracleButton = GameObject.Find ("Capa2/Miracle2/MiracleButton");
+		capa2LoveGained = GameObject.Find ("Capa2/LoveGained");
+		capa2LoveGainedIcon = GameObject.Find ("Capa2/LoveGainedIcon");
+
+		for (int i = 0; i < iconHearts.Length; i++) {
+			iconHearts[i] = Instantiate(capa2LoveGainedIcon);
+			iconHearts[i].name = "Heart"+i;
+			iconHearts[i].transform.parent = capa2LoveGainedIcon.transform.parent;
+			iconHearts[i].SetActive(false);
+			iconCounters[i] = 0f;
+		}
 		
 		capa2Miracle2.SetActive (false);
+		capa2LoveGained.SetActive (false);
+		capa2LoveGainedIcon.SetActive (false);
 
 		rise3 = gameObject.AddComponent<AudioSource>();
 		rise3.clip = Resources.Load ("Audio/rise3") as AudioClip;
@@ -120,6 +139,29 @@ public class Capa2Script : MonoBehaviour {
 		
 		if (capa2Heart.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 0.99f) {
 			capa2Heart.GetComponent<Animator>().Play("Idle", 0, 0);
+		}
+
+		if (capa2LoveGained.activeInHierarchy) {
+			capa2LoveGained.transform.localPosition = new Vector3(capa2LoveGained.transform.localPosition.x, capa2LoveGained.transform.localPosition.y +Time.deltaTime*1f, capa2LoveGained.transform.localPosition.z);
+			capa2LoveGained.GetComponent<TextMesh>().color = new Color(capa2LoveGained.GetComponent<TextMesh>().color.r, capa2LoveGained.GetComponent<TextMesh>().color.g, capa2LoveGained.GetComponent<TextMesh>().color.b, capa2LoveGained.GetComponent<TextMesh>().color.a - Time.deltaTime);
+			if (capa2LoveGained.GetComponent<TextMesh>().color.a <= 0f) {
+				capa2LoveGained.SetActive(false);
+			}
+		}
+
+		for (int i = 0; i < iconHearts.Length; i++) {
+			if (iconHearts[i].activeInHierarchy) {
+				if (iconCounters[i] < 0.3f) {
+					iconCounters[i] += Time.deltaTime;
+					if (iconCounters[i] >= 0.3f) { iconCounters[i] = 0.3f; }
+				}
+				if (iconCounters[i] == 0.3f) {
+					iconHearts[i].transform.position = new Vector3(Mathf.Lerp(iconHearts[i].transform.position.x, capa2Heart.transform.position.x, Time.deltaTime*10f), Mathf.Lerp(iconHearts[i].transform.position.y, capa2Heart.transform.position.y, Time.deltaTime*10f), iconHearts[i].transform.position.z);
+				}
+				if (Mathf.Abs(iconHearts[i].transform.position.x - capa2Heart.transform.position.x) < 0.1f && Mathf.Abs(iconHearts[i].transform.position.y - capa2Heart.transform.position.y) < 0.1f) {
+					iconHearts[i].SetActive(false);
+				}
+			}
 		}
 	
 	}
