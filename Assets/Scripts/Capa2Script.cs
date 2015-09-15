@@ -55,6 +55,7 @@ public class Capa2Script : MonoBehaviour {
 			iconHearts[i].SetActive(false);
 			iconCounters[i] = 0f;
 		}
+
 		
 		capa2Miracle2.SetActive (false);
 		capa2LoveGained.SetActive (false);
@@ -134,6 +135,10 @@ public class Capa2Script : MonoBehaviour {
 				}
 				
 				if (capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName("Pressing") && capa2MiracleButton.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).normalizedTime >= 1f) {
+					Camera.main.GetComponent<MainScript>().capa1Screen3.GetComponent<Capa1Screen3Script>().allowedChanges = false;
+					if (Camera.main.GetComponent<MainScript>().capa1Screen3.GetComponent<Capa1Screen3Script>().fogUp.activeInHierarchy) {
+						Camera.main.GetComponent<MainScript>().capa1Screen3.GetComponent<Capa1Screen3Script>().storeAllAnimations();
+					}
 					Application.LoadLevelAdditive("MiniGame");
 				}
 				

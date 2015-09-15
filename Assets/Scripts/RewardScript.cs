@@ -126,6 +126,7 @@ public class RewardScript : MonoBehaviour {
 		this.gameObject.transform.parent.gameObject.SetActive (false);
 		scene1.SetActive (true);
 		scene1.transform.FindChild ("Main Camera").GetComponent<MainScript> ().lastMouse = Input.mousePosition;
+		Camera.main.GetComponent<MainScript>().capa1Screen3.GetComponent<Capa1Screen3Script>().allowedChanges = true;
 
 	}
 }

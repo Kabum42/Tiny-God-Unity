@@ -28,8 +28,10 @@ public class Capa1Screen3Script : MonoBehaviour {
 	private AudioSource epic_ching;
 	private AudioSource tap;
 
-	private GameObject fogUp;
-	private GameObject fogDown;
+	public GameObject fogUp;
+	public GameObject fogDown;
+
+	public bool allowedChanges = true;
 
 	// Use this for initialization
 	void Start () {
@@ -82,7 +84,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 		if (Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x < -8f && Camera.main.GetComponent<MainScript> ().capa1.transform.localPosition.x > -32) {
 
-			if (!fogUp.activeInHierarchy) {
+			if (!fogUp.activeInHierarchy && allowedChanges) {
 				
 				fogUp.SetActive (true);
 				fogDown.SetActive (true);
@@ -161,7 +163,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 					producerSelected.board.GetComponent<Animator> ().CrossFade ("Opening", 0f, 0, 0f);
 					producerSelected.info.SetActive (true);
 					producerSelected.info.GetComponent<TextMesh> ().color = new Color (producerSelected.info.GetComponent<TextMesh> ().color.r, producerSelected.info.GetComponent<TextMesh> ().color.g, producerSelected.info.GetComponent<TextMesh> ().color.b, 0f);
-					
+					producerSelected.bigIcon.SetActive(true);
+					producerSelected.bigIcon.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, producerSelected.info.GetComponent<TextMesh>().color.a);
 				}
 				
 				if (selectedStatus > 2.5f) {
@@ -175,10 +178,14 @@ public class Capa1Screen3Script : MonoBehaviour {
 				float y_value = Mathf.Lerp (lastProducerSelected.root.transform.localPosition.y, previousPosition.y, Time.deltaTime * 10f);
 				lastProducerSelected.root.transform.localPosition = new Vector3 (x_value, y_value, 0);
 				lastProducerSelected.info.GetComponent<TextMesh> ().color = new Color (lastProducerSelected.info.GetComponent<TextMesh> ().color.r, lastProducerSelected.info.GetComponent<TextMesh> ().color.g, lastProducerSelected.info.GetComponent<TextMesh> ().color.b, Mathf.Lerp (lastProducerSelected.info.GetComponent<TextMesh> ().color.a, 0f, Time.deltaTime * 50f));
+				lastProducerSelected.bigIcon.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, lastProducerSelected.info.GetComponent<TextMesh>().color.a);
 				if (selectedStatus < 0f) { 
 					selectedStatus = 0f; 
 					lastProducerSelected.root.transform.localPosition = new Vector3 (previousPosition.x, previousPosition.y, 0);
 					lastProducerSelected.info.GetComponent<TextMesh> ().color = new Color (lastProducerSelected.info.GetComponent<TextMesh> ().color.r, lastProducerSelected.info.GetComponent<TextMesh> ().color.g, lastProducerSelected.info.GetComponent<TextMesh> ().color.b, 0f);
+					lastProducerSelected.bigIcon.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, lastProducerSelected.info.GetComponent<TextMesh>().color.a);
+					lastProducerSelected.info.SetActive(false);
+					lastProducerSelected.bigIcon.SetActive(false);
 				}
 			}
 
@@ -186,45 +193,8 @@ public class Capa1Screen3Script : MonoBehaviour {
 
 			if (fogUp.activeInHierarchy) {
 
-				fogUp.SetActive (false);
-				fogDown.SetActive(false);
-
 				// AQUI SE PUEDEN DESACTIVAR TODOS LOS PRODUCERS, DE MOMENTO NO PARECE SER NECESARIO
-				if (servant.status != "undiscovered") {
-					storeAnimations(servant);
-				}
-
-				if (human.status != "undiscovered") {
-					storeAnimations(human);
-				}
-
-				if (prophet.status != "undiscovered") {
-					storeAnimations(prophet);
-				}
-
-				if (temple.status != "undiscovered") {
-					storeAnimations(temple);
-				}
-
-				if (ship.status != "undiscovered") {
-					storeAnimations(ship);
-				}
-
-				if (factory.status != "undiscovered") {
-					storeAnimations(factory);
-				}
-
-				if (laboratory.status != "undiscovered") {
-					storeAnimations(laboratory);
-				}
-
-				if (shop.status != "undiscovered") {
-					storeAnimations(shop);
-				}
-
-				if (spaceship.status != "undiscovered") {
-					storeAnimations(spaceship);
-				}
+				storeAllAnimations();
 
 			}
 
@@ -255,6 +225,49 @@ public class Capa1Screen3Script : MonoBehaviour {
 			ClickingComprobation (ref shop);
 			ClickingComprobation (ref spaceship);
 
+		}
+
+	}
+
+	public void storeAllAnimations() {
+
+		fogUp.SetActive (false);
+		fogDown.SetActive(false);
+
+		if (servant.status != "undiscovered") {
+			storeAnimations(servant);
+		}
+		
+		if (human.status != "undiscovered") {
+			storeAnimations(human);
+		}
+		
+		if (prophet.status != "undiscovered") {
+			storeAnimations(prophet);
+		}
+		
+		if (temple.status != "undiscovered") {
+			storeAnimations(temple);
+		}
+		
+		if (ship.status != "undiscovered") {
+			storeAnimations(ship);
+		}
+		
+		if (factory.status != "undiscovered") {
+			storeAnimations(factory);
+		}
+		
+		if (laboratory.status != "undiscovered") {
+			storeAnimations(laboratory);
+		}
+		
+		if (shop.status != "undiscovered") {
+			storeAnimations(shop);
+		}
+		
+		if (spaceship.status != "undiscovered") {
+			storeAnimations(spaceship);
 		}
 
 	}
@@ -776,10 +789,9 @@ public class Capa1Screen3Script : MonoBehaviour {
 		public GameObject screen;
 
 		public GameObject hb_head;
-
 		public GameObject icon_producer;
-
 		public GameObject info;
+		public GameObject bigIcon;
 
 		public GameObject staticClosedL;
 		public GameObject staticClosedU;
@@ -857,6 +869,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 			root.gameObject.transform.FindChild("Pro_Button/bb_square_side").gameObject.GetComponent<SpriteRenderer>().sharedMaterial = mat;
 
 			info = root.gameObject.transform.FindChild("Info").gameObject;
+			bigIcon = root.gameObject.transform.FindChild("BigIcon").gameObject;
 
 			staticClosedL = root.gameObject.transform.FindChild("Closed_Lock").gameObject;
 			staticClosedL.GetComponent<SpriteRenderer>().sharedMaterial = mat;
@@ -909,12 +922,15 @@ public class Capa1Screen3Script : MonoBehaviour {
 				description = Lang.SPACESHIP_DESCRIPTION;
 			}
 
+			bigIcon.GetComponent<SpriteRenderer>().sprite = icon_producer.GetComponent<SpriteRenderer> ().sprite;
+
 			root.gameObject.transform.FindChild("Closed_Available/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = icon_producer.GetComponent<SpriteRenderer> ().sprite; 
 			root.gameObject.transform.FindChild("Closed_Unavailable/icon_producer").gameObject.GetComponent<SpriteRenderer> ().sprite = icon_producer.GetComponent<SpriteRenderer> ().sprite; 
 
 
 			icon_producer.SetActive(false);
 			info.SetActive(false);
+			bigIcon.SetActive(false);
 
 			root.SetActive(false);
 
@@ -957,6 +973,7 @@ public class Capa1Screen3Script : MonoBehaviour {
 					}
 					smartText(originalText, producer.info);
 					producer.info.GetComponent<TextMesh>().color = new Color(producer.info.GetComponent<TextMesh>().color.r, producer.info.GetComponent<TextMesh>().color.g, producer.info.GetComponent<TextMesh>().color.b, Mathf.Lerp(producer.info.GetComponent<TextMesh>().color.a, 1f, Time.deltaTime*10f));
+					producer.bigIcon.GetComponent<SpriteRenderer>().color = new Color (1f, 1f, 1f, producer.info.GetComponent<TextMesh>().color.a);
 				}
 			}
 

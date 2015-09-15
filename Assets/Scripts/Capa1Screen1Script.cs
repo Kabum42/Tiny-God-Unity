@@ -7,7 +7,7 @@ public class Capa1Screen1Script : MonoBehaviour {
 	private Upgrade[] upgrades = new Upgrade[69];
 
 	public Upgrade upgradeSelected = null;
-	private Upgrade lastUpgradeSelected = null;
+	public Upgrade lastUpgradeSelected = null;
 	private float selectedStatus = 0f;
 	private Vector3 previousPosition;
 
