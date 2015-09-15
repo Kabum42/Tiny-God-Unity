@@ -282,11 +282,14 @@ public class YahvyScript : MonoBehaviour {
 				Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.transform.position = new Vector3(rayAUX.origin.x, rayAUX.origin.y, Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.transform.position.z);
 				Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color = new Color(Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color.r, Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color.g, Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().color.b, 1f);
 
+				int auxIcon = 0;
+
 				for (int i = 0; i < Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts.Length; i++) {
 					if (!Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts[i].activeInHierarchy) {
 						Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts[i].SetActive(true);
-						Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts[i].transform.position = Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.transform.position + new Vector3(-0.5f, 0f, 0f);
+						Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconHearts[i].transform.position = Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.transform.position + new Vector3(0f, 0f, +0.1f);
 						Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconCounters[i] = 0f;
+						auxIcon = i;
 						break;
 					}
 				}
@@ -304,8 +307,8 @@ public class YahvyScript : MonoBehaviour {
 					Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().text = "+"+GlobalData.thisState.getCriticalClickValue();
 					
 					CrossFadeAnimation("TapCritical");
-					
-					Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
+
+					Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconCrits[auxIcon] = true;
 					
 				} else {
 					
@@ -317,6 +320,7 @@ public class YahvyScript : MonoBehaviour {
 
 					Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().capa2LoveGained.GetComponent<TextMesh>().text = "+"+GlobalData.thisState.getClickValue();
 
+					Camera.main.GetComponent<MainScript>().capa2.GetComponent<Capa2Script>().iconCrits[auxIcon] = false;
 					
 					Ray ray = Camera.main.ScreenPointToRay (lastMousePosition);
 					
@@ -324,10 +328,8 @@ public class YahvyScript : MonoBehaviour {
 						
 						if (state == "SleepLoop") {
 							PlayAnimation("TapCritical");
-							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 						} else {
 							CrossFadeAnimation("TapEye");
-							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 							//Application.LoadLevelAdditive("MiniGame");
 						}
 						
@@ -335,10 +337,8 @@ public class YahvyScript : MonoBehaviour {
 						
 						if (state == "SleepLoop") {
 							PlayAnimation("TapCritical");
-							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 						} else {
 							CrossFadeAnimation("TapBody");
-							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 						}
 						
 					} else {
@@ -352,10 +352,8 @@ public class YahvyScript : MonoBehaviour {
 						
 						if (state == "SleepLoop") {
 							PlayAnimation("TapCritical");
-							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
 						} else {
 							CrossFadeAnimation("TapScreen");
-							Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
 						}
 						
 					}

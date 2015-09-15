@@ -19,6 +19,10 @@ public class Capa2Script : MonoBehaviour {
 
 	public GameObject[] iconHearts = new GameObject[10];
 	public float[] iconCounters = new float[10];
+	public bool[] iconCrits = new bool[10];
+	public float[] iconT = new float[10];
+	public Vector3[] iconOrigins = new Vector3[10];
+	public Vector3[] iconControls = new Vector3[10];
 
 	public float gainedIconCounter = 0f;
 
@@ -153,13 +157,26 @@ public class Capa2Script : MonoBehaviour {
 			if (iconHearts[i].activeInHierarchy) {
 				if (iconCounters[i] < 0.3f) {
 					iconCounters[i] += Time.deltaTime;
-					if (iconCounters[i] >= 0.3f) { iconCounters[i] = 0.3f; }
+					if (iconCounters[i] >= 0.3f) { 
+						iconCounters[i] = 0.3f; 
+						iconT[i] = 0f;
+						iconOrigins[i] = iconHearts[i].transform.localPosition;
+						iconControls[i] = (iconOrigins[i] + capa2Heart.transform.position)/2 + new Vector3(Random.Range(-5f, 5f), 0f, 0f);
+					}
+					iconHearts[i].transform.localPosition = new Vector3(iconHearts[i].transform.localPosition.x, iconHearts[i].transform.localPosition.y +Time.deltaTime*1f, iconHearts[i].transform.localPosition.z);
 				}
 				if (iconCounters[i] == 0.3f) {
-					iconHearts[i].transform.position = new Vector3(Mathf.Lerp(iconHearts[i].transform.position.x, capa2Heart.transform.position.x, Time.deltaTime*10f), Mathf.Lerp(iconHearts[i].transform.position.y, capa2Heart.transform.position.y, Time.deltaTime*10f), iconHearts[i].transform.position.z);
+					iconT[i] = Mathf.Lerp(iconT[i], 1f, Time.deltaTime*5f);
+					iconHearts[i].transform.position = capa2Heart.transform.position*Mathf.Pow(iconT[i], 2f) + iconControls[i]*2f*iconT[i]*(1f-iconT[i]) + iconOrigins[i]*Mathf.Pow(1f - iconT[i], 2f);
 				}
 				if (Mathf.Abs(iconHearts[i].transform.position.x - capa2Heart.transform.position.x) < 0.1f && Mathf.Abs(iconHearts[i].transform.position.y - capa2Heart.transform.position.y) < 0.1f) {
 					iconHearts[i].SetActive(false);
+					if (iconCrits[i]) {
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Crit", 0, 0);
+					}
+					else {
+						Camera.main.GetComponent<MainScript>().capa2Heart.GetComponent<Animator>().Play("Pulse", 0, 0);
+					}
 				}
 			}
 		}
